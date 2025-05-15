@@ -17,7 +17,7 @@ public class UserTable {
 	private int Id;
 	private String username;
 	private String email;
-	private long mobile;
+	private String mobile;
 	private String pan;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date dateOfBirth;
@@ -29,7 +29,7 @@ public class UserTable {
 	}
 
 
-	public UserTable(int id, String username, String email,long mobile, String pan, Date dateOfBirth, double walletBalance) {
+	public UserTable(int id, String username, String email,String mobile, String pan, Date dateOfBirth, double walletBalance) {
 		Id = id;
 		this.username = username;
 		this.email = email;
@@ -70,12 +70,12 @@ public class UserTable {
 	}
 
 
-	public Long getMobile() {
+	public String getMobile() {
 		return mobile;
 	}
 
 
-	public void setMobile(Long mobile) {
+	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
 

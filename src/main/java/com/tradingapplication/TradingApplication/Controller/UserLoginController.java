@@ -44,7 +44,7 @@ public class UserLoginController {
 		UserTable user = new UserTable();
 		String username=user.getUsername();
 		String email = user.getEmail();
-		long mobile = user.getMobile();
+		String mobile = user.getMobile();
 		int userid = user.getId();
 		Date dob = user.getDateOfBirth();
 		String pan = user.getPan();

@@ -10,7 +10,7 @@ public class UserRequestDTO {
 	private String password;
 	private String cpass;
 	private String email;
-	private long mobile;
+	private String mobile;
 	private String pan;
 	
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -21,7 +21,7 @@ public class UserRequestDTO {
 		
 	}
 	
-	public UserRequestDTO(String username, String password, String cpass, String email, int mobile, String pan,
+	public UserRequestDTO(String username, String password, String cpass, String email, String mobile, String pan,
 			Date dateOfBirth) {
 		
 		this.username = username;
@@ -51,10 +51,10 @@ public class UserRequestDTO {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public long getMobile() {
+	public String getMobile() {
 		return mobile;
 	}
-	public void setMobile(int mobile) {
+	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
 	public String getPan() {
