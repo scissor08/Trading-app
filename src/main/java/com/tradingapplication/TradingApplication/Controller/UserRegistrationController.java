@@ -1,31 +1,36 @@
 package com.tradingapplication.TradingApplication.Controller;
 
-
-import com.tradingapplication.TradingApplication.Service.UserRegistrationService;
-import com.tradingapplication.TradingApplication.dto.RegistrationRequestUserDTO;
-import com.tradingapplication.TradingApplication.dto.RegistrationResponseUserDTO;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.tradingapplication.TradingApplication.Service.UserService;
+import com.tradingapplication.TradingApplication.dto.UserRequestDTO;
+
+
 
 @Controller
+@RequestMapping("/user")
 public class UserRegistrationController {
 
-    @Autowired
-    UserRegistrationService registrationService;
+	@Autowired
+	UserService userService;
+	
+	@GetMapping("/registrationpage")
+	public String getRegistrationPage() {
+	    return "RegistrationPage";
+	}
 
-    @GetMapping("/user")
-    public String getRegistrationPage(){
-        return "Registration";
-    }
-
-    @PostMapping("/Registration")
-    @ResponseBody
-    public ResponseEntity<?> addUser(RegistrationRequestUserDTO user){
-        return registrationService.addUser(user);
-    }
+	
+	@PostMapping("/register")
+	public String addUsers(@ModelAttribute UserRequestDTO requestDto,Model model){
+		String message = userService.addNewUser(requestDto);
+		model.addAttribute("message",message);
+		return "Success";		
+	}
+	
 }

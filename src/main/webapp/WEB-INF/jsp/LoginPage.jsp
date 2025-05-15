@@ -1,7 +1,10 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>User Registration</title>
+<meta charset="UTF-8">
+<title>Insert title here</title>
  <style>
         :root {
   --back: #ccccff;
@@ -22,7 +25,7 @@ header{
 }
 form{
     border: 1px solid;
-
+   
     margin:100px 35% 0px 35%;
     padding: 50px;
     background-color: var(--light);
@@ -55,29 +58,25 @@ button:hover{
     </style>
 </head>
 <body>
-    <header>
+    <header> 
         <nav> </nav>
     </header>
     <main>
         <section>
-            <form action="/registration" method="post">
+            <form action="/user/login" method="Post">
                 <label for="username">User name</label>
                 <input type="text" name="username" required>
-                <label for="email">E-mail</label>
-                <input type="email" name="email" required>
-                <label for="mobile">Mobile No</label>
-                <input type="number" name="mobile">
-                <label for="password">Create Password</label>
+               
+                <label for="password">Password</label>
                 <input type="password" name="password">
-                <label for="cpass">Confirm Password</label>
-                <input type="password" name="cpass">
+                
                 <button>Register</button>
             </form>
         </section>
     </main>
 
     <script>
-
+        
     </script>
 
 </body>
