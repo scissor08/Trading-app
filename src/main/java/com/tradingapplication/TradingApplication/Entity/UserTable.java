@@ -33,12 +33,12 @@ public class UserTable {
 	private Date dateOfBirth;
 //	private double walletBalance;
 
-//    @OneToOne(mappedBy = "UserTable", cascade = CascadeType.ALL)
-//    private Account account;
-//
-//
-//    @OneToMany(mappedBy = "UserTable", cascade = CascadeType.ALL)
-//    private List<StockEntity> stockEntity;
+    @OneToOne(mappedBy = "UserTable", cascade = CascadeType.ALL)
+    private Account account;
+
+
+    @OneToMany(mappedBy = "UserTable", cascade = CascadeType.ALL)
+    private List<StockEntity> stockEntity;
 }
 
 

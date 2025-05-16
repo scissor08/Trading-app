@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Entity.UserLogin;
 import com.tradingapplication.TradingApplication.Entity.UserTable;
 import com.tradingapplication.TradingApplication.Service.UserService;
@@ -29,7 +30,7 @@ public class UserLoginController {
 	}
 	
 	@PostMapping("/login")
-	public String getUserDashboard(@ModelAttribute UserLogin userlog,HttpSession session,Model model) {
+	public String getUserDashboard(@ModelAttribute UserLog userlog,HttpSession session,Model model) {
 		session.setAttribute("userlog", userlog);
 		UserTable usertable = new UserTable();
   	double balance=usertable.getAccount().getBalance();
