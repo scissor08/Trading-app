@@ -1,9 +1,8 @@
 package com.tradingapplication.TradingApplication.Service;
 
-import java.util.List;  
+import java.util.List;   
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.tradingapplication.TradingApplication.Entity.UserLogin;
@@ -12,26 +11,33 @@ import com.tradingapplication.TradingApplication.Repository.UserLogRepository;
 import com.tradingapplication.TradingApplication.Repository.UserRepository;
 import com.tradingapplication.TradingApplication.dto.UserRequestDTO;
 import com.tradingapplication.TradingApplication.dto.UserResponseDTO;
+import com.tradingapplication.TradingApplication.globalException.UserAlreadyExist;
+
+import lombok.extern.slf4j.Slf4j;
 
 
 
 @Service
+@Slf4j
 public class UserService implements UserServiceInterface{
 	
 	@Autowired
 	UserRepository userRepository;
 	@Autowired
 	UserLogRepository logRepository;
+	
 	@Override
 	public String addNewUser(UserRequestDTO requestDto) {
 		
-//		if(requestDto.getUsername().isBlank()||requestDto.getPassword().isBlank()||requestDto.getEmail().isBlank()
-//				||requestDto.getMobile()==0) throw new IncorrectDetails("Enter Valid Details . . . ");
 		UserLogin userlog = new UserLogin();
+		if(userlog.getUsername().equalsIgnoreCase(requestDto.getUsername())) {
+			throw new UserAlreadyExist("Try Anyother Username . . .");
+		}
 		userlog.setUsername(requestDto.getUsername());
 		userlog.setPassword(requestDto.getPassword());
 		
 		logRepository.save(userlog);
+		log.info("Data Save Successfully . . . ");
 		
 		UserTable user= new UserTable();
 		user.setUsername(requestDto.getUsername());
@@ -50,10 +56,6 @@ public class UserService implements UserServiceInterface{
 		return response.getUsername();
 	}
 	
-	@Override
-	public ResponseEntity<?> getAllStocks(){
-		return null;
-	}
 
 	@Override
 	public String userLogin(UserLogin userlogin) {

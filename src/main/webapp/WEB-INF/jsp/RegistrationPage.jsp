@@ -85,9 +85,73 @@ button:hover{
     </main>
 
     <script>
-        
-    </script>
+    document.querySelector("form").addEventListener("submit", function (e) {
+        const username = document.querySelector('input[name="username"]').value.trim();
+        const email = document.querySelector('input[name="email"]').value.trim();
+        const mobile = document.querySelector('input[name="mobile"]').value.trim();
+        const password = document.querySelector('input[name="password"]').value;
+        const cpass = document.querySelector('input[name="cpass"]').value;
+        const pan = document.querySelector('input[name="pan"]').value.trim();
+        const dob = document.querySelector('input[name="dateOfBirth"]').value;
 
+       
+        if (username === "") {
+            alert("Username cannot be blank.");
+            e.preventDefault();
+            return;
+        }
+
+        
+        if (!email.endsWith(".com")) {
+            alert("Email must end with .com");
+            e.preventDefault();
+            return;
+        }
+
+        
+        const mobileRegex = /^[6-9]\d{9}$/;
+        if (!mobileRegex.test(mobile)) {
+            alert("Mobile number must be 10 digits, start with 6-9 and contain only numbers.");
+            e.preventDefault();
+            return;
+        }
+
+        
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.,*&$/])[A-Za-z\d@.,*&$/]{8,}$/;
+        if (!passwordRegex.test(password)) {
+            alert("Password must be at least 8 characters long and include uppercase, lowercase, number, and symbol.");
+            e.preventDefault();
+            return;
+        }
+
+       
+        if (password !== cpass) {
+            alert("Confirm password must match the password.");
+            e.preventDefault();
+            return;
+        }
+
+       
+        const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+        if (!panRegex.test(pan)) {
+            alert("PAN must be 10 characters: first 5 letters, next 4 digits, and last letter in uppercase.");
+            e.preventDefault();
+            return;
+        }
+
+      
+        const dobDate = new Date(dob);
+        const today = new Date();
+        const minDate = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+
+        if (dobDate > minDate) {
+            alert("You must be at least 18 years old.");
+            e.preventDefault();
+            return;
+        }
+    });
+    
+   </script>
 
 </body>
 </html>
