@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tradingapplication.TradingApplication.Entity.Account;
 import com.tradingapplication.TradingApplication.Entity.UserLogin;
 import com.tradingapplication.TradingApplication.Entity.UserTable;
 import com.tradingapplication.TradingApplication.Repository.UserLogRepository;
@@ -45,8 +46,11 @@ public class UserService implements UserServiceInterface{
 		user.setMobile(requestDto.getMobile());
 		user.setDateOfBirth(requestDto.getDateOfBirth());
 		user.setPan(requestDto.getPan());
-		user.setWalletBalance(0);
+		Account account = new Account();
+		account.setBalance(0);
+		user.getAccount().setBalance(0); //it is Safe to use Because we using BiDirectional relationship
 		
+	
 		userRepository.save(user);
 		
 		UserResponseDTO response = new UserResponseDTO();

@@ -20,9 +20,7 @@ public class StockEntity {
     private String symbol;
     private String name;
     private double price;
-    private Integer quantity;
-    @ManyToOne
-    @JoinColumn(name = "UserTable")
-    private UserTable userTable;
 
+    private Integer quantity;
+   
 }

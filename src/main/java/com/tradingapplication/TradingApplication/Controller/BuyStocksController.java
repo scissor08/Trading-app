@@ -16,7 +16,7 @@ public class BuyStocksController {
 	private BuyStocksInterface buyStocksInterface;
 	@PostMapping("/{id}/buy")
 	public ResponseEntity<?> buyStock(@PathVariable Long id, @RequestBody BuyStockRequestDTO value) {
-	    return buyStocksInterface.buyStocks(id, value.getQuantity());
+	    return buyStocksInterface.buyStocks(id, value);
 	}
 
 

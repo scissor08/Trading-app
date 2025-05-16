@@ -32,7 +32,7 @@ public class UserLoginController {
 	public String getUserDashboard(@ModelAttribute UserLogin userlog,HttpSession session,Model model) {
 		session.setAttribute("userlog", userlog);
 		UserTable usertable = new UserTable();
-		double balance=usertable.getWalletBalance();
+  	double balance=usertable.getAccount().getBalance();
 		String username=usertable.getUsername();
 		model.addAttribute("balance", balance);
 		model.addAttribute("Username", username);
@@ -48,7 +48,7 @@ public class UserLoginController {
 		int userid = user.getId();
 		Date dob = user.getDateOfBirth();
 		String pan = user.getPan();
-		double balance = user.getWalletBalance();
+		double balance = user.getAccount().getBalance();
 		model.addAttribute("username", username);
 		model.addAttribute("email", email);
 		model.addAttribute("mobile", mobile);
