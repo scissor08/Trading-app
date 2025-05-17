@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tradingapplication.TradingApplication.Entity.Portfolio;
-import com.tradingapplication.TradingApplication.Entity.StockDetails;
+import com.tradingapplication.TradingApplication.Entity.Stock;
+
 import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
 import com.tradingapplication.TradingApplication.Entity.UserDetails;
 import com.tradingapplication.TradingApplication.Entity.UserLog;
@@ -64,7 +65,7 @@ public class UserDashboardController {
 	}
 	
 	@GetMapping("/stocks")
-	public StockDetails getAllStocks(HttpSession session,Model model) {
+	public Stock getAllStocks(HttpSession session,Model model) {
 		UserLog user = (UserLog) session.getAttribute("userlog");
 		if(user!=null) {
 			return dashboardService.getStockDetails(user);

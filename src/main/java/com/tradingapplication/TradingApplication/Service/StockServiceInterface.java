@@ -2,12 +2,13 @@ package com.tradingapplication.TradingApplication.Service;
 
 
 
-import com.tradingapplication.TradingApplication.dto.StockRequestDTO;
-import com.tradingapplication.TradingApplication.dto.StockResponseDTO;
+
 
 import java.util.List;
 
+import com.tradingapplication.TradingApplication.dto.StockRequestDTO;
+
 public interface StockServiceInterface {
-    StockResponseDTO saveStock(StockRequestDTO requestDTO);
-    List<StockResponseDTO> getAllStocks();
+    StockRequestDTO fetchStock(String symbol) throws Exception;
+    List<StockRequestDTO> fetchMultipleStocks(List<String> symbols);
 }

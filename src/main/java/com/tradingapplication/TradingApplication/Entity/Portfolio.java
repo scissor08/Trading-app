@@ -32,7 +32,7 @@ public class Portfolio {
 	User user;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	StockDetails stocks;
+	Stock stocks;
 	
 	private String transactionType;
 	

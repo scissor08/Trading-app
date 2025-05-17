@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tradingapplication.TradingApplication.Entity.Portfolio;
-import com.tradingapplication.TradingApplication.Entity.StockDetails;
+import com.tradingapplication.TradingApplication.Entity.Stock;
+
 import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
 import com.tradingapplication.TradingApplication.Entity.UserDetails;
 import com.tradingapplication.TradingApplication.Entity.UserLog;
@@ -29,7 +30,7 @@ public class UserDashboardService implements UserDashboardServiceInterface {
 	}
 
 	@Override
-	public StockDetails getStockDetails(UserLog user) {
+	public Stock getStockDetails(UserLog user) {
 
 		return null;
 	}

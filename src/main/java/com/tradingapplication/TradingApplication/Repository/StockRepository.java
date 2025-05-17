@@ -6,11 +6,11 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface StockRepository extends JpaRepository<StockDetails, Long> {
+public interface StockRepository extends JpaRepository<Stock, Long> {
 	
-	Optional<StockDetails> findBySymbol(String symbol);
+	Optional<Stock> findBySymbol(String symbol);
 
-	Optional<StockDetails> findById(Long id);
-	Optional<StockDetails> findByQuantity (Long id);
+//	Optional<Stock> findById(Long id);
+//	Optional<Stock> findByQuantity (Long id);
 }
 
