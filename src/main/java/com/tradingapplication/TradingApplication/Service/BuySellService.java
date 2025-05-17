@@ -40,15 +40,14 @@ public class BuySellService {
 
 		portfolio.setTransactionTime(buySellStockRequestDTO.getTransactionTime());
 		portfolio.setTransactionType(TsType);
-		
 		Stock stock = new Stock();
-		
-		
-	     String updateQuantity =String.valueOf(Long.parseLong(stock.getVolume()) - buySellStockRequestDTO.getQuantity()) ;
-	     
-	     stock.setVolume(updateQuantity);
-	    
+
+		String updateQuantity = String.valueOf(Long.parseLong(stock.getVolume()) - buySellStockRequestDTO.getQuantity());
+
+		stock.setVolume(updateQuantity);
+
 		double transactionAmount = Double.parseDouble(stock.getPrice()) * buySellStockRequestDTO.getQuantity();
+
 
 		double walletbalance = userAccountDetails.getBalance();
 
