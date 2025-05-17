@@ -127,8 +127,13 @@ a{
            <li><a href="${pageContext.request.contextPath}/user/profile">Profile</a></li>
             <li><a href="${pageContext.request.contextPath}/user/dashBoard">Dashboard</a></li>
             <li><a href="${pageContext.request.contextPath}">Portfolio</a></li>
+<<<<<<< HEAD
+            <li><a href="${pageContext.request.contextPath}/api/stocks/view">Stocks</a></li>
+            <li><a href="${pageContext.request.contextPath}">Trasaction</a></li>
+=======
             <li><a href="${pageContext.request.contextPath}">Stocks</a></li>
             <li><a href="${pageContext.request.contextPath}">Buy/Sell</a></li>
+>>>>>>> 77941427d6614931ce933dbb293f6e249cfb1861
             <li><a href="${pageContext.request.contextPath}">Wallet</a></li>
             <li><a href="${pageContext.request.contextPath}">Log Out</a></li>
             

@@ -31,7 +31,7 @@ public class StockController {
     public String viewStocks(Model model) {
         List<StockResponseDTO> stocks = stockService.getAllStocks();
         model.addAttribute("stocks", stocks);
-        return "stocks"; // maps to /WEB-INF/views/stocks.jsp
+        return "stocks"; 
     }
     
 }
