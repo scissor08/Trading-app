@@ -28,15 +28,7 @@ public class BuySellService {
 		final String TsType = "Buy";
 		User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new RuntimeException("User not found")); // Fetch
 																														// the
-		Portfolio portfolio = new Portfolio(); // user
-<<<<<<< HEAD
-		UserDetails userDetails = user.getUserdetails();
 
-		
-=======
-		
-		UserAccountDetails userAccountDetails = user.getUserAccountDetails();
->>>>>>> 8c7e053acf4a808e72c7cde4d2079dcdf265dd9b
 		if (userAccountDetails == null) {
 			throw new RuntimeException("User account details not found");
 		}
