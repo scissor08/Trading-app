@@ -1,6 +1,6 @@
 package com.tradingapplication.TradingApplication.Controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.tradingapplication.TradingApplication.Entity.Portfolio;
-import com.tradingapplication.TradingApplication.Entity.Stocks;
+import com.tradingapplication.TradingApplication.Entity.StockDetails;
 import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
 import com.tradingapplication.TradingApplication.Entity.UserDetails;
 import com.tradingapplication.TradingApplication.Entity.UserLog;
@@ -64,7 +64,7 @@ public class UserDashboardController {
 	}
 	
 	@GetMapping("/stocks")
-	public Stocks getAllStocks(HttpSession session,Model model) {
+	public StockDetails getAllStocks(HttpSession session,Model model) {
 		UserLog user = (UserLog) session.getAttribute("userlog");
 		if(user!=null) {
 			return dashboardService.getStockDetails(user);

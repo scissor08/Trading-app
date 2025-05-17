@@ -1,6 +1,5 @@
 package com.tradingapplication.TradingApplication.dto;
 
-import com.tradingapplication.TradingApplication.Entity.StockEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

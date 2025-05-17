@@ -1,6 +1,6 @@
 package com.tradingapplication.TradingApplication.Service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.stereotype.Service;
 
 import com.tradingapplication.TradingApplication.Entity.Portfolio;
@@ -8,7 +8,7 @@ import com.tradingapplication.TradingApplication.Entity.User;
 import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
 import com.tradingapplication.TradingApplication.Repository.PortfolioRepository;
 import com.tradingapplication.TradingApplication.Repository.UserAccountDetailsRepository;
-import com.tradingapplication.TradingApplication.Repository.UserRepository;
+import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
 import com.tradingapplication.TradingApplication.dto.BuyResponseDTO;
 import com.tradingapplication.TradingApplication.dto.BuySellStockRequestDTO;
 
@@ -16,7 +16,7 @@ import com.tradingapplication.TradingApplication.dto.BuySellStockRequestDTO;
 public class BuySellService {
 
 	@Autowired
-	private UserRepository userRepository;
+	private UserDetailsRepository userRepository;
 	@Autowired
 	private PortfolioRepository portfolioRepository;
 	@Autowired
@@ -28,7 +28,7 @@ public class BuySellService {
 		User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new RuntimeException("User not found")); // Fetch
 																														// the
 		Portfolio portfolio = new Portfolio(); // user
-
+		
 		UserAccountDetails userAccountDetails = user.getUserAccountDetails();
 		if (userAccountDetails == null) {
 			throw new RuntimeException("User account details not found");
@@ -49,7 +49,6 @@ public class BuySellService {
 		portfolio.setPrice(buySellStockRequestDTO.getPrice());
 		portfolio.setQuantity(buySellStockRequestDTO.getQuantity());
 		portfolio.setTransactionType(TsType);
-		portfolio.setSymbol(buySellStockRequestDTO.getSymbol());
 		portfolio.setUser(user);
 		portfolioRepository.save(portfolio);
 

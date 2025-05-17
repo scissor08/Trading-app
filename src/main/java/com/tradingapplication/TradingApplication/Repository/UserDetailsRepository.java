@@ -17,4 +17,6 @@ public interface UserDetailsRepository extends JpaRepository<UserDetails,String>
 	Optional<User> findByUsernameAndPassword(String username,String password);
 	
 	Optional<UserDetails> findByUserName(String username);
+	
+	Optional<User> findByEmail(String email);
 }
