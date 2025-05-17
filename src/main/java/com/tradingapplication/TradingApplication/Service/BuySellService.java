@@ -26,13 +26,20 @@ public class BuySellService {
 	public BuyResponseDTO buyRequest(String userEmail, BuySellStockRequestDTO buySellStockRequestDTO) {
 
 		final String TsType = "Buy";
-		User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new RuntimeException("User not found")); // Fetch
-																														// the
+		Portfolio portfolio = new Portfolio();
+		//UserAccountDetails userAccountDetails = new UserAccountDetails();
+		
+		User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new RuntimeException("User not found")); // Fetch the use detail
+		 UserAccountDetails userAccountDetails = user.getUserAccountDetails();
+																													
 
 		if (userAccountDetails == null) {
 			throw new RuntimeException("User account details not found");
 		}
 
+	    
+		portfolio.setTransactionType(TsType);
+		
 		double transactionAmount = portfolio.getQuantity() * portfolio.getPrice();
 
 		double walletbalance = userAccountDetails.getBalance();
@@ -43,12 +50,10 @@ public class BuySellService {
 		}
 		userAccountDetails.setBalance(walletbalance - transactionAmount);
 
+		portfolio.setUser(user);
 		userAccountDetailsRepository.save(userAccountDetails);
 
-		portfolio.setPrice(buySellStockRequestDTO.getPrice());
-		portfolio.setQuantity(buySellStockRequestDTO.getQuantity());
-		portfolio.setTransactionType(TsType);
-		portfolio.setUser(user);
+		
 		portfolioRepository.save(portfolio);
 
 		BuyResponseDTO response = new BuyResponseDTO();
