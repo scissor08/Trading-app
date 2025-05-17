@@ -15,4 +15,6 @@ public interface UserDetailsRepository extends JpaRepository<UserDetails,String>
 
 	@Query(value = "Select * from UserDetails where UserLog.username=?1 and UserLog.password=?2", nativeQuery=true)
 	Optional<User> findByUsernameAndPassword(String username,String password);
+	
+	Optional<UserDetails> findByUserName(String username);
 }

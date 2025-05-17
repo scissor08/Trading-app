@@ -1,14 +1,12 @@
 package com.tradingapplication.TradingApplication.Entity;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.Entity; 
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserLog {
@@ -19,5 +17,22 @@ public class UserLog {
 	
 	@OneToOne(mappedBy="userLog")
 	UserDetails userDetails;
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 	
 }

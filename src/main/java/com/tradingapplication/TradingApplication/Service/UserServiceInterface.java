@@ -1,7 +1,6 @@
 package com.tradingapplication.TradingApplication.Service;
 
-import com.tradingapplication.TradingApplication.Entity.UserLog;
-import com.tradingapplication.TradingApplication.Entity.UserLogin;
+import com.tradingapplication.TradingApplication.Entity.UserLog; 
 import com.tradingapplication.TradingApplication.dto.UserRequestDTO; 
 
 

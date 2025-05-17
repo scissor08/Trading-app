@@ -1,6 +1,5 @@
 package com.tradingapplication.TradingApplication.Service;
 
-import java.util.List;    
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +8,6 @@ import com.tradingapplication.TradingApplication.Entity.User;
 import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
 import com.tradingapplication.TradingApplication.Entity.UserDetails;
 import com.tradingapplication.TradingApplication.Entity.UserLog;
-import com.tradingapplication.TradingApplication.Entity.UserLogin;
 import com.tradingapplication.TradingApplication.Exception.DataNotFoundException;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
 import com.tradingapplication.TradingApplication.Repository.UserLogRepository;
@@ -69,8 +67,10 @@ public class UserService implements UserServiceInterface{
 	public String userLogin(UserLog userlogin) {
 		String username = userlogin.getUsername();
 		String password = userlogin.getPassword();
+		
 		userDetailsRepository.findByUsernameAndPassword(username,password)
 				.orElseThrow(()->new DataNotFoundException("LoginPage"));
+		
 		return "UserDashboard";
 	}
 
