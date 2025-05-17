@@ -29,8 +29,6 @@ public class UserDetails {
     
     @OneToOne
     UserLog userLog;
-    
-    @OneToOne
-    UserAccountDetails userAccountDetails;
+   
     
 }

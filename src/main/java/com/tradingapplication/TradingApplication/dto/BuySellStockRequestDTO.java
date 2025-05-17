@@ -7,10 +7,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BuyStockRequestDTO {
+public class BuySellStockRequestDTO {
 	
 	private Long id;
-	
+	 private String symbol;
 	  private Integer Quantity;
+	  private Integer price;
+	  private String transcationType;
+	  
 
 }

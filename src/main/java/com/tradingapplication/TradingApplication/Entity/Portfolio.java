@@ -1,11 +1,14 @@
 package com.tradingapplication.TradingApplication.Entity;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Temporal;
@@ -24,13 +27,18 @@ public class Portfolio {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int orderId;
 	@Temporal(TemporalType.DATE)
-	private Date transactionTime;
+	private LocalDateTime transactionTime;
+	private int quantity;
 	
+	private double price;
+	  private String symbol;
 	
-	@OneToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	User user;
 	
-	@OneToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	Stocks stocks;
+	
+	private String transactionType;
 	
 }
