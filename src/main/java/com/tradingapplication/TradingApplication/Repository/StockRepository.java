@@ -1,16 +1,16 @@
 package com.tradingapplication.TradingApplication.Repository;
 
-import com.tradingapplication.TradingApplication.Entity.*;
+import com.tradingapplication.TradingApplication.Entity.*; 
 
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface StockRepository extends JpaRepository<StockEntity, Long> {
+public interface StockRepository extends JpaRepository<StockDetails, Long> {
 	
-	Optional<StockEntity> findBySymbol(String symbol);
+	Optional<StockDetails> findBySymbol(String symbol);
 
-	Optional<StockEntity> findById(Long id);
-	Optional<StockEntity> findByQuantity (Long id);
+	Optional<StockDetails> findById(Long id);
+	Optional<StockDetails> findByQuantity (Long id);
 }
 

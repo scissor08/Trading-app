@@ -1,6 +1,6 @@
 package com.tradingapplication.TradingApplication.Controller;
 
-import org.springframework.beans.factory.annotation.Autowired; 
+import org.springframework.beans.factory.annotation.Autowired;  
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.tradingapplication.TradingApplication.Service.UserService;
+import com.tradingapplication.TradingApplication.Service.UserServiceInterface;
 import com.tradingapplication.TradingApplication.dto.UserRequestDTO;
 
 
@@ -18,7 +18,7 @@ import com.tradingapplication.TradingApplication.dto.UserRequestDTO;
 public class UserRegistrationController {
 
 	@Autowired
-	UserService userService;
+	UserServiceInterface userService;
 	
 	@GetMapping("/registrationpage")
 	public String getRegistrationPage() {
