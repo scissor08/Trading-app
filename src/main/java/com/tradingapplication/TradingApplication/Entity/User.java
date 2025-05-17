@@ -26,11 +26,11 @@ public class User {
 	@OneToOne(mappedBy="user")
 	UserDetails userdetails;
 	
+	 
+    @OneToOne
+    UserAccountDetails userAccountDetails;
 	
-	@OneToMany
-	List<Stocks> stocks;
-	
-	@OneToOne(mappedBy="user")
-	Portfolio portfolio;
+	@OneToMany(mappedBy = "user")
+    private List<Portfolio> portfolioEntries;
 	
 }
