@@ -1,6 +1,6 @@
 package com.tradingapplication.TradingApplication.Repository;
 
-import java.util.Optional;
+import java.util.Optional; 
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,7 +16,6 @@ public interface UserDetailsRepository extends JpaRepository<UserDetails,String>
 	@Query(value = "Select * from UserDetails where UserLog.username=?1 and UserLog.password=?2", nativeQuery=true)
 	Optional<User> findByUsernameAndPassword(String username,String password);
 	
-	Optional<UserDetails> findByUserName(String username);
 	
 	Optional<User> findByEmail(String email);
 }
