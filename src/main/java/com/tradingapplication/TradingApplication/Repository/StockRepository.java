@@ -5,12 +5,13 @@ import com.tradingapplication.TradingApplication.Entity.*;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-
+import org.springframework.stereotype.Repository;
+@Repository
 public interface StockRepository extends JpaRepository<Stock, Long> {
 	
 	Optional<Stock> findBySymbol(String symbol);
 
-//	Optional<Stock> findById(Long id);
-//	Optional<Stock> findByQuantity (Long id);
+	Optional<Stock> findById(Long id);
+	
 }
 
