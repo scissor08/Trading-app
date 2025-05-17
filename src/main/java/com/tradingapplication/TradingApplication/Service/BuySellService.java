@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import com.tradingapplication.TradingApplication.Entity.Portfolio;
 import com.tradingapplication.TradingApplication.Entity.User;
 import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
+import com.tradingapplication.TradingApplication.Entity.UserDetails;
 import com.tradingapplication.TradingApplication.Repository.PortfolioRepository;
 import com.tradingapplication.TradingApplication.Repository.UserAccountDetailsRepository;
 import com.tradingapplication.TradingApplication.Repository.UserRepository;
@@ -28,8 +29,9 @@ public class BuySellService {
 		User user = userRepository.findByEmail(userEmail).orElseThrow(() -> new RuntimeException("User not found")); // Fetch
 																														// the
 		Portfolio portfolio = new Portfolio(); // user
+		UserDetails userDetails = user.getUserdetails();
 
-		UserAccountDetails userAccountDetails = user.getUserAccountDetails();
+		
 		if (userAccountDetails == null) {
 			throw new RuntimeException("User account details not found");
 		}
