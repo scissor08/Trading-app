@@ -37,7 +37,7 @@
         </c:forEach>
         </tbody>
     </table>
-    <a href="${pageContext.request.contextPath}/" class="link">Back to Search</a>
+    <a href="${pageContext.request.contextPath}/viewstock" class="link">Back to Search</a>
 </div>
 </body>
 </html>

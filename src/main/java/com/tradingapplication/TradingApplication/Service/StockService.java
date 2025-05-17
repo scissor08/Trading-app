@@ -1,9 +1,5 @@
 package com.tradingapplication.TradingApplication.Service;
 
-
-
-
-
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tradingapplication.TradingApplication.Entity.Stock;
@@ -26,7 +22,6 @@ public class StockService implements StockServiceInterface {
     @Value("${alpha.api.key}")
     private String apiKey;
 
-    // Static map to associate stock symbols with company domains (used for logo URLs)
     private static final Map<String, String> domainMap = Map.ofEntries(
             Map.entry("AAPL", "apple.com"),
             Map.entry("GOOGL", "abc.xyz"),
@@ -40,60 +35,69 @@ public class StockService implements StockServiceInterface {
             Map.entry("INTC", "intel.com")
     );
 
-    public StockRequestDTO fetchStock(String symbol) throws Exception {
-        String url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbol + "&apikey=" + apiKey;
-        RestTemplate restTemplate = new RestTemplate();
+    @Override
+    public StockRequestDTO fetchStock(String symbol) {
+        try {
+            Optional<Stock> cached = stockRepository.findBySymbol(symbol);
+            if (cached.isPresent()) {
+                return convertToDTO(cached.get());
+            }
 
-        String json = restTemplate.getForObject(url, String.class);
-        System.out.println("API response for " + symbol + ": " + json);  // 🔍 Log the raw response
+            String url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbol + "&apikey=" + apiKey;
+            RestTemplate restTemplate = new RestTemplate();
+            String json = restTemplate.getForObject(url, String.class);
 
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode root = mapper.readTree(json);
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode root = mapper.readTree(json);
 
-        // 🛑 Rate limit or unexpected error response
-        if (root.has("Note")) {
-            throw new Exception("Alpha Vantage rate limit exceeded or throttled: " + root.get("Note").asText());
+            if (root.has("Note")) {
+                System.err.println("❌ API limit reached. Using cached data for: " + symbol);
+                return cached.map(this::convertToDTO)
+                        .orElseThrow(() -> new RuntimeException("Stock not available in DB: " + symbol));
+            }
+
+            JsonNode quoteNode = root.get("Global Quote");
+            if (quoteNode == null || quoteNode.isEmpty()) {
+                throw new Exception("Invalid Global Quote");
+            }
+
+            StockRequestDTO dto = mapper.treeToValue(quoteNode, StockRequestDTO.class);
+            dto.setDomain(domainMap.getOrDefault(symbol, ""));
+
+            Stock stock = cached.orElse(new Stock());
+            stock.setSymbol(dto.getSymbol());
+            stock.setOpen(dto.getOpen());
+            stock.setHigh(dto.getHigh());
+            stock.setLow(dto.getLow());
+            stock.setPrice(dto.getPrice());
+            stock.setVolume(dto.getVolume());
+            stock.setLatestTradingDay(dto.getLatestTradingDay());
+            stock.setPreviousClose(dto.getPreviousClose());
+            stock.setChange(dto.getChange());
+            stock.setChangePercent(dto.getChangePercent());
+            stock.setDomain(dto.getDomain());
+
+            stockRepository.save(stock);
+            return dto;
+
+        } catch (Exception e) {
+            System.err.println("⚠️ Fetch failed for " + symbol + ": " + e.getMessage());
+            return stockRepository.findBySymbol(symbol)
+                    .map(this::convertToDTO)
+                    .orElseThrow(() -> new RuntimeException("No cached data for symbol: " + symbol));
         }
-
-        JsonNode quoteNode = root.get("Global Quote");
-
-        // 🛑 Empty or malformed response check
-        if (quoteNode == null || quoteNode.isEmpty()) {
-            throw new Exception("Invalid or empty Global Quote from Alpha Vantage for symbol: " + symbol);
-        }
-
-        StockRequestDTO dto = mapper.treeToValue(quoteNode, StockRequestDTO.class);
-        dto.setDomain(domainMap.getOrDefault(symbol, ""));
-
-        // Save to DB (update if exists)
-        Stock stock = stockRepository.findBySymbol(dto.getSymbol()).orElse(new Stock());
-
-        stock.setSymbol(dto.getSymbol());
-        stock.setOpen(dto.getOpen());
-        stock.setHigh(dto.getHigh());
-        stock.setLow(dto.getLow());
-        stock.setPrice(dto.getPrice());
-        stock.setVolume(dto.getVolume());
-        stock.setLatestTradingDay(dto.getLatestTradingDay());
-        stock.setPreviousClose(dto.getPreviousClose());
-        stock.setChange(dto.getChange());
-        stock.setChangePercent(dto.getChangePercent());
-        stock.setDomain(dto.getDomain());
-
-        stockRepository.save(stock);
-
-        return dto;
     }
 
+    @Override
     public List<StockRequestDTO> fetchMultipleStocks(List<String> symbols) {
         List<StockRequestDTO> stockList = new ArrayList<>();
 
         for (String symbol : symbols) {
             try {
-            	StockRequestDTO dto = fetchStock(symbol);
+                StockRequestDTO dto = fetchStock(symbol);
                 stockList.add(dto);
 
-                // 🕒 Respect Alpha Vantage free-tier rate limit: 5 requests/minute
+                // Sleep to avoid hitting free-tier rate limit
                 Thread.sleep(12000);
             } catch (Exception e) {
                 System.err.println("❌ Failed to fetch " + symbol + ": " + e.getMessage());
@@ -101,5 +105,21 @@ public class StockService implements StockServiceInterface {
         }
 
         return stockList;
+    }
+
+    private StockRequestDTO convertToDTO(Stock stock) {
+        StockRequestDTO dto = new StockRequestDTO();
+        dto.setSymbol(stock.getSymbol());
+        dto.setOpen(stock.getOpen());
+        dto.setHigh(stock.getHigh());
+        dto.setLow(stock.getLow());
+        dto.setPrice(stock.getPrice());
+        dto.setVolume(stock.getVolume());
+        dto.setLatestTradingDay(stock.getLatestTradingDay());
+        dto.setPreviousClose(stock.getPreviousClose());
+        dto.setChange(stock.getChange());
+        dto.setChangePercent(stock.getChangePercent());
+        dto.setDomain(stock.getDomain());
+        return dto;
     }
 }

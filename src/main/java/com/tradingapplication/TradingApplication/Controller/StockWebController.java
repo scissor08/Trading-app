@@ -18,9 +18,9 @@ public class StockWebController {
 
     private final StockService stockService;
 
-    @GetMapping("/")
+    @GetMapping("/viewstock")
     public String index() {
-        return "index";
+        return "stock";
     }
 
     @PostMapping("/getStock")
@@ -31,7 +31,7 @@ public class StockWebController {
             return "result";
         } catch (Exception e) {
             model.addAttribute("error", "Error: " + e.getMessage());
-            return "index";
+            return "stock";
         }
     }
 
