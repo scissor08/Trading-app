@@ -19,18 +19,18 @@ public class StockService implements StockServiceInterface {
 
     @Override
     public StockResponseDTO saveStock(StockRequestDTO dto) {
-        StockEntity stock = new StockEntity();
+        StockDetails stock = new StockDetails();
         stock.setSymbol(dto.getSymbol());
-        stock.setName(dto.getName());
+        stock.setStockName(dto.getName());
         stock.setPrice(dto.getPrice());
         stock.setQuantity(dto.getQuantity());
 
-        StockEntity saved = stockRepository.save(stock);
+        StockDetails saved = stockRepository.save(stock);
 
         StockResponseDTO response = new StockResponseDTO();
-        response.setId(saved.getId());
+        response.setId(saved.getStockId());
         response.setSymbol(saved.getSymbol());
-        response.setName(saved.getName());
+        response.setName(saved.getStockName());
         response.setPrice(saved.getPrice());
         response.setQuantity(saved.getQuantity());
 
@@ -39,12 +39,12 @@ public class StockService implements StockServiceInterface {
 
     @Override
     public List<StockResponseDTO> getAllStocks() {
-        List<StockEntity> stocks = stockRepository.findAll();
+        List<StockDetails> stocks = stockRepository.findAll();
         return stocks.stream().map(stock -> {
             StockResponseDTO dto = new StockResponseDTO();
-            dto.setId(stock.getId());
+            dto.setId(stock.getStockId());
             dto.setSymbol(stock.getSymbol());
-            dto.setName(stock.getName());
+            dto.setName(stock.getStockName());
             dto.setPrice(stock.getPrice());
             dto.setQuantity(stock.getQuantity());
 

@@ -1,7 +1,11 @@
 package com.tradingapplication.TradingApplication.Entity;
 
+<<<<<<< HEAD
 
 import java.util.Date;
+=======
+import java.util.Date; 
+>>>>>>> 8c7e053acf4a808e72c7cde4d2079dcdf265dd9b
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -27,12 +31,17 @@ public class Portfolio {
 	@Temporal(TemporalType.DATE)
 	private Date transactionTime;
 	private int quantity;
+<<<<<<< HEAD
 
+=======
+	private double price; 
+	
+>>>>>>> 8c7e053acf4a808e72c7cde4d2079dcdf265dd9b
 	@ManyToOne(fetch = FetchType.LAZY)
 	User user;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	Stocks stocks;
+	StockDetails stocks;
 	
 	private String transactionType;
 	
