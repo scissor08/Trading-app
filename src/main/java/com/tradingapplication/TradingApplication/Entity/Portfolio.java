@@ -29,7 +29,7 @@ public class Portfolio {
 	private Date transactionTime;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	User user;
+	UserDetails user;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	Stock stocks;

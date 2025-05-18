@@ -1,6 +1,8 @@
 package com.tradingapplication.TradingApplication.Entity;
 
-import jakarta.persistence.Entity; 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
@@ -16,7 +18,11 @@ public class UserLog {
 	private String password;
 	
 	@OneToOne(mappedBy="userLog")
+	@JsonIgnore
 	UserDetails userDetails;
+	
+	@OneToOne
+	UserAccountDetails userAccountDetails;
 
 	public String getUsername() {
 		return username;

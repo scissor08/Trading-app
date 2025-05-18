@@ -135,14 +135,14 @@ strong{
     <h2>WELCOME Siva</h2>
     <div>
         <h3>Wallet Balance</h3>
-        <p>20000</p>
+        <p>${userAccount.balance}</p>
         <a href="">Add Balance</a>
     </div>    
    </header>
    <aside>
         <ul>
             <li><a href="${pageContext.request.contextPath}/user/profile">Profile</a></li>
-            <li><a href="${pageContext.request.contextPath}/user/login">Dashboard</a></li>
+            <li><a href="${pageContext.request.contextPath}/user/dashBoard">Dashboard</a></li>
             <li><a href="${pageContext.request.contextPath}">Portfolio</a></li>
             <li><a href="${pageContext.request.contextPath}">Stocks</a></li>
             <li><a href="${pageContext.request.contextPath}">Trasaction</a></li>
@@ -150,13 +150,13 @@ strong{
         </ul>
    </aside>
    <main>
-        <p><strong>UserId<strong>1</p>
-        <p><Strong>Name</Strong> sivaraman</p>
-        <p><Strong>Email</Strong></h3>sivaram@gnaik</p>
-        <p><Strong>Mobile</Strong>737498429</p>
-        <p><strong>PAN NO</strong>BITPL2334F</p>
-        <p><strong>DOB</strong>12-9-1997</p>
-        <p><strong>Wallet Balance</strong> 0.0</p>
+        <p><strong>UserId<strong>${userDetails.userId}</p>
+        <p><Strong>Name</Strong>${userDetails.username}</p>
+        <p><Strong>Email</Strong></h3>${userDetails.email}</p>
+        <p><Strong>Mobile</Strong>${userDetails.mobile}</p>
+        <p><strong>PAN NO</strong>${userDetails.pan}</p>
+        <p><strong>DOB</strong>${userDetails.dateOfBirth}</p>
+        <p><strong>Wallet Balance</strong>${userAccount.balance}</p>
         <button><a href="">Add Balance</a></button>
    </main>
    <footer>
