@@ -1,6 +1,6 @@
 package com.tradingapplication.TradingApplication.dto;
 
-import java.util.Date;
+import java.util.Date; 
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
