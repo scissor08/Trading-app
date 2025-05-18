@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.tradingapplication.TradingApplication.Entity.Portfolio;
-import com.tradingapplication.TradingApplication.Entity.Stock;
-
 import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
 import com.tradingapplication.TradingApplication.Entity.UserDetails;
 import com.tradingapplication.TradingApplication.Entity.UserLog;
@@ -25,29 +22,25 @@ public class UserDashboardController {
 	UserDashboardServiceInterface dashboardService;
 	
 	@GetMapping("/profile")
-	public UserDetails getUserDetails(HttpSession session,Model model) {
+	public String getUserDetails(HttpSession session,Model model) {
+		
 		UserLog user = (UserLog) session.getAttribute("userlog");
 		if(user!=null) {
-			UserDetails userdetails = dashboardService.getUserDetail(user);
-			model.addAttribute("username", userdetails.getUser().getUsername());
-			model.addAttribute("email", userdetails.getEmail());
-			model.addAttribute("mobile", userdetails.getMobile());
-			model.addAttribute("dob", userdetails.getDateOfBirth());
-			model.addAttribute("pan", userdetails.getPan());
-			model.addAttribute("balance", userdetails.getUserAccountDetails().getBalance());
-			return dashboardService.getUserDetail(user);
+			return dashboardService.getUserDetail(user, model);
 		}
-		return dashboardService.getUserDetail(user);
+		return "LoginPage";
 	}
 	
 	@GetMapping("/dashBoard")
 	public String userDashboard(HttpSession session,Model model) {
 		
+		
 		UserLog user =(UserLog) session.getAttribute("userlog");
-		UserDetails userdetails = new UserDetails();
+		
+		UserDetails userdetails=dashboardService.getDashboard(user, model);
 		
 		if(user!=null) {
-			model.addAttribute("username", user.getUsername());
+			model.addAttribute("username", userdetails.getUsername());
 			model.addAttribute("balance", userdetails.getUserAccountDetails().getBalance());
 			return "UserDashboard";
 		}
@@ -56,21 +49,21 @@ public class UserDashboardController {
 	}
 	
 	@GetMapping("/portfolio")
-	public Portfolio getUserPortfolio(HttpSession session,Model model) {
+	public String getUserPortfolio(HttpSession session,Model model) {
 		UserLog user = (UserLog) session.getAttribute("userlog");
 		if(user!=null) {
-			return dashboardService.getPortfoliodetails(user);
+			dashboardService.getPortfoliodetails(user);
 		}
-		return dashboardService.getPortfoliodetails(user);
+		return "LoginPage";
 	}
 	
 	@GetMapping("/stocks")
-	public Stock getAllStocks(HttpSession session,Model model) {
+	public String getAllStocks(HttpSession session,Model model) {
 		UserLog user = (UserLog) session.getAttribute("userlog");
 		if(user!=null) {
-			return dashboardService.getStockDetails(user);
+			dashboardService.getStockDetails(user);
 		}
-		return dashboardService.getStockDetails(user);
+		return "LoginPage";
 	}
 	
 	@GetMapping("/purchase")
@@ -98,5 +91,10 @@ public class UserDashboardController {
 			return dashboardService.addAccountBalance(user,cash);
 		}
 		return dashboardService.addAccountBalance(user,cash);
+	}
+	
+	@GetMapping("/logout")
+	public String getLogot() {
+		return "LoginPage";
 	}
 }

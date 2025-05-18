@@ -1,11 +1,12 @@
 package com.tradingapplication.TradingApplication.dto;
 
-import java.util.Date;
+import java.util.Date; 
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class UserRequestDTO {
 
+	
 	private String username;
 	private String password;
 	private String cpass;

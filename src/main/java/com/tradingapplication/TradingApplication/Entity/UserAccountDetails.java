@@ -20,10 +20,13 @@ public class UserAccountDetails {
 	private int walletId;
 	private double balance;
 	
-	@OneToOne
-	User user;
+//	@OneToOne
+//	User user;
 	
 	@OneToOne(mappedBy="userAccountDetails")
 	UserDetails userdetails;
+	
+	@OneToOne(mappedBy="userAccountDetails")
+	UserLog userLog;
 	
 }

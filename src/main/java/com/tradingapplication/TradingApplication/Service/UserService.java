@@ -1,10 +1,10 @@
 package com.tradingapplication.TradingApplication.Service;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
-import com.tradingapplication.TradingApplication.Entity.User;
 import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
 import com.tradingapplication.TradingApplication.Entity.UserDetails;
 import com.tradingapplication.TradingApplication.Entity.UserLog;
@@ -26,16 +26,14 @@ public class UserService implements UserServiceInterface{
 	@Autowired
 	UserDetailsRepository userDetailsRepository;
 	@Autowired
-	UserLogRepository logRepository;
+	UserLogRepository userLogRepository;
 	
 	@Override
 	public String addNewUser(UserRequestDTO requestDto) {
 		
-		User user= new User();
-		user.setUsername(requestDto.getUsername());
 		
 		UserLog userlog = new UserLog();
-		if(userlog.getUsername().equalsIgnoreCase(requestDto.getUsername())) {
+		if(requestDto.getUsername().equalsIgnoreCase(userlog.getUsername())) {
 			throw new UserAlreadyExist("Try Anyother Username . . .");
 		}
 		userlog.setUsername(requestDto.getUsername());
@@ -46,11 +44,11 @@ public class UserService implements UserServiceInterface{
 		
 		
 		UserDetails userDetails = new UserDetails();
+		userDetails.setUsername(requestDto.getUsername());
 		userDetails.setEmail(requestDto.getEmail());
 		userDetails.setMobile(requestDto.getMobile());
 		userDetails.setDateOfBirth(requestDto.getDateOfBirth());
 		userDetails.setPan(requestDto.getPan());
-		userDetails.setUser(user);
 		userDetails.setUserAccountDetails(accountDetails);
 		userDetails.setUserLog(userlog);
 		
@@ -64,18 +62,19 @@ public class UserService implements UserServiceInterface{
 	
 
 	@Override
-	public String userLogin(UserLog userlogin) {
-		String username = userlogin.getUsername();
-		String password = userlogin.getPassword();
+	public String userLogin(UserLog userlog,Model model) {
+		String username = userlog.getUsername();
+		String password = userlog.getPassword();
 		
-		userDetailsRepository.findByUsernameAndPassword(username,password)
-				.orElseThrow(()->new DataNotFoundException("LoginPage"));
+		UserDetails existingUsers=userDetailsRepository.findByUsername(username).orElseThrow(()->new DataNotFoundException("LoginPage"));
 		
-		return "UserDashboard";
+		UserLog exist=existingUsers.getUserLog();
+		
+		if(username.equals(exist.getUsername()) && password.equals(exist.getPassword()))
+						
+			model.addAttribute("balance",existingUsers.getUserAccountDetails().getBalance());
+			model.addAttribute("username", existingUsers.getUsername());
+			return "UserDashboard";
 	}
 
-
-
-	
-	
 }

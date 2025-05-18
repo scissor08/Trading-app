@@ -28,14 +28,12 @@ public class UserLoginController {
 	
 	@PostMapping("/login")
 	public String getUserDashboard(@ModelAttribute UserLog userlog,HttpSession session,Model model) {
-		
-		UserLog user = userlog;
-		String username=user.getUsername();
 		 
-		session.setAttribute("userlog", user);
+		session.setAttribute("userlog", userlog);
 		
-		model.addAttribute("Username", username);
-		return service.userLogin(userlog);
+		model.addAttribute("Username", userlog.getUsername());
+
+		return service.userLogin(userlog, model);
 	}
 	
 	
