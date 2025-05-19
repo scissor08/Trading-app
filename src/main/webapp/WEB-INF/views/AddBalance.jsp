@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>UserProfile</title>
+<title>AddBalancePage</title>
 
 <!-- FontAwesome CDN for icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -131,36 +131,50 @@
         color: #ffd700;
     }
 
- /* MAIN CONTENT */
-  main {
-    grid-area: main;
-    padding: 2rem 3rem;
-    background-color: var(--color-white);
-    overflow-y: auto;
-  }
-  main p {
-    font-size: 1.15rem;
-    margin-bottom: 1.2rem;
-  }
-  main p strong {
-    display: inline-block;
-    width: 140px;
-    color: var(--color-primary);
-  }
-  main button {
-    background-color: #007bff;
-    border: none;
-    padding: 12px 28px;
-    border-radius: 25px;
-    font-size: 1rem;
-    color: var(--color-text-light);
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  main button a {
-    color: inherit;
-    text-decoration: none;
-  }
+    main {
+        margin-left: 220px;
+        padding: 2rem;
+    }
+
+    .balance-form-container {
+        background-color: white;
+        border-radius: 10px;
+        padding: 2rem;
+        max-width: 500px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        margin: 2rem auto;
+        text-align: center;
+    }
+
+    .balance-form-container h3 {
+        margin-bottom: 1.5rem;
+        color: #0e1c36;
+    }
+
+    .balance-form-container input[type="number"] {
+        padding: 0.6rem;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        width: 100%;
+        max-width: 300px;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+    }
+
+    .balance-form-container button {
+        padding: 0.6rem 1.2rem;
+        background-color: #007bff;
+        border: none;
+        border-radius: 6px;
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .balance-form-container button:hover {
+        background-color: #0056b3;
+    }
 
     footer {
         clear: both;
@@ -184,13 +198,13 @@
        </div>
 
        <div class="header-center">
-           <h2>WELCOME ${userDetails.username}</h2>
+           <h2>WELCOME ${username}</h2>
        </div>
 
        <div class="header-right">
            <div class="wallet-info">
                <h3>Wallet Balance</h3>
-               <p>${userAccount.balance}</p>
+               <p>${balance}</p>
                <a href="/user/addbalance">Add Balance</a>
            </div>
            <a href="${pageContext.request.contextPath}/user/profile" class="icon-btn" title="Profile">
@@ -216,14 +230,15 @@
    </aside>
 
    <main>
-      <p><strong>UserId:</strong> ${userDetails.userId}</p>
-      <p><strong>Name:</strong> ${userDetails.username}</p>
-      <p><strong>Email:</strong> ${userDetails.email}</p>
-      <p><strong>Mobile:</strong> ${userDetails.mobile}</p>
-      <p><strong>PAN NO:</strong> ${userDetails.pan}</p>
-      <p><strong>DOB:</strong> ${userDetails.dateOfBirth}</p>
-      <p><strong>Wallet Balance:</strong> ${userAccount.balance}</p>
-      <button><a href="${pageContext.request.contextPath}/user/addbalance">Add Balance</a></button>   </main>
+       <div class="balance-form-container">
+           <h3>Enter Amount to Add</h3>
+           <form action="${pageContext.request.contextPath}/user/add" method="post">
+               <input type="number" name="cash" placeholder="Enter amount" required />
+               <br>
+               <button type="submit">Add Cash</button>
+           </form>
+       </div>
+   </main>
 
    <footer>
        &copy; 2025 Trading App | All rights reserved

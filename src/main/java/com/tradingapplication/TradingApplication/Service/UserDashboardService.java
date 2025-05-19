@@ -41,22 +41,29 @@ public class UserDashboardService implements UserDashboardServiceInterface {
 	}
 
 	@Override
-	public UserAccountDetails addAccountBalance(UserLog user, double cash) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getAccountBalance(UserLog user, Model model) {
+		UserDetails userDetails=userDetailsRepository.findByUsername(user.getUsername()).orElseThrow(()->new DataNotFoundException("LoginPage"));
+		model.addAttribute("balance", userDetails.getUserAccountDetails().getBalance());
+		model.addAttribute("username", userDetails.getUsername());
+		return "WalletPage";
 	}
 
 	@Override
 	public UserDetails getDashboard(UserLog user,Model model) {
-
 		UserDetails userDetails = userDetailsRepository.findByUsername(user.getUsername()).orElseThrow(()->new DataNotFoundException("LoginPage"));
-	
 		return userDetails;
-		
-		
-	
-	
-	
+	}
+
+	@Override
+	public String addAccountBalance(UserLog user, Model model, double cash) {
+		UserDetails userdetails = userDetailsRepository.findByUsername(user.getUsername()).orElseThrow(()->new DataNotFoundException("LoginPage"));
+		double oldbal = userdetails.getUserAccountDetails().getBalance();
+		double newBal=oldbal+cash;
+		userdetails.getUserAccountDetails().setBalance(newBal);
+		userDetailsRepository.save(userdetails);
+		model.addAttribute("balance",newBal);
+		model.addAttribute("username", userdetails.getUsername());
+		return "WalletPage";
 	}
 
 

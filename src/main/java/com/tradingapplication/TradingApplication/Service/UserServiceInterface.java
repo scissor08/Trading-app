@@ -9,5 +9,5 @@ import com.tradingapplication.TradingApplication.dto.UserRequestDTO;
 public interface UserServiceInterface {
 
 	public String addNewUser(UserRequestDTO requestDto);
-	String userLogin(UserLog userlogin, Model model);
+	String userLogin(UserLog userlog, Model model);
 }

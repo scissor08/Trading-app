@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
 import com.tradingapplication.TradingApplication.Entity.UserDetails;
@@ -57,14 +58,16 @@ public class UserDashboardController {
 		return "LoginPage";
 	}
 	
+	
 	@GetMapping("/stocks")
 	public String getAllStocks(HttpSession session,Model model) {
 		UserLog user = (UserLog) session.getAttribute("userlog");
 		if(user!=null) {
-			dashboardService.getStockDetails(user);
+			return "allStocks";
 		}
 		return "LoginPage";
 	}
+	
 	
 	@GetMapping("/purchase")
 	public String getPurchasePage(HttpSession session,Model model) {
@@ -75,22 +78,35 @@ public class UserDashboardController {
 		return "LoginPage";
 	}
 	
+	
 	@GetMapping("/wallet")
-	public String getAddBalancePage(HttpSession session,Model model) {
+	public String getBalance(HttpSession session,Model model) {
 		UserLog user = (UserLog) session.getAttribute("userlog");
 		if(user!=null) {
-			return "";
+			return dashboardService.getAccountBalance(user,model);
 		}
-		return "LoginPage";
+		return dashboardService.getAccountBalance(user,model);
 	}
 	
-	@PostMapping("/wallet")
-	public UserAccountDetails addBalance(double cash,HttpSession session,Model model) {
+	
+	@GetMapping("/addbalance")
+	public String addBalancePage(HttpSession session) {
+	UserLog user = (UserLog) session.getAttribute("userlog");
+	if(user!=null) {
+		return "AddBalance";
+	}
+	return "LoginPage";
+	}
+	
+	@PostMapping("/add")
+	public String addBalance(HttpSession session,Model model,@RequestParam Double cash) {
 		UserLog user = (UserLog) session.getAttribute("userlog");
 		if(user!=null) {
-			return dashboardService.addAccountBalance(user,cash);
+			double cashh = cash;
+			return dashboardService.addAccountBalance(user,model,cashh);
 		}
-		return dashboardService.addAccountBalance(user,cash);
+		
+		return null;
 	}
 	
 	@GetMapping("/logout")

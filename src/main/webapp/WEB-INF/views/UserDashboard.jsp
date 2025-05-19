@@ -4,140 +4,197 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-<style>
-        :root {
-  --back: #ccccff;
-  --light: #a3a3cc;
-  --before-click: #5c5c99;
-  --onclick: #292966;
-}
-*{
-    margin: 0%;
-    padding: 0%;
-    box-sizing: border-box;
-}
- div{
-        display: grid;
-        grid-template-columns: 1fr 4fr;
-        grid-template-rows: 1fr 4fr 1fr;
-        grid-template-areas: 
-        "header header"
-        "aside main"
-        "footer footer"; 
-       }
-       
-header{
-    height: 200px;
-    grid-area: header;
-    background-color: var(--onclick);
-    width: 100%;
-    color: var(--back);
-}
-header input{
-    width: 200px;
-    position: absolute;
-    margin-left: 50%;
-    transform: translateX(-50%);
-    padding: 5px;
-    border-radius: 5px;
-}
-header h2{
-    width: 200px;
-    font-size: 24px;
-    margin-top: 80px;
-    margin-left: 50%;
-    transform: translateX(-50%);
-    display:inline-block;
-}
-header div{
-    border: 1px solid black;
-    padding: 40px;
-    width: 250px;
-    height: 150px;
-    display:inline-block;
-    position: absolute;
-  margin-top: 40px;
-  margin-left: 100px;
-}
-header div h3{
-    margin-bottom: 20px;
-    text-align: center;
-}
-header div p{
-    text-align: center;
-    margin-bottom: 10px;
-}
-header div a{
-    text-align: center;
-    color: var(--back);
-    margin-left: 25%;
-    text-decoration: none;
-    border: 1px solid black;
-    padding: 2px;
-}
-aside{
-    grid-area: aside;
-    background-color: var(--light);
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-main{
-   grid-area: main;
-    width: 100%;
-    padding: 100px;
-    background-color: var(--back);
-}
-footer{
-    grid-area: footer;
-    background-color: var(--onclick);
-}
-li{
-  padding: 20px;
-  font-size: 20px;
-  text-align: center;
-  box-shadow: 1px 1px ;
-}
-li:hover{
-    background-color: var(--before-click);
-}
-a{
-    padding: 20px 100px;
-    text-decoration: none;
-    text-transform:capitalize;
-}
+<title>Dashboard</title>
 
+<!-- FontAwesome CDN for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f7f9;
+    }
+
+    header {
+        background-color: #0e1c36;
+        color: white;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .header-left input[type="text"] {
+        padding: 0.5rem;
+        border-radius: 6px;
+        border: none;
+        outline: none;
+        min-width: 200px;
+    }
+
+    .header-left button {
+        padding: 0.5rem 1rem;
+        background-color: #007bff;
+        border: none;
+        border-radius: 6px;
+        color: white;
+        cursor: pointer;
+    }
+
+    h2 {
+        margin: 0;
+        font-size: 1.4rem;
+    }
+
+    .header-center {
+        text-align: center;
+    }
+
+    .header-right {
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+    }
+
+    .wallet-info {
+        background-color: #fff;
+        color: #0e1c36;
+        padding: 0.8rem 1.2rem;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .wallet-info h3 {
+        margin: 0;
+        font-size: 1.1rem;
+    }
+
+    .wallet-info p {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        font-weight: bold;
+    }
+
+    .wallet-info a {
+        text-decoration: none;
+        color: #007bff;
+        font-weight: bold;
+    }
+
+    .icon-btn {
+        color: white;
+        font-size: 1.5rem;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+    .icon-btn:hover {
+        color: #ffc107;
+    }
+
+    aside {
+        background-color: #1e2d50;
+        color: white;
+        width: 200px;
+        min-height: 100vh;
+        float: left;
+        padding: 2rem 1rem;
+    }
+
+    aside ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    aside ul li {
+        margin-bottom: 1.5rem;
+    }
+
+    aside ul li a {
+        text-decoration: none;
+        color: white;
+        font-weight: 500;
+        transition: color 0.3s;
+    }
+
+    aside ul li a:hover {
+        color: #ffd700;
+    }
+
+    main {
+        margin-left: 220px;
+        padding: 2rem;
+    }
+
+    footer {
+        clear: both;
+        padding: 1rem;
+        text-align: center;
+        background-color: #0e1c36;
+        color: white;
+        margin-top: 2rem;
+    }
 </style>
+
 </head>
 <body>
-    <div>
+<div>
    <header>
-    <input type="text" placeholder="search"> 
-    <h2>WELCOME ${username}</h2>
-    <div>
-        <h3>Wallet Balance</h3>
-        <p>${balance}</p>
-        <a href="">Add Balance</a>
-        
-    </div>    
+       <div class="header-left">
+           <form action="/user/search" method="get" style="display: flex; gap: 0.5rem;">
+               <input type="text" name="query" placeholder="Search">
+               <button type="submit">Search</button>
+           </form>
+       </div>
+
+       <div class="header-center">
+           <h2>WELCOME ${username}</h2>
+       </div>
+
+       <div class="header-right">
+           <div class="wallet-info">
+               <h3>Wallet Balance</h3>
+               <p>${balance}</p>
+               <a href="/user/addbalance">Add Balance</a>
+           </div>
+           <a href="${pageContext.request.contextPath}/user/profile" class="icon-btn" title="Profile">
+               <i class="fas fa-user-circle"></i>
+           </a>
+           <a href="${pageContext.request.contextPath}/user/logout" class="icon-btn" title="Logout">
+               <i class="fas fa-sign-out-alt"></i>
+           </a>
+       </div>
    </header>
+
    <aside>
         <ul>
-           <li><a href="${pageContext.request.contextPath}/user/profile">Profile</a></li>
+            <li><a href="${pageContext.request.contextPath}/user/profile">Profile</a></li>
             <li><a href="${pageContext.request.contextPath}/user/dashBoard">Dashboard</a></li>
-            <li><a href="${pageContext.request.contextPath}">Portfolio</a></li>
-            <li><a href="${pageContext.request.contextPath}/api/stocks/view">Stocks</a></li>
-            <li><a href="${pageContext.request.contextPath}">Buy/Sell</a></li>
-            <li><a href="${pageContext.request.contextPath}">Trasaction</a></li>
-            <li><a href="${pageContext.request.contextPath}">Wallet</a></li>
+            <li><a href="${pageContext.request.contextPath}/user/portfolio">Portfolio</a></li>
+            <li><a href="${pageContext.request.contextPath}/user/stocks">Stocks</a></li>
+            <li><a href="${pageContext.request.contextPath}user/trades">Buy/Sell</a></li>
+            <li><a href="${pageContext.request.contextPath}user/transactions">Transaction</a></li>
+            <li><a href="${pageContext.request.contextPath}/user/wallet">Wallet</a></li>
             <li><a href="${pageContext.request.contextPath}/user/logout">Log Out</a></li>
-            
         </ul>
    </aside>
+
    <main>
+       <!-- Main content can be placed here -->
    </main>
+
    <footer>
+       &copy; 2025 Trading App | All rights reserved
    </footer>
 </div>
 </body>

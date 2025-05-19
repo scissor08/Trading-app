@@ -16,11 +16,13 @@ public interface UserDashboardServiceInterface {
 
 	public Stock getStockDetails(UserLog user);
 
-	public UserAccountDetails addAccountBalance(UserLog user, double cash);
-
 	public UserDetails getDashboard(UserLog user, Model model);
 
 	String getUserDetail(UserLog user, Model model);
+
+	public String getAccountBalance(UserLog user, Model model);
+
+	public String addAccountBalance(UserLog user, Model model, double cash);
 
 
 }
