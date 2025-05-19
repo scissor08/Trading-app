@@ -109,14 +109,16 @@ button:hover {
 </head>
 <body>
 	<header>
-		<h1>Trading App - Login</h1>
+		<h1>Arize - Login</h1>
 		<a href="/" class="home-btn">Home</a>
 	</header>
 	<main>
 		<section>
 			<form action="/user/login" method="post">
-				<label for="username">User name</label> <input type="text"
-					name="username" required> <label for="password">Password</label>
+				<label for="username">User name</label> 
+				<input type="text" name="username" required> 
+				
+				<label for="password">Password</label>
 				<div class="password-wrapper">
 					<input type="password" name="password" id="password" required>
 				</div>
@@ -140,6 +142,5 @@ button:hover {
 			}
 		}
 	</script>
-
 </body>
 </html>

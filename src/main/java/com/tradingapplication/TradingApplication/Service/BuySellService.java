@@ -15,7 +15,7 @@ import com.tradingapplication.TradingApplication.dto.BuyResponseDTO;
 import com.tradingapplication.TradingApplication.dto.BuySellStockRequestDTO;
 
 @Service
-public class BuySellService {
+public class BuySellService implements BuySellServiceInterface{
 
 	@Autowired
 	private UserDetailsRepository userRepository;
@@ -42,9 +42,9 @@ public class BuySellService {
 		portfolio.setTransactionType(TsType);
 		Stock stock = new Stock();
 
-		String updateQuantity = String.valueOf(Long.parseLong(stock.getVolume()) - buySellStockRequestDTO.getQuantity());
-
-		stock.setVolume(updateQuantity);
+//		String updateQuantity = String.valueOf(Long.parseLong(stock.getVolume()) - buySellStockRequestDTO.getQuantity());
+//
+//		stock.setVolume(updateQuantity);
 
 		double transactionAmount = Double.parseDouble(stock.getPrice()) * buySellStockRequestDTO.getQuantity();
 

@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Dashboard</title>
+<<<<<<< HEAD
 
 <!-- FontAwesome CDN for icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -144,11 +145,165 @@
         color: white;
         margin-top: 2rem;
     }
+=======
+<style>
+:root {
+  --background: #000;
+  --card: #111;
+  --highlight: #FFA500;
+  --shadow: rgba(255, 165, 0, 0.2);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--highlight);
+  font-family: Arial, sans-serif;
+}
+
+div {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  grid-template-rows: 1fr 4fr 1fr;
+  grid-template-areas: 
+    "header header"
+    "aside main"
+    "footer footer";
+}
+
+/* Header Section */
+header {
+  grid-area: header;
+  background-color: var(--card);
+  color: var(--highlight);
+  padding: 20px;
+  position: relative;
+}
+
+header h2 {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 28px;
+}
+
+/* Search Box */
+header form {
+  text-align: center;
+  margin-top: 20px;
+}
+
+header input[type="text"] {
+  padding: 10px 15px;
+  width: 300px;
+  border: 1px solid var(--highlight);
+  border-radius: 8px;
+  background-color: #222;
+  color: var(--highlight);
+  margin-right: 10px;
+  box-shadow: 0 0 8px var(--shadow);
+}
+
+header input[type="submit"] {
+  padding: 10px 20px;
+  background-color: var(--highlight);
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  box-shadow: 0 0 8px var(--shadow);
+}
+
+header input[type="submit"]:hover {
+  background-color: #ffb733;
+}
+
+/* Wallet Box */
+header > div {
+  position: absolute;
+  top: 20px;
+  right: 20px; /* moved from left to right */
+  background-color: #222;
+  padding: 20px;
+  width: 220px;
+  height: 130px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px var(--shadow);
+  text-align: center;
+}
+
+header div h3 {
+  margin-bottom: 10px;
+}
+
+header div a {
+  display: inline-block;
+  margin-top: 10px;
+  color: var(--highlight);
+  text-decoration: none;
+  border: 1px solid var(--highlight);
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+header div a:hover {
+  background-color: var(--highlight);
+  color: black;
+}
+
+/* Aside Sidebar */
+aside {
+  grid-area: aside;
+  background-color: #111;
+  padding-top: 20px;
+  min-height: 100vh;
+}
+
+aside ul {
+  list-style: none;
+}
+
+aside li {
+  padding: 15px;
+  font-size: 18px;
+  text-align: center;
+  border-bottom: 1px solid #333;
+}
+
+aside li:hover {
+  background-color: #222;
+}
+
+aside a {
+  color: var(--highlight);
+  text-decoration: none;
+}
+
+/* Main Section */
+main {
+  grid-area: main;
+  padding: 40px;
+  background-color: var(--background);
+}
+
+/* Footer */
+footer {
+  grid-area: footer;
+  background-color: var(--card);
+  height: 60px;
+}
+>>>>>>> c31e7cf (new stock detail and change user searchbox and style)
 </style>
 
 </head>
 <body>
 <div>
+<<<<<<< HEAD
    <header>
        <div class="header-left">
            <form action="/user/search" method="get" style="display: flex; gap: 0.5rem;">
@@ -196,6 +351,42 @@
    <footer>
        &copy; 2025 Trading App | All rights reserved
    </footer>
+=======
+  <header>
+    <h2>Search for a Stock Symbol</h2>
+    <form action="${pageContext.request.contextPath}/getStock" method="post">
+      <input type="text" name="symbol" placeholder="Enter stock symbol (e.g. AAPL)" required />
+      <input type="submit" value="Get Stock" />
+    </form>
+    <h2>Welcome, ${username}</h2>
+    <div>
+      <h3>Wallet Balance</h3>
+      <p>${balance}</p>
+      <a href="#">Add Balance</a>
+    </div>
+  </header>
+  
+  <aside>
+    <ul>
+      <li><a href="${pageContext.request.contextPath}/user/profile">Profile</a></li>
+      <li><a href="${pageContext.request.contextPath}/user/dashBoard">Dashboard</a></li>
+      <li><a href="${pageContext.request.contextPath}">Portfolio</a></li>
+      <li><a href="${pageContext.request.contextPath}/stocks">Stocks</a></li>
+      <li><a href="${pageContext.request.contextPath}">Buy/Sell</a></li>
+      <li><a href="${pageContext.request.contextPath}">Transaction</a></li>
+      <li><a href="${pageContext.request.contextPath}">Wallet</a></li>
+      <li><a href="${pageContext.request.contextPath}/user/logout">Log Out</a></li>
+    </ul>
+  </aside>
+
+  <main>
+    <!-- Main content here -->
+  </main>
+
+  <footer>
+    <!-- Optional footer -->
+  </footer>
+>>>>>>> c31e7cf (new stock detail and change user searchbox and style)
 </div>
 </body>
 </html>

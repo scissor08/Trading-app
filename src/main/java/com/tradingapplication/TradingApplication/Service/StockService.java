@@ -5,12 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tradingapplication.TradingApplication.Entity.Stock;
 import com.tradingapplication.TradingApplication.Repository.StockRepository;
 import com.tradingapplication.TradingApplication.dto.StockRequestDTO;
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
+import org.springframework.cache.annotation.Cacheable;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -19,7 +19,7 @@ public class StockService implements StockServiceInterface {
 
     private final StockRepository stockRepository;
 
-    @Value("${alpha.api.key}")
+    @Value("${finnhub.api.key}")
     private String apiKey;
 
     private static final Map<String, String> domainMap = Map.ofEntries(
@@ -35,53 +35,66 @@ public class StockService implements StockServiceInterface {
             Map.entry("INTC", "intel.com")
     );
 
+
+
     @Override
+    @Cacheable(value = "stocks", key = "#symbol", unless = "#result == null")
     public StockRequestDTO fetchStock(String symbol) {
         try {
-            Optional<Stock> cached = stockRepository.findBySymbol(symbol);
-            if (cached.isPresent()) {
-                return convertToDTO(cached.get());
-            }
+            System.out.println("🔁 Fetching from API for: " + symbol); // Log to verify cache usage
 
-            String url = "https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=" + symbol + "&apikey=" + apiKey;
+            String url = "https://finnhub.io/api/v1/quote?symbol=" + symbol + "&token=" + apiKey;
             RestTemplate restTemplate = new RestTemplate();
             String json = restTemplate.getForObject(url, String.class);
 
             ObjectMapper mapper = new ObjectMapper();
             JsonNode root = mapper.readTree(json);
 
-            if (root.has("Note")) {
-                System.err.println("❌ API limit reached. Using cached data for: " + symbol);
-                return cached.map(this::convertToDTO)
-                        .orElseThrow(() -> new RuntimeException("Stock not available in DB: " + symbol));
+            if (root == null || root.get("c").isNull()) {
+                throw new Exception("Invalid response from Finnhub");
             }
 
-            JsonNode quoteNode = root.get("Global Quote");
-            if (quoteNode == null || quoteNode.isEmpty()) {
-                throw new Exception("Invalid Global Quote");
-            }
-
-            StockRequestDTO dto = mapper.treeToValue(quoteNode, StockRequestDTO.class);
+            StockRequestDTO dto = new StockRequestDTO();
+            dto.setSymbol(symbol);
+            dto.setPrice(String.valueOf(root.get("c").asDouble()));
+            dto.setChange(String.valueOf(root.get("d").asDouble()));
+            dto.setChangePercent(String.valueOf(root.get("dp").asDouble()));
+            dto.setHigh(String.valueOf(root.get("h").asDouble()));
+            dto.setLow(String.valueOf(root.get("l").asDouble()));
+            dto.setOpen(String.valueOf(root.get("o").asDouble()));
+            dto.setPreviousClose(String.valueOf(root.get("pc").asDouble()));
+            dto.setLatestTradingDay(new SimpleDateFormat("yyyy-MM-dd")
+                    .format(new Date(root.get("t").asLong() * 1000L)));
             dto.setDomain(domainMap.getOrDefault(symbol, ""));
 
-            Stock stock = cached.orElse(new Stock());
-            stock.setSymbol(dto.getSymbol());
-            stock.setOpen(dto.getOpen());
-            stock.setHigh(dto.getHigh());
-            stock.setLow(dto.getLow());
+         // Inside fetchStock method before saving
+            Optional<Stock> existingStockOpt = stockRepository.findBySymbol(symbol);
+            Stock stock;
+            if (existingStockOpt.isPresent()) {
+                stock = existingStockOpt.get();
+                // update fields
+            } else {
+                stock = new Stock();
+                stock.setSymbol(symbol);
+            }
+            // update all fields as before
             stock.setPrice(dto.getPrice());
-            stock.setVolume(dto.getVolume());
-            stock.setLatestTradingDay(dto.getLatestTradingDay());
-            stock.setPreviousClose(dto.getPreviousClose());
             stock.setChange(dto.getChange());
             stock.setChangePercent(dto.getChangePercent());
+            stock.setHigh(dto.getHigh());
+            stock.setLow(dto.getLow());
+            stock.setOpen(dto.getOpen());
+            stock.setPreviousClose(dto.getPreviousClose());
+            stock.setLatestTradingDay(dto.getLatestTradingDay());
             stock.setDomain(dto.getDomain());
 
             stockRepository.save(stock);
+
+
             return dto;
 
         } catch (Exception e) {
-            System.err.println("⚠️ Fetch failed for " + symbol + ": " + e.getMessage());
+            System.err.println("⚠️ Finnhub fetch failed for " + symbol + ": " + e.getMessage());
             return stockRepository.findBySymbol(symbol)
                     .map(this::convertToDTO)
                     .orElseThrow(() -> new RuntimeException("No cached data for symbol: " + symbol));
@@ -96,9 +109,7 @@ public class StockService implements StockServiceInterface {
             try {
                 StockRequestDTO dto = fetchStock(symbol);
                 stockList.add(dto);
-
-                // Sleep to avoid hitting free-tier rate limit
-                Thread.sleep(12000);
+                Thread.sleep(1200); // to respect Finnhub free tier limit
             } catch (Exception e) {
                 System.err.println("❌ Failed to fetch " + symbol + ": " + e.getMessage());
             }
@@ -110,15 +121,15 @@ public class StockService implements StockServiceInterface {
     private StockRequestDTO convertToDTO(Stock stock) {
         StockRequestDTO dto = new StockRequestDTO();
         dto.setSymbol(stock.getSymbol());
-        dto.setOpen(stock.getOpen());
-        dto.setHigh(stock.getHigh());
-        dto.setLow(stock.getLow());
         dto.setPrice(stock.getPrice());
-        dto.setVolume(stock.getVolume());
-        dto.setLatestTradingDay(stock.getLatestTradingDay());
-        dto.setPreviousClose(stock.getPreviousClose());
         dto.setChange(stock.getChange());
         dto.setChangePercent(stock.getChangePercent());
+        dto.setHigh(stock.getHigh());
+        dto.setLow(stock.getLow());
+        dto.setOpen(stock.getOpen());
+        dto.setPreviousClose(stock.getPreviousClose());
+       // dto.setVolume(stock.getVolume());
+        dto.setLatestTradingDay(stock.getLatestTradingDay());
         dto.setDomain(stock.getDomain());
         return dto;
     }
