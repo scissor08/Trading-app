@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BuySellStockRequestDTO {
 	
-	private Long id;
+	
 	 private String symbol;
 	  private Integer Quantity;
 	  private Integer price;
