@@ -1,12 +1,14 @@
 package com.tradingapplication.TradingApplication.Entity;
 
-import java.util.List;
-
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.Date;
 
 @Entity
-@Data
+@Getter
+@Setter
 public class Stock {
 
     @Id
@@ -14,30 +16,16 @@ public class Stock {
     private Long id;
 
     private String symbol;
-    private String open;
+    private String price;
+    private String change;
+    private String changePercent;
     private String high;
     private String low;
-    private String price;
-    private String volume;
-
-    @Column(name = "latest_trading_day")
-    private String latestTradingDay;
-
-    @Column(name = "previous_close")
+    private String open;
     private String previousClose;
-
-    @Column(name = "change_value")
-    private String change;
-
-    @Column(name = "change_percent")
-    private String changePercent;
-
+    private String latestTradingDay;
     private String domain;
 
-    
-
-    @OneToMany(mappedBy = "stocks", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Portfolio> portfolioRecords;
-    
-    
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastUpdated; // ✅ Timestamp for caching
 }
