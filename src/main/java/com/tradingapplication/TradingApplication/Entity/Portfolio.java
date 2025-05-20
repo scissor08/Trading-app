@@ -29,8 +29,7 @@ public class Portfolio {
 	
 	
 	private Integer quantity;
-	private String symbol;
-	
+	private String symbol;	
 	private Double price;
 	private Double trancationAmount;
 
