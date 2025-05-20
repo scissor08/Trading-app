@@ -8,7 +8,7 @@
   <title>Success!</title>
   <style>
     body {
-      background-color: #e6f7e6;
+      background-color: #f5f7fa;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       display: flex;
       justify-content: center;
@@ -18,40 +18,39 @@
     }
 
     .success-container {
-      background-color: #d4edda;
-      border: 2px solid #28a745;
-      padding: 40px 60px;
+      background-color: #ffffff;
+      border-left: 6px solid #28a745;
+      padding: 40px 50px;
       border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
       text-align: center;
-      max-width: 400px;
+      max-width: 450px;
     }
 
     .success-container h1 {
-      color: #155724;
-      font-size: 2.5rem;
-      margin-bottom: 10px;
+      color: #28a745;
+      font-size: 2.4rem;
+      margin-bottom: 15px;
     }
 
     .success-container p {
-      color: #155724;
-      font-size: 1.2rem;
-      margin-bottom: 25px;
+      color: #0e1c36;
+      font-size: 1.1rem;
+      margin-bottom: 30px;
     }
 
-    .success-container .btn-home {
+    .btn-home {
       background-color: #28a745;
       color: white;
       text-decoration: none;
-      padding: 12px 25px;
-      border-radius: 6px;
-      font-weight: 600;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-weight: bold;
       font-size: 1rem;
       transition: background-color 0.3s ease;
-      display: inline-block;
     }
 
-    .success-container .btn-home:hover {
+    .btn-home:hover {
       background-color: #218838;
     }
   </style>
@@ -60,7 +59,7 @@
   <div class="success-container">
     <h1>${message}</h1>
     <p>Your registration was completed successfully.</p>
-    <a href="/user/loginpage" class="btn-home">Login</a>
+    <a href="${pageContext.request.contextPath}/user/loginpage" class="btn-home">Go to Login</a>
   </div>
 </body>
 </html>
