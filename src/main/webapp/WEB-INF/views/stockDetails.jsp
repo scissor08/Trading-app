@@ -6,69 +6,113 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         body {
-            background-color: black;
-            color: orange;
-            font-family: Arial, sans-serif;
-            padding: 20px;
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #0e1c36;
         }
+
         .container {
-            width: 80%;
-            margin: 0 auto;
-            border: 2px solid orange;
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #ffffff;
             padding: 30px;
-            border-radius: 10px;
-            background-color: #111;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
             text-align: center;
+            margin-bottom: 30px;
+            color: #0e1c36;
         }
-        .field {
-            font-weight: bold;
-            margin: 8px 0;
-        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
         }
+
         th, td {
             text-align: left;
-            padding: 10px;
-            border-bottom: 1px solid orange;
+            padding: 10px 12px;
+            border-bottom: 1px solid #ccc;
         }
-        img {
-            margin: 20px 0;
-            border-radius: 8px;
+
+        th {
+            width: 200px;
+            color: #0e1c36;
         }
-        .buttons {
-            margin-top: 20px;
-        }
-        button {
-            background-color: orange;
-            color: black;
-            font-weight: bold;
-            border: none;
-            padding: 10px 20px;
-            margin: 0 10px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #ffb84d;
-        }
-        #chartContainer {
-            margin-top: 40px;
-        }
-        a {
-            color: orange;
-            text-decoration: none;
-        }
-        a:hover {
+
+        td a {
+            color: #ff7f00;
             text-decoration: underline;
         }
+
+        img {
+            display: block;
+            margin: 30px auto;
+            border-radius: 8px;
+        }
+
+        .buttons {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .buttons button {
+            padding: 10px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 0 15px;
+            transition: background-color 0.3s;
+        }
+
+        .buttons form {
+            display: inline-block;
+        }
+
+        .buy-button {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .buy-button:hover {
+            background-color: #218838;
+        }
+
+        .sell-button {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .sell-button:hover {
+            background-color: #c82333;
+        }
+
         .back-link {
-            margin-top: 30px;
             display: block;
             text-align: center;
+            margin-top: 40px;
+            font-weight: bold;
+            color: #ff7f00;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        #chartContainer {
+            margin-top: 50px;
+        }
+
+        canvas {
+            width: 100% !important;
+            height: 400px !important;
         }
     </style>
 </head>
@@ -101,25 +145,24 @@
     </c:if>
 
     <div class="buttons">
-        <form action="/buyStock" method="post" style="display:inline;">
+        <form action="/buyStock" method="post">
             <input type="hidden" name="symbol" value="${stock.symbol}" />
-            <button type="submit">Buy</button>
+            <button type="submit" class="buy-button">Buy</button>
         </form>
-        <form action="/sellStock" method="post" style="display:inline;">
+        <form action="/sellStock" method="post">
             <input type="hidden" name="symbol" value="${stock.symbol}" />
-            <button type="submit">Sell</button>
+            <button type="submit" class="sell-button">Sell</button>
         </form>
     </div>
 
     <div id="chartContainer">
-        <canvas id="priceChart" width="600" height="300"></canvas>
+        <canvas id="priceChart"></canvas>
     </div>
 
     <a href="${pageContext.request.contextPath}/stocks" class="back-link">← Back to All Stocks</a>
 </div>
 
 <script>
-    // Mocked chart data — replace with actual data
     const labels = ['2025-05-10', '2025-05-11', '2025-05-12', '2025-05-13', '2025-05-14', '2025-05-15', '2025-05-16'];
     const prices = [335, 338, 340, 337, 339, 341, parseFloat('${stock.price}')];
 
@@ -131,8 +174,8 @@
             datasets: [{
                 label: '${stock.symbol} Price',
                 data: prices,
-                borderColor: 'orange',
-                backgroundColor: 'rgba(255, 165, 0, 0.2)',
+                borderColor: '#ff7f00',
+                backgroundColor: 'rgba(255, 127, 0, 0.2)',
                 fill: true,
                 tension: 0.2,
                 pointRadius: 4,
@@ -142,18 +185,18 @@
         options: {
             scales: {
                 x: {
-                    ticks: { color: 'orange' },
-                    grid: { color: '#333' }
+                    ticks: { color: '#0e1c36' },
+                    grid: { color: '#ccc' }
                 },
                 y: {
-                    ticks: { color: 'orange' },
-                    grid: { color: '#333' },
+                    ticks: { color: '#0e1c36' },
+                    grid: { color: '#ccc' },
                     beginAtZero: false
                 }
             },
             plugins: {
                 legend: {
-                    labels: { color: 'orange' }
+                    labels: { color: '#0e1c36' }
                 }
             },
             responsive: true,

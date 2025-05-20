@@ -25,6 +25,7 @@
         justify-content: space-between;
         align-items: center;
         flex-wrap: wrap;
+        position: relative;
     }
 
     .header-left {
@@ -43,11 +44,16 @@
 
     .header-left button {
         padding: 0.5rem 1rem;
-        background-color: #007bff;
+        background-color: #ff7f00;
         border: none;
         border-radius: 6px;
         color: white;
         cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .header-left button:hover {
+        background-color: #e66900;
     }
 
     h2 {
@@ -57,6 +63,7 @@
 
     .header-center {
         text-align: center;
+        flex-grow: 1;
     }
 
     .header-right {
@@ -87,7 +94,7 @@
 
     .wallet-info a {
         text-decoration: none;
-        color: #007bff;
+        color: #ff7f00;
         font-weight: bold;
     }
 
@@ -105,15 +112,22 @@
     aside {
         background-color: #1e2d50;
         color: white;
-        width: 200px;
+        width: 220px;
         min-height: 100vh;
         float: left;
         padding: 2rem 1rem;
+        transition: transform 0.3s ease;
+        position: fixed;
+        top: 0;
+        left: 0;
+        overflow-y: auto;
+        z-index: 1000;
     }
 
     aside ul {
         list-style-type: none;
         padding: 0;
+        margin: 0;
     }
 
     aside ul li {
@@ -125,6 +139,7 @@
         color: white;
         font-weight: 500;
         transition: color 0.3s;
+        display: block;
     }
 
     aside ul li a:hover {
@@ -134,6 +149,7 @@
     main {
         margin-left: 220px;
         padding: 2rem;
+        transition: margin-left 0.3s ease;
     }
 
     .balance-form-container {
@@ -157,13 +173,13 @@
         border: 1px solid #ccc;
         width: 100%;
         max-width: 300px;
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
         font-size: 1rem;
     }
 
     .balance-form-container button {
         padding: 0.6rem 1.2rem;
-        background-color: #007bff;
+        background-color: #ff7f00;
         border: none;
         border-radius: 6px;
         color: white;
@@ -173,7 +189,7 @@
     }
 
     .balance-form-container button:hover {
-        background-color: #0056b3;
+        background-color: #e66900;
     }
 
     footer {
@@ -184,12 +200,54 @@
         color: white;
         margin-top: 2rem;
     }
+
+    /* Hamburger toggle button */
+    .hamburger {
+        display: none;
+        font-size: 1.8rem;
+        color: white;
+        cursor: pointer;
+        background: none;
+        border: none;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 900px) {
+        aside {
+            transform: translateX(-100%);
+            position: fixed;
+            height: 100%;
+        }
+        aside.active {
+            transform: translateX(0);
+        }
+
+        main {
+            margin-left: 0;
+            padding: 2rem 1rem;
+        }
+
+        .hamburger {
+            display: block;
+        }
+
+        .header-center {
+            text-align: left;
+            flex-grow: unset;
+            margin-left: 1rem;
+        }
+    }
 </style>
 
 </head>
 <body>
+
 <div>
    <header>
+       <button class="hamburger" id="hamburgerBtn" aria-label="Toggle Menu">
+           <i class="fas fa-bars"></i>
+       </button>
+
        <div class="header-left">
            <form action="/user/search" method="get" style="display: flex; gap: 0.5rem;">
                <input type="text" name="query" placeholder="Search">
@@ -216,7 +274,7 @@
        </div>
    </header>
 
-   <aside>
+   <aside id="sidebar">
         <ul>
             <li><a href="${pageContext.request.contextPath}/user/profile">Profile</a></li>
             <li><a href="${pageContext.request.contextPath}/user/dashBoard">Dashboard</a></li>
@@ -229,7 +287,7 @@
         </ul>
    </aside>
 
-   <main>
+   <main id="mainContent">
        <div class="balance-form-container">
            <h3>Enter Amount to Add</h3>
            <form action="${pageContext.request.contextPath}/user/add" method="post">
@@ -244,5 +302,15 @@
        &copy; 2025 Trading App | All rights reserved
    </footer>
 </div>
+
+<script>
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const sidebar = document.getElementById('sidebar');
+
+    hamburgerBtn.addEventListener('click', () => {
+        sidebar.classList.toggle('active');
+    });
+</script>
+
 </body>
 </html>
