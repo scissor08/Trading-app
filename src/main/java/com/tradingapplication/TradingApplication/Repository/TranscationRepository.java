@@ -1,6 +1,11 @@
-package com.tradingapplication.TradingApplication.Repository;
+package com.tradingapplication.TradingApplication.Service;
 
-public interface TranscationRepository {
-	
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.tradingapplication.TradingApplication.Entity.TransactionBuySell;
+
+
+
+public interface TranscationRepository extends JpaRepository<TransactionBuySell,Integer>{
 
 }
