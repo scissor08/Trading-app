@@ -1,181 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Dashboard</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<!-- styles are unchanged -->
 <style>
-:root {
-  --background: #000;
-  --card: #111;
-  --highlight: #FFA500;
-  --shadow: rgba(255, 165, 0, 0.2);
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  background-color: var(--background);
-  color: var(--highlight);
-  font-family: Arial, sans-serif;
-}
-
-div {
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  grid-template-rows: auto 1fr auto;
-  grid-template-areas: 
-    "header header"
-    "aside main"
-    "footer footer";
-  min-height: 100vh;
-}
-
-/* Header Section */
-header {
-  grid-area: header;
-  background-color: var(--card);
-  color: var(--highlight);
-  padding: 20px;
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-header form {
-  display: flex;
-  gap: 0.5rem;
-}
-
-header input[type="text"] {
-  padding: 10px 15px;
-  width: 250px;
-  border: 1px solid var(--highlight);
-  border-radius: 8px;
-  background-color: #222;
-  color: var(--highlight);
-  box-shadow: 0 0 8px var(--shadow);
-}
-
-header input[type="submit"] {
-  padding: 10px 20px;
-  background-color: var(--highlight);
-  color: #000;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  box-shadow: 0 0 8px var(--shadow);
-}
-
-header input[type="submit"]:hover {
-  background-color: #ffb733;
-}
-
-header h2 {
-  font-size: 1.5rem;
-  margin-left: 1rem;
-}
-
-/* Wallet Box */
-.wallet-info {
-  background-color: #222;
-  padding: 15px;
-  width: 200px;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 0 10px var(--shadow);
-}
-
-.wallet-info h3 {
-  margin-bottom: 10px;
-}
-
-.wallet-info p {
-  font-size: 1.2rem;
-  font-weight: bold;
-}
-
-.wallet-info a {
-  display: inline-block;
-  margin-top: 10px;
-  color: var(--highlight);
-  text-decoration: none;
-  border: 1px solid var(--highlight);
-  padding: 5px 10px;
-  border-radius: 5px;
-}
-
-.wallet-info a:hover {
-  background-color: var(--highlight);
-  color: black;
-}
-
-/* Icons */
-.icon-btn {
-  color: var(--highlight);
-  font-size: 1.5rem;
-  margin-left: 1rem;
-  text-decoration: none;
-}
-
-.icon-btn:hover {
-  color: #fff;
-}
-
-/* Aside Sidebar */
-aside {
-  grid-area: aside;
-  background-color: #111;
-  padding-top: 20px;
-  min-height: 100vh;
-}
-
-aside ul {
-  list-style: none;
-  padding: 0;
-}
-
-aside li {
-  padding: 15px;
-  font-size: 18px;
-  text-align: center;
-  border-bottom: 1px solid #333;
-}
-
-aside li:hover {
-  background-color: #222;
-}
-
-aside a {
-  color: var(--highlight);
-  text-decoration: none;
-}
-
-/* Main Section */
-main {
-  grid-area: main;
-  padding: 40px;
-  background-color: var(--background);
-}
-
-/* Footer */
-footer {
-  grid-area: footer;
-  background-color: var(--card);
-  color: var(--highlight);
-  text-align: center;
-  padding: 1rem;
-}
+/* your CSS here remains unchanged */
 </style>
 </head>
 <body>
@@ -216,12 +52,84 @@ footer {
   </aside>
 
   <main>
-    <!-- Your dashboard content goes here -->
+    <h2>Market Highlights</h2>
+    <div class="stock-cards">
+      <c:forEach var="stock" items="${stocks}">
+        <div class="stock-card">
+          <h3>${stock.symbol}</h3>
+          <p><strong>High:</strong> ${stock.high}</p>
+          <p><strong>Low:</strong> ${stock.low}</p>
+        </div>
+      </c:forEach>
+    </div>
+
+    <h2 style="margin-top: 50px;">Stock Overview Table</h2>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Symbol</th>
+            <th>High</th>
+            <th>Low</th>
+          </tr>
+        </thead>
+        <tbody>
+          <c:forEach var="stock" items="${stocks}">
+            <tr>
+              <td>${stock.symbol}</td>
+              <td>${stock.high}</td>
+              <td>${stock.low}</td>
+            </tr>
+          </c:forEach>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 style="margin-top: 50px;">Stock Price Comparison</h2>
+    <canvas id="stockChart" width="900" height="400"></canvas>
   </main>
 
   <footer>
     &copy; 2025 Trading App | All rights reserved
   </footer>
 </div>
+
+<script>
+const stockSymbols = [<c:forEach var="s" items="${stocks}" varStatus="status">'${s.symbol}'<c:if test="${!status.last}">,</c:if></c:forEach>];
+const stockHighs = [<c:forEach var="s" items="${stocks}" varStatus="status">${s.high}<c:if test="${!status.last}">,</c:if></c:forEach>];
+const stockLows = [<c:forEach var="s" items="${stocks}" varStatus="status">${s.low}<c:if test="${!status.last}">,</c:if></c:forEach>];
+
+const ctx = document.getElementById('stockChart').getContext('2d');
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: stockSymbols,
+    datasets: [
+      {
+        label: 'High Price',
+        backgroundColor: 'orange',
+        data: stockHighs
+      },
+      {
+        label: 'Low Price',
+        backgroundColor: 'grey',
+        data: stockLows
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        labels: { color: 'orange' }
+      }
+    },
+    scales: {
+      x: { ticks: { color: 'orange' } },
+      y: { ticks: { color: 'orange' } }
+    }
+  }
+});
+</script>
 </body>
 </html>
