@@ -47,6 +47,7 @@ public class UserDetails {
     
     @OneToOne(cascade=CascadeType.ALL)
     UserAccountDetails userAccountDetails;
-   
+    @OneToMany
+   List< TransactionBuySell> transaction;
     
 }

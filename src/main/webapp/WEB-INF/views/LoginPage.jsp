@@ -11,13 +11,14 @@ body {
 	margin: 0;
 	padding: 0;
 	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-	background-color: #f4f7f9;
+	background-color: #f5f7fa;
+	color: #0e1c36;
 }
 
 header {
 	background-color: #0e1c36;
 	padding: 1rem 2rem;
-	color: white;
+	color: #ffffff;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -36,12 +37,13 @@ header h1 {
 	border-radius: 8px;
 	font-weight: bold;
 	cursor: pointer;
-	transition: background-color 0.3s;
+	transition: background-color 0.3s, color 0.3s;
 	text-decoration: none;
 }
 
 .home-btn:hover {
-	background-color: #d6e0f0;
+	background-color: #ff7f00;
+	color: #ffffff;
 }
 
 main {
@@ -52,7 +54,8 @@ main {
 }
 
 form {
-	background-color: white;
+	background-color: #ffffff;
+	color: #0e1c36;
 	padding: 2rem 3rem;
 	border-radius: 12px;
 	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
@@ -64,7 +67,7 @@ form label {
 	display: block;
 	margin-top: 1rem;
 	font-weight: 600;
-	color: #333;
+	color: #0e1c36;
 }
 
 form input {
@@ -78,7 +81,7 @@ form input {
 }
 
 form input:focus {
-	border-color: #007bff;
+	border-color: #ff7f00;
 }
 
 .password-wrapper {
@@ -93,7 +96,7 @@ button {
 	margin-top: 1.5rem;
 	width: 100%;
 	padding: 0.8rem;
-	background-color: #007bff;
+	background-color: #ff7f00;
 	color: white;
 	font-size: 1rem;
 	border: none;
@@ -103,7 +106,7 @@ button {
 }
 
 button:hover {
-	background-color: #0056b3;
+	background-color: #e66900;
 }
 </style>
 </head>
