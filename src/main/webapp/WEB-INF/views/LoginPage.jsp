@@ -117,7 +117,7 @@ button:hover {
 	</header>
 	<main>
 		<section>
-			<form action="/user/login" method="post">
+			<form action="/login" method="post">
 				<label for="username">User name</label> 
 				<input type="text" name="username" required> 
 				

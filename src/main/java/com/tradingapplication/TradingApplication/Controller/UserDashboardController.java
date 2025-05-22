@@ -16,7 +16,7 @@ import com.tradingapplication.TradingApplication.Service.UserDashboardServiceInt
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping
 public class UserDashboardController {
 
 	@Autowired
@@ -59,7 +59,7 @@ public class UserDashboardController {
 	}
 	
 	
-	@GetMapping("/stocks")
+	@GetMapping("/stock")
 	public String getAllStocks(HttpSession session,Model model) {
 		UserLog user = (UserLog) session.getAttribute("userlog");
 		if(user!=null) {
@@ -110,7 +110,8 @@ public class UserDashboardController {
 	}
 	
 	@GetMapping("/logout")
-	public String getLogot() {
+	public String getLogot(HttpSession session) {
+		session.invalidate();
 		return "LoginPage";
 	}
 }

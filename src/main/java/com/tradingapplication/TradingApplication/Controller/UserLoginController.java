@@ -16,7 +16,7 @@ import com.tradingapplication.TradingApplication.Service.UserServiceInterface;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping
 public class UserLoginController {
 
 	@Autowired

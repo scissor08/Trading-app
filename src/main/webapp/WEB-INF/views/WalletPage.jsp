@@ -196,7 +196,7 @@
 <div>
    <header>
        <div class="header-left">
-           <form action="/user/search" method="get" style="display: flex; gap: 0.5rem;">
+           <form action="/search" method="get" style="display: flex; gap: 0.5rem;">
                <input type="text" name="query" placeholder="Search">
                <button type="submit">Search</button>
            </form>
@@ -210,35 +210,35 @@
            <div class="wallet-info">
                <h3>Wallet Balance</h3>
                <p>${balance}</p>
-               <a href="/user/addbalance">Add Balance</a>
+               <a href="/addbalance">Add Balance</a>
            </div>
-           <a href="${pageContext.request.contextPath}/user/profile" class="icon-btn" title="Profile">
+           <a href="${pageContext.request.contextPath}/profile" class="icon-btn" title="Profile">
                <i class="fas fa-user-circle"></i>
            </a>
-           <a href="${pageContext.request.contextPath}/user/logout" class="icon-btn" title="Logout">
+           <a href="${pageContext.request.contextPath}/logout" class="icon-btn" title="Logout">
                <i class="fas fa-sign-out-alt"></i>
            </a>
        </div>
    </header>
 
-   <aside>
-        <ul>
-            <li><a href="${pageContext.request.contextPath}/user/profile">Profile</a></li>
-            <li><a href="${pageContext.request.contextPath}/user/dashBoard">Dashboard</a></li>
-            <li><a href="${pageContext.request.contextPath}/portfolio">Portfolio</a></li>
-            <li><a href="${pageContext.request.contextPath}/api/stocks/view">Stocks</a></li>
-            <li><a href="${pageContext.request.contextPath}/trades">Buy/Sell</a></li>
-            <li><a href="${pageContext.request.contextPath}/transactions">Transaction</a></li>
-            <li><a href="${pageContext.request.contextPath}/user/wallet">Wallet</a></li>
-            <li><a href="${pageContext.request.contextPath}/user/logout">Log Out</a></li>
-        </ul>
-   </aside>
+  <aside>
+    <ul>
+      <li><a href="${pageContext.request.contextPath}/profile">Profile</a></li>
+      <li><a href="${pageContext.request.contextPath}/dashBoard">Dashboard</a></li>
+      <li><a href="${pageContext.request.contextPath}/portfolio">Portfolio</a></li>
+      <li><a href="${pageContext.request.contextPath}/stocks">Stocks</a></li>
+      <li><a href="${pageContext.request.contextPath}/trades">Buy/Sell</a></li>
+      <li><a href="${pageContext.request.contextPath}/transactions">Transaction</a></li>
+      <li><a href="${pageContext.request.contextPath}/wallet">Wallet</a></li>
+      <li><a href="${pageContext.request.contextPath}/logout">Log Out</a></li>
+    </ul>
+  </aside>
 
    <main>
         <form>
            <h3>Your Balance</h3>
            <p>${balance}</p>
-           <button><a href="/user/addbalance">Add Balance</a></button>
+           <button><a href="/addbalance">Add Balance</a></button>
        </form> 
    </main>
   
