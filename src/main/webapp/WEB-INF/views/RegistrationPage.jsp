@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Arize Registration</title>
 <style>
-/* (Your existing styles unchanged) */
 body {
 	margin: 0;
 	padding: 0;
@@ -13,7 +12,6 @@ body {
 	background-color: #f5f7fa;
 	color: #0e1c36;
 }
-
 header {
 	background-color: #0e1c36;
 	padding: 1rem 2rem;
@@ -22,12 +20,10 @@ header {
 	justify-content: space-between;
 	align-items: center;
 }
-
 header h1 {
 	margin: 0;
 	font-size: 1.5rem;
 }
-
 .home-btn {
 	background-color: #ffffff;
 	color: #0e1c36;
@@ -39,12 +35,10 @@ header h1 {
 	transition: background-color 0.3s, color 0.3s;
 	text-decoration: none;
 }
-
 .home-btn:hover {
 	background-color: #ff7f00;
 	color: #ffffff;
 }
-
 main {
 	display: flex;
 	justify-content: center;
@@ -52,7 +46,6 @@ main {
 	min-height: 90vh;
 	padding: 1rem;
 }
-
 form {
 	background-color: #ffffff;
 	color: #0e1c36;
@@ -62,64 +55,53 @@ form {
 	width: 100%;
 	max-width: 400px;
 }
-
 form label {
-    display: block;
-    margin-top: 1rem;
-    margin-bottom: 0.3rem; /* Add a small margin below label */
-    font-weight: 600;
-    color: #0e1c36;
+	display: block;
+	margin-top: 1rem;
+	margin-bottom: 0.3rem;
+	font-weight: 600;
+	color: #0e1c36;
 }
-
 form input {
-    width: 100%;
-    padding: 0.7rem 2.5rem 0.7rem 0.7rem; /* add right padding for icon space */
-    margin: 0; /* remove margin */
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    outline: none;
-    transition: border-color 0.3s;
-    box-sizing: border-box; /* ensure padding included in width */
+	width: 100%;
+	padding: 0.7rem 2.5rem 0.7rem 0.7rem; 
+	margin: 0; 
+	border: 1px solid #ccc;
+	border-radius: 8px;
+	outline: none;
+	transition: border-color 0.3s;
+	box-sizing: border-box; 
 }
-
-.password-wrapper {
-    position: relative;
-}
-
-.password-wrapper input {
-    padding-right: 2.5rem; /* space for toggle icon */
-}
-
-.password-wrapper .toggle-password {
-    position: absolute;
-    top: 50%;
-    right: 0.7rem; /* align toggle icon */
-    transform: translateY(-50%);
-    cursor: pointer;
-    fill: #ff7f00;
-    width: 20px;
-    height: 20px;
-    user-select: none;
-}
-
 form button {
-    margin-top: 2rem;
-    width: 100%;
-    padding: 0.8rem;
-    background-color: #ff7f00;
-    color: white;
-    font-size: 1rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s;
+	margin-top: 1rem;
+	width: 100%;
+	padding: 0.8rem;
+	background-color: #ff7f00;
+	color: white;
+	font-size: 1rem;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
+	transition: background-color 0.3s;
 }
-
 form button:hover {
-    background-color: #e66900;
+	background-color: #e66900;
 }
-
+.login-link {
+	display: inline;
+	margin-top: 1.5rem;
+	margin-bottom: 0.5rem;
+	margin-left: 1rem;
+	text-align: center;
+	color: #0e1c36;
+	text-decoration: none;
+	font-weight: bold;
+}
+.login-link:hover {
+	color: #ff7f00;
+}
 </style>
+
 </head>
 <body>
 <header>
@@ -128,7 +110,10 @@ form button:hover {
 </header>
 
 <main>
-	<form action="/user/register" method="post" novalidate>
+		<form action="/verification" method="post" novalidate onsubmit="return validateForm();">
+		<label for="name">Name</label>
+		<input type="text" id="name" name="name" required />
+		
 		<label for="username">User Name</label>
 		<input type="text" id="username" name="username" required />
 
@@ -136,50 +121,56 @@ form button:hover {
 		<input type="email" id="email" name="email" required />
 
 		<label for="mobile">Mobile No</label>
-		<input type="tel" id="mobile" name="mobile" pattern="[6-9][0-9]{9}" required />
+		<input type="tel" id="mobile" name="mobile" required />
 
 		<label for="password">Create Password</label>
-		<div class="password-wrapper">
-			<input type="password" id="password" name="password" required />
-			<span class="toggle-password" role="button" aria-label="Toggle Password Visibility" tabindex="0">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 5c-7 0-11 7-11 7s4 7 11 7 11-7 11-7-4-7-11-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg>
-			</span>
-		</div>
-
+		<input type="password" id="password" name="password" required />
+			
 		<label for="cpass">Confirm Password</label>
-		<div class="password-wrapper">
-			<input type="password" id="cpass" name="cpass" required />
-			<span class="toggle-password" role="button" aria-label="Toggle Password Visibility" tabindex="0">
-				<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 5c-7 0-11 7-11 7s4 7 11 7 11-7 11-7-4-7-11-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg>
-			</span>
-		</div>
+		<input type="password" id="cpass" name="cpass" required />
 
 		<label for="pan">PAN Number</label>
 		<input type="text" id="pan" name="pan" required />
 
 		<label for="dateOfBirth">Enter DOB</label>
 		<input type="date" id="dateOfBirth" name="dateOfBirth" required />
-
+		
+		<p>Already have an Account?<a href="/login" class="login-link">Login Here</a></p>
+		
 		<button type="submit">Register</button>
 	</form>
 </main>
-
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-	const toggles = document.querySelectorAll('.toggle-password');
-	toggles.forEach(toggle => {
-		toggle.addEventListener('click', () => {
-			const input = toggle.previousElementSibling;
-			if (input.type === 'password') {
-				input.type = 'text';
-				toggle.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7zm10-3a3 3 0 1 1 0 6 3 3 0 0 1 0-6z" fill="#ff7f00"/></svg>`;
-			} else {
-				input.type = 'password';
-				toggle.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 5c-7 0-11 7-11 7s4 7 11 7 11-7 11-7-4-7-11-7zm0 12a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-8a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></svg>`;
-			}
-		});
-	});
-});
+function validateForm() {
+	let username = document.getElementById("username").value.trim();
+	let email = document.getElementById("email").value.trim();
+	let mobile = document.getElementById("mobile").value.trim();
+	let pan = document.getElementById("pan").value.trim();
+
+	const nameRegex = /^[A-Za-z ]+$/;
+	const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+	const mobileRegex = /^[6-9]\d{9}$/;
+	const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+
+	if (!nameRegex.test(username)) {
+		alert("Name must contain only letters and spaces.");
+		return false;
+	}
+	if (!emailRegex.test(email)) {
+		alert("Please enter a valid email address.");
+		return false;
+	}
+	if (!mobileRegex.test(mobile)) {
+		alert("Mobile number must be exactly 10 digits and start with 6-9.");
+		return false;
+	}
+	if (!panRegex.test(pan.toUpperCase())) {
+		alert("Invalid PAN format. Example: ABCDE1234F");
+		return false;
+	}
+
+	return true;
+}
 </script>
 </body>
 </html>
