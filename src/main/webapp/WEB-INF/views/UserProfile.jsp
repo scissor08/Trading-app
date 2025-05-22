@@ -205,7 +205,7 @@
    <aside>
     <ul>
       <li><a href="${pageContext.request.contextPath}/profile">Profile</a></li>
-      <li><a href="${pageContext.request.contextPath}/dashBoard">Dashboard</a></li>
+      <li><a href="${pageContext.request.contextPath}/dashboard">Dashboard</a></li>
       <li><a href="${pageContext.request.contextPath}/portfolio">Portfolio</a></li>
       <li><a href="${pageContext.request.contextPath}/stocks">Stocks</a></li>
       <li><a href="${pageContext.request.contextPath}/trades">Buy/Sell</a></li>
