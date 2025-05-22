@@ -68,7 +68,7 @@ public class UserService implements UserServiceInterface{
 	
 
 	@Override
-	public String userLogin(UserLog userlog,Model model) {
+	public boolean userLogin(UserLog userlog,Model model) {
 		String username = userlog.getUsername();
 		String password = userlog.getPassword();
 		
@@ -78,9 +78,9 @@ public class UserService implements UserServiceInterface{
 		if(username.equals(existingUsers.getUserLog().getUsername()) && password.equals(existingUsers.getUserLog().getPassword())) {
 			model.addAttribute("balance",existingUsers.getUserAccountDetails().getBalance());
 			model.addAttribute("username", existingUsers.getUsername());
-			return "UserDashboard";
+			return true;
 		}
-		return "LoginPage";
+		return false;
 						
 			
 	}

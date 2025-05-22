@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Trading App Home</title>
+  <style>
+    :root {
+      --back: #ccccff;
+      --light: #a3a3cc;
+      --before-click: #5c5c99;
+      --onclick: #292966;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--back);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      background-color: var(--light);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      width: 80%;
+      max-width: 500px;
+    }
+
+    h1 {
+      color: var(--onclick);
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #333;
+      font-size: 16px;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      background-color: var(--before-click);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: var(--onclick);
+    }
+
+    .btn:active {
+      background-color: #1a1a4d;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Welcome to SmartTrade</h1>
+    <p>Your one-stop platform to trade, track, and grow your portfolio with real-time insights.</p>
+    <button class="btn" onclick="window.location.href='login.jsp'">Login / Register</button>
+  </div>
+
+</body>
+</html>
