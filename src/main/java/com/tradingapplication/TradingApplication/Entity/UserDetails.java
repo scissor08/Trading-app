@@ -94,4 +94,7 @@ public class UserDetails {
     @OneToMany
    List< TransactionBuySell> transaction;
     
+    @OneToMany
+    private List<Portfolio> portfolio;
+    
 }

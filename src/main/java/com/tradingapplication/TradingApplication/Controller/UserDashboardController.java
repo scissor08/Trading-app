@@ -32,22 +32,22 @@ public class UserDashboardController {
 		return "LoginPage";
 	}
 	
-	@GetMapping("/dashBoard")
-	public String userDashboard(HttpSession session,Model model) {
-		
-		
-		UserLog user =(UserLog) session.getAttribute("userlog");
-		
-		UserDetails userdetails=dashboardService.getDashboard(user, model);
-		
-		if(user!=null) {
-			model.addAttribute("username", userdetails.getUsername());
-			model.addAttribute("balance", userdetails.getUserAccountDetails().getBalance());
-			return "UserDashboard";
-		}
-		return"LoginPage";
-		
+	@GetMapping("/dashboard")
+	public String userDashboard(HttpSession session, Model model) {
+	    UserLog user = (UserLog) session.getAttribute("userlog");
+
+	    if (user != null) {
+	        UserDetails userdetails = dashboardService.getDashboard(user, model);
+	        model.addAttribute("username", userdetails.getUsername());
+	        model.addAttribute("balance", userdetails.getUserAccountDetails().getBalance());
+	        model.addAttribute("stocks", dashboardService.getAllStockData()); // Set stocks for JSP
+	        return "UserDashboard"; // Looks for UserDashboard.jsp
+	    }
+
+	    return "redirect:/LoginPage";
 	}
+
+
 	
 	@GetMapping("/portfolio")
 	public String getUserPortfolio(HttpSession session,Model model) {
