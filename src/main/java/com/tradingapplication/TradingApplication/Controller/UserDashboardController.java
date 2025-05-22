@@ -12,6 +12,7 @@ import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
 import com.tradingapplication.TradingApplication.Entity.UserDetails;
 import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Service.UserDashboardServiceInterface;
+import com.tradingapplication.TradingApplication.Service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -21,6 +22,8 @@ public class UserDashboardController {
 
 	@Autowired
 	UserDashboardServiceInterface dashboardService;
+	@Autowired
+	UserService service;
 	
 	@GetMapping("/profile")
 	public String getUserDetails(HttpSession session,Model model) {
@@ -32,9 +35,16 @@ public class UserDashboardController {
 		return "LoginPage";
 	}
 	
-	@GetMapping("/dashboard")
-	public String userDashboard(HttpSession session, Model model) {
-	    UserLog user = (UserLog) session.getAttribute("userlog");
+	@PostMapping("/dashboard")
+	public String userDashboard(UserLog userlog,HttpSession session, Model model) {
+		
+		session.setAttribute("userlog", userlog);
+		
+		model.addAttribute("Username", userlog.getUsername());
+		
+		boolean validate=service.userLogin(userlog, model);
+		if(validate) {
+		UserLog user = (UserLog) session.getAttribute("userlog");
 
 	    if (user != null) {
 	        UserDetails userdetails = dashboardService.getDashboard(user, model);
@@ -43,7 +53,7 @@ public class UserDashboardController {
 	        model.addAttribute("stocks", dashboardService.getAllStockData()); // Set stocks for JSP
 	        return "UserDashboard"; // Looks for UserDashboard.jsp
 	    }
-
+		}
 	    return "redirect:/LoginPage";
 	}
 

@@ -26,17 +26,6 @@ public class UserLoginController {
 	public String getRegistrationPage() {
 	    return "LoginPage";
 	}
-	
-	@PostMapping("/login")
-	public String getUserDashboard(@ModelAttribute UserLog userlog,HttpSession session,Model model) {
-		 
-		session.setAttribute("userlog", userlog);
 		
-		model.addAttribute("Username", userlog.getUsername());
-
-		return service.userLogin(userlog, model);
-	}
-	
-	
 	
 }
