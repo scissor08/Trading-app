@@ -1,7 +1,6 @@
 package com.tradingapplication.TradingApplication.configuration;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.text.SimpleDateFormat; 
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;

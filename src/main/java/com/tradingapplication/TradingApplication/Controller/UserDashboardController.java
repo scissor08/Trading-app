@@ -1,6 +1,6 @@
 package com.tradingapplication.TradingApplication.Controller;
 
-import org.springframework.beans.factory.annotation.Autowired; 
+import org.springframework.beans.factory.annotation.Autowired;  
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
 import com.tradingapplication.TradingApplication.Entity.UserDetails;
 import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Service.UserDashboardServiceInterface;
@@ -35,15 +34,9 @@ public class UserDashboardController {
 		return "LoginPage";
 	}
 	
-	@PostMapping("/dashboard")
+	@GetMapping("/dashboard")
 	public String userDashboard(UserLog userlog,HttpSession session, Model model) {
 		
-		session.setAttribute("userlog", userlog);
-		
-		model.addAttribute("Username", userlog.getUsername());
-		
-		boolean validate=service.userLogin(userlog, model);
-		if(validate) {
 		UserLog user = (UserLog) session.getAttribute("userlog");
 
 	    if (user != null) {
@@ -53,7 +46,7 @@ public class UserDashboardController {
 	        model.addAttribute("stocks", dashboardService.getAllStockData()); // Set stocks for JSP
 	        return "UserDashboard"; // Looks for UserDashboard.jsp
 	    }
-		}
+		
 	    return "redirect:/LoginPage";
 	}
 

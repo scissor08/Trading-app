@@ -11,6 +11,6 @@ import jakarta.servlet.http.HttpSession;
 public interface UserServiceInterface {
 
 	public String addNewUser(UserRequestDTO requestDto);
-	boolean userLogin(UserLog userlog, Model model);
+	String userLogin(UserLog userlog, Model model);
 	public String sendOtp(UserRequestDTO requestDto,HttpSession session);
 }

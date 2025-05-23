@@ -2,7 +2,7 @@
 package com.tradingapplication.TradingApplication.Service;
 
 
-import java.util.Date;  
+import java.util.Date;   
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
 import com.tradingapplication.TradingApplication.Exception.DataNotFoundException;
 import com.tradingapplication.TradingApplication.Repository.PortfolioRepository;
 import com.tradingapplication.TradingApplication.Repository.StockRepository;
-import com.tradingapplication.TradingApplication.Repository.TranscationRepository;
+import com.tradingapplication.TradingApplication.Repository.TransactionRepository;
 import com.tradingapplication.TradingApplication.Repository.UserAccountDetailsRepository;
 import com.tradingapplication.TradingApplication.dto.BuyRequestDTO;
 import com.tradingapplication.TradingApplication.dto.BuyResponseDTO;
@@ -42,7 +42,7 @@ public class BuyService implements BuyServiceInterface {
     @Autowired
     private UserAccountDetailsRepository userAccountDetailsRepository;
     @Autowired
-    TranscationRepository transcationRepository;
+    TransactionRepository transcationRepository;
 
     public BuyResponseDTO buyStock(int id, BuyRequestDTO request) {
     	
