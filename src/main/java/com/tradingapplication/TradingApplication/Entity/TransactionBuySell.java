@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,13 +23,15 @@ public class TransactionBuySell {
 	private String orderId;
 	private Date transactionTime;
 	private String StockName;
-	private Integer noOfStocks;
-	private Double currentPrice;
-	private Double totalAmount;
+	private int noOfStocks;
+	private double currentPrice;
+	private double totalAmount;
 	private String transactionType; // "BUY" or "SELL"
 
 	
 	@ManyToOne
-	UserDetails userDetails;
+	@JoinColumn(name = "user_id")
+	private UserDetails userDetails;
+
 
 }

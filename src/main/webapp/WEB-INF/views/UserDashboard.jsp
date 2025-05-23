@@ -213,6 +213,23 @@
     </a>
   </header>
 
+<<<<<<< HEAD
+=======
+  <aside>
+    <ul>
+	  <li><a href="${pageContext.request.contextPath}/profile">Profile</a></li>
+      <li><a href="${pageContext.request.contextPath}/dashboard">Dashboard</a></li>
+      <li><a href="${pageContext.request.contextPath}/portfolio">Portfolio</a></li>
+      <li><a href="${pageContext.request.contextPath}/stocks">Stocks</a></li>
+      <li><a href="${pageContext.request.contextPath}/trades">Buy/Sell</a></li>
+      <li><a href="${pageContext.request.contextPath}/growthreport">Profile</a></li>
+      <li><a href="${pageContext.request.contextPath}/transactions">Transaction</a></li>
+      <li><a href="${pageContext.request.contextPath}/wallet">Wallet</a></li>
+      <li><a href="${pageContext.request.contextPath}/logout">Log Out</a></li>
+    </ul>
+  </aside>
+
+>>>>>>> 868543b170bb52600ff5d557bbfe50ade9850d8d
   <main>
    <h2 style="margin-top: 80px;">Stock Overview Table</h2>
 

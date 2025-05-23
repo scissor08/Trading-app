@@ -1,7 +1,7 @@
 package com.tradingapplication.TradingApplication.Service;
 
 
-import java.util.Random;
+import java.util.Random; 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -78,7 +78,7 @@ public class UserService implements UserServiceInterface{
 		if(username.equals(existingUsers.getUserLog().getUsername()) && password.equals(existingUsers.getUserLog().getPassword())) {
 			model.addAttribute("balance",existingUsers.getUserAccountDetails().getBalance());
 			model.addAttribute("username", existingUsers.getUsername());
-			return "UserDashboard";
+			return "redirect:/dashboard";
 		}
 		return "LoginPage";
 						

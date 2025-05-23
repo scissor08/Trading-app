@@ -1,9 +1,13 @@
 package com.tradingapplication.TradingApplication.Controller;
 
+<<<<<<< HEAD
 import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired; 
+=======
+import org.springframework.beans.factory.annotation.Autowired;  
+>>>>>>> 868543b170bb52600ff5d557bbfe50ade9850d8d
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +15,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+<<<<<<< HEAD
 import com.tradingapplication.TradingApplication.Entity.Portfolio;
+=======
+>>>>>>> 868543b170bb52600ff5d557bbfe50ade9850d8d
 import com.tradingapplication.TradingApplication.Entity.UserDetails;
 import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Exception.DataNotFoundException;
@@ -19,7 +26,11 @@ import com.tradingapplication.TradingApplication.Repository.PortfolioRepository;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
 import com.tradingapplication.TradingApplication.Service.PortfolioService;
 import com.tradingapplication.TradingApplication.Service.UserDashboardServiceInterface;
+<<<<<<< HEAD
 import com.tradingapplication.TradingApplication.dto.PortfolioResponseDTO;
+=======
+import com.tradingapplication.TradingApplication.Service.UserService;
+>>>>>>> 868543b170bb52600ff5d557bbfe50ade9850d8d
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +42,8 @@ public class UserDashboardController {
 
 	@Autowired
 	UserDashboardServiceInterface dashboardService;
+	@Autowired
+	UserService service;
 	
 	
 
@@ -52,8 +65,9 @@ public class UserDashboardController {
 	}
 	
 	@GetMapping("/dashboard")
-	public String userDashboard(HttpSession session, Model model) {
-	    UserLog user = (UserLog) session.getAttribute("userlog");
+	public String userDashboard(UserLog userlog,HttpSession session, Model model) {
+		
+		UserLog user = (UserLog) session.getAttribute("userlog");
 
 	    if (user != null) {
 	        UserDetails userdetails = dashboardService.getDashboard(user, model);
@@ -62,7 +76,7 @@ public class UserDashboardController {
 	        model.addAttribute("stocks", dashboardService.getAllStockData()); // Set stocks for JSP
 	        return "UserDashboard"; // Looks for UserDashboard.jsp
 	    }
-
+		
 	    return "redirect:/LoginPage";
 	}
 

@@ -59,26 +59,6 @@ public class UserDetails {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateOfBirth;
-
-//@Entity
-//@Data
-//@NoArgsConstructor
-//@AllArgsConstructor
-//public class UserDetails {
-//
-//	
-//	@Id
-//	@GeneratedValue(strategy = GenerationType.IDENTITY)
-//	private int userId;
-//	private String name;
-//	private byte[] profileImage;
-//	private String username;
-//	private String email;
-//	private String mobile;
-//	private String pan;
-//    @DateTimeFormat(pattern = "yyyy-MM-dd")
-//	private Date dateOfBirth;
-    
     
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name = "user_log_username", referencedColumnName = "username")
@@ -91,8 +71,9 @@ public class UserDetails {
     @OneToOne(cascade=CascadeType.ALL)
     UserAccountDetails userAccountDetails;
     
-    @OneToMany
-   List< TransactionBuySell> transaction;
+    @OneToMany(mappedBy = "userDetails", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<TransactionBuySell> transaction;
+
     
     @OneToMany
     private List<Portfolio> portfolio;

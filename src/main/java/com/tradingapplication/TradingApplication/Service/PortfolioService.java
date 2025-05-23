@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.tradingapplication.TradingApplication.Entity.Portfolio;
@@ -19,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @Slf4j
+
 public class PortfolioService implements PortfolioServiceInterface {
 	
 	@Autowired
@@ -28,8 +30,13 @@ public class PortfolioService implements PortfolioServiceInterface {
 	@Autowired
 	UserAccountDetailsRepository userAccountDetailsRepository;
 	
+<<<<<<< HEAD
 	
 	public List<PortfolioResponseDTO> getPortfolio(UserLog name) {
+=======
+	@Cacheable("fetchportfolio")
+	public List<PortfolioResponseDTO> getPortfolio(int id) {
+>>>>>>> 868543b170bb52600ff5d557bbfe50ade9850d8d
 		
 		
 //		UserAccountDetails user = userAccountDetailsRepository.findById(id)
