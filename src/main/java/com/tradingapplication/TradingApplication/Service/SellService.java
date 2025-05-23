@@ -14,6 +14,7 @@ import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
 import com.tradingapplication.TradingApplication.Exception.DataNotFoundException;
 import com.tradingapplication.TradingApplication.Repository.PortfolioRepository;
 import com.tradingapplication.TradingApplication.Repository.StockRepository;
+import com.tradingapplication.TradingApplication.Repository.TransactionRepository;
 import com.tradingapplication.TradingApplication.Repository.UserAccountDetailsRepository;
 import com.tradingapplication.TradingApplication.dto.SellRequestDTO;
 import com.tradingapplication.TradingApplication.dto.SellResponseDTO;
@@ -40,7 +41,7 @@ public class SellService implements SellServiceInterface {
     private UserAccountDetailsRepository userAccountDetailsRepository;
 
     @Autowired
-    private TranscationRepository transcationRepository;
+   private  TransactionRepository transcationRepository;
 
     @Override
     public SellResponseDTO sellStock(int id, SellRequestDTO request) {
