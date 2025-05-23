@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <!DOCTYPE html>
 <html>
@@ -8,14 +7,18 @@
 <title>Dashboard</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- styles are unchanged -->
 <style>
- body {
+    * {
+        box-sizing: border-box;
+    }
+
+    body, html {
         margin: 0;
         padding: 0;
+        height: 100%;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #f4f7f9;
     }
 
     header {
@@ -25,7 +28,11 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        flex-wrap: wrap;
+        position: fixed;
+        top: 0;
+        left: 200px;
+        right: 0;
+        z-index: 1000;
     }
 
     .header-left {
@@ -49,21 +56,6 @@
         border-radius: 6px;
         color: white;
         cursor: pointer;
-    }
-
-    h2 {
-        margin: 0;
-        font-size: 1.4rem;
-    }
-
-    .header-center {
-        text-align: center;
-    }
-
-    .header-right {
-        display: flex;
-        align-items: center;
-        gap: 1.2rem;
     }
 
     .wallet-info {
@@ -107,9 +99,12 @@
         background-color: #1e2d50;
         color: white;
         width: 200px;
-        min-height: 100vh;
-        float: left;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
         padding: 2rem 1rem;
+        overflow-y: auto;
     }
 
     aside ul {
@@ -132,55 +127,75 @@
         color: #ffd700;
     }
 
- /* MAIN CONTENT */
-  main {
-    grid-area: main;
-    padding: 2rem 3rem;
-    background-color: var(--color-white);
-    overflow-y: auto;
-  }
-  main p {
-    font-size: 1.15rem;
-    margin-bottom: 1.2rem;
-  }
-  main p strong {
-    display: inline-block;
-    width: 140px;
-    color: var(--color-primary);
-  }
-  main button {
-    background-color: #007bff;
-    border: none;
-    padding: 12px 28px;
-    border-radius: 25px;
-    font-size: 1rem;
-    color: var(--color-text-light);
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  main button a {
-    color: inherit;
-    text-decoration: none;
-  }
+    main {
+        margin-left: 200px;
+        margin-top: 80px; /* Height of header */
+        padding: 2rem 3rem;
+        height: calc(100vh - 80px);
+        overflow-y: auto;
+        background-color: #f4f7f9;
+    }
+
+    .table-container {
+        overflow-x: auto;
+        background-color: white;
+        padding: 1rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 0.75rem 1rem;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #0e1c36;
+        color: white;
+    }
+
+    tr:hover {
+        background-color: #f1f1f1;
+    }
 
     footer {
-        clear: both;
         padding: 1rem;
         text-align: center;
         background-color: #0e1c36;
         color: white;
-        margin-top: 2rem;
+        position: relative;
+        z-index: 1;
     }
-
 </style>
 </head>
 <body>
-<div>
+  <aside>
+    <ul>
+      <li><a href="${pageContext.request.contextPath}/profile">Profile</a></li>
+      <li><a href="${pageContext.request.contextPath}/dashboard">Dashboard</a></li>
+      <li><a href="${pageContext.request.contextPath}/portfolio">Portfolio</a></li>
+      <li><a href="${pageContext.request.contextPath}/stocks">Stocks</a></li>
+      <li><a href="${pageContext.request.contextPath}/trades">Buy/Sell</a></li>
+      <li><a href="${pageContext.request.contextPath}/transactions">Transaction</a></li>
+      <li><a href="${pageContext.request.contextPath}/wallet">Wallet</a></li>
+ <li><a href="${pageContext.request.contextPath}/api/holdings">Holdings</a></li>
+
+
+      <li><a href="${pageContext.request.contextPath}/logout">Log Out</a></li>
+    </ul>
+  </aside>
+
   <header>
-    <form action="/search" method="get">
-      <input type="text" name="query" placeholder="Search">
-      <input type="submit" value="Search" />
-    </form>
+    <div class="header-left">
+      <input type="text" id="searchInput" placeholder="Search stocks">
+      <button onclick="filterTable()">Search</button>
+    </div>
 
     <h2>Welcome, ${username}</h2>
 
@@ -198,34 +213,11 @@
     </a>
   </header>
 
-  <aside>
-    <ul>
-      <li><a href="${pageContext.request.contextPath}/profile">Profile</a></li>
-      <li><a href="${pageContext.request.contextPath}/dashBoard">Dashboard</a></li>
-      <li><a href="${pageContext.request.contextPath}/portfolio">Portfolio</a></li>
-      <li><a href="${pageContext.request.contextPath}/stocks">Stocks</a></li>
-      <li><a href="${pageContext.request.contextPath}/trades">Buy/Sell</a></li>
-      <li><a href="${pageContext.request.contextPath}/transactions">Transaction</a></li>
-      <li><a href="${pageContext.request.contextPath}/wallet">Wallet</a></li>
-      <li><a href="${pageContext.request.contextPath}/logout">Log Out</a></li>
-    </ul>
-  </aside>
-
   <main>
-    <h2>Market Highlights</h2>
-    <div class="stock-cards">
-      <c:forEach var="stock" items="${stocks}">
-        <div class="stock-card">
-          <h3>${stock.symbol}</h3>
-          <p><strong>High:</strong> ${stock.high}</p>
-          <p><strong>Low:</strong> ${stock.low}</p>
-        </div>
-      </c:forEach>
-    </div>
+   <h2 style="margin-top: 80px;">Stock Overview Table</h2>
 
-    <h2 style="margin-top: 50px;">Stock Overview Table</h2>
     <div class="table-container">
-      <table>
+      <table id="stockTable">
         <thead>
           <tr>
             <th>Symbol</th>
@@ -252,44 +244,58 @@
   <footer>
     &copy; 2025 Trading App | All rights reserved
   </footer>
-</div>
 
-<script>
-const stockSymbols = [<c:forEach var="s" items="${stocks}" varStatus="status">'${s.symbol}'<c:if test="${!status.last}">,</c:if></c:forEach>];
-const stockHighs = [<c:forEach var="s" items="${stocks}" varStatus="status">${s.high}<c:if test="${!status.last}">,</c:if></c:forEach>];
-const stockLows = [<c:forEach var="s" items="${stocks}" varStatus="status">${s.low}<c:if test="${!status.last}">,</c:if></c:forEach>];
+  <script>
+    const stockSymbols = [<c:forEach var="s" items="${stocks}" varStatus="status">'${s.symbol}'<c:if test="${!status.last}">,</c:if></c:forEach>];
+    const stockHighs = [<c:forEach var="s" items="${stocks}" varStatus="status">${s.high}<c:if test="${!status.last}">,</c:if></c:forEach>];
+    const stockLows = [<c:forEach var="s" items="${stocks}" varStatus="status">${s.low}<c:if test="${!status.last}">,</c:if></c:forEach>];
 
-const ctx = document.getElementById('stockChart').getContext('2d');
-new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels: stockSymbols,
-    datasets: [
-      {
-        label: 'High Price',
-        backgroundColor: 'orange',
-        data: stockHighs
+    const ctx = document.getElementById('stockChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: stockSymbols,
+        datasets: [
+          {
+            label: 'High Price',
+            backgroundColor: 'orange',
+            data: stockHighs
+          },
+          {
+            label: 'Low Price',
+            backgroundColor: 'grey',
+            data: stockLows
+          }
+        ]
       },
-      {
-        label: 'Low Price',
-        backgroundColor: 'grey',
-        data: stockLows
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            labels: { color: 'orange' }
+          }
+        },
+        scales: {
+          x: { ticks: { color: 'orange' } },
+          y: { ticks: { color: 'orange' } }
+        }
       }
-    ]
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      legend: {
-        labels: { color: 'orange' }
+    });
+
+    function filterTable() {
+      var input = document.getElementById("searchInput");
+      var filter = input.value.toUpperCase();
+      var table = document.getElementById("stockTable");
+      var tr = table.getElementsByTagName("tr");
+
+      for (var i = 1; i < tr.length; i++) {
+        var td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          var txtValue = td.textContent || td.innerText;
+          tr[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+        }       
       }
-    },
-    scales: {
-      x: { ticks: { color: 'orange' } },
-      y: { ticks: { color: 'orange' } }
     }
-  }
-});
-</script>
+  </script>
 </body>
 </html>

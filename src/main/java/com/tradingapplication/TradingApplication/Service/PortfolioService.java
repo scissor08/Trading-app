@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.tradingapplication.TradingApplication.Entity.Portfolio;
 import com.tradingapplication.TradingApplication.Entity.UserDetails;
+import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Repository.PortfolioRepository;
 import com.tradingapplication.TradingApplication.Repository.UserAccountDetailsRepository;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
@@ -28,13 +29,13 @@ public class PortfolioService implements PortfolioServiceInterface {
 	UserAccountDetailsRepository userAccountDetailsRepository;
 	
 	
-	public List<PortfolioResponseDTO> getPortfolio(int id) {
+	public List<PortfolioResponseDTO> getPortfolio(UserLog name) {
 		
 		
 //		UserAccountDetails user = userAccountDetailsRepository.findById(id)
 //				.orElseThrow(()->new DataNotFoundException("User Not Found"));
 		
-		UserDetails user = userDetailsRepository.findById(id).orElseThrow(()->new DataNotFoundException("User Not Found"));
+		UserDetails user = userDetailsRepository.findByUsername(name.getUsername()).orElseThrow(()->new DataNotFoundException("User Not Found"));
 		List<Portfolio> portfolios = portfolioRepository.findByUser(user);
 
 		//List<Portfolio> portfolios = portfolioRepository.findByUser_Id(id);

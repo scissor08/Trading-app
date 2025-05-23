@@ -1,5 +1,8 @@
 package com.tradingapplication.TradingApplication.Controller;
 
+import java.security.Principal;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,19 +11,35 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
+import com.tradingapplication.TradingApplication.Entity.Portfolio;
 import com.tradingapplication.TradingApplication.Entity.UserDetails;
 import com.tradingapplication.TradingApplication.Entity.UserLog;
+import com.tradingapplication.TradingApplication.Exception.DataNotFoundException;
+import com.tradingapplication.TradingApplication.Repository.PortfolioRepository;
+import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
+import com.tradingapplication.TradingApplication.Service.PortfolioService;
 import com.tradingapplication.TradingApplication.Service.UserDashboardServiceInterface;
+import com.tradingapplication.TradingApplication.dto.PortfolioResponseDTO;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping
+@Slf4j
 public class UserDashboardController {
 
 	@Autowired
 	UserDashboardServiceInterface dashboardService;
+	
+	
+
+
+
+
+
+
+	
 	
 	@GetMapping("/profile")
 	public String getUserDetails(HttpSession session,Model model) {
