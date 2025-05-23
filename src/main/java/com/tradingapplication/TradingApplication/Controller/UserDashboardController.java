@@ -1,6 +1,6 @@
 package com.tradingapplication.TradingApplication.Controller;
 
-import org.springframework.beans.factory.annotation.Autowired; 
+import org.springframework.beans.factory.annotation.Autowired;  
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,19 +8,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
 import com.tradingapplication.TradingApplication.Entity.UserDetails;
 import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Service.UserDashboardServiceInterface;
+import com.tradingapplication.TradingApplication.Service.UserService;
 
 import jakarta.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping
 public class UserDashboardController {
 
 	@Autowired
 	UserDashboardServiceInterface dashboardService;
+	@Autowired
+	UserService service;
 	
 	@GetMapping("/profile")
 	public String getUserDetails(HttpSession session,Model model) {
@@ -32,22 +34,23 @@ public class UserDashboardController {
 		return "LoginPage";
 	}
 	
-	@GetMapping("/dashBoard")
-	public String userDashboard(HttpSession session,Model model) {
+	@GetMapping("/dashboard")
+	public String userDashboard(UserLog userlog,HttpSession session, Model model) {
 		
+		UserLog user = (UserLog) session.getAttribute("userlog");
+
+	    if (user != null) {
+	        UserDetails userdetails = dashboardService.getDashboard(user, model);
+	        model.addAttribute("username", userdetails.getUsername());
+	        model.addAttribute("balance", userdetails.getUserAccountDetails().getBalance());
+	        model.addAttribute("stocks", dashboardService.getAllStockData()); // Set stocks for JSP
+	        return "UserDashboard"; // Looks for UserDashboard.jsp
+	    }
 		
-		UserLog user =(UserLog) session.getAttribute("userlog");
-		
-		UserDetails userdetails=dashboardService.getDashboard(user, model);
-		
-		if(user!=null) {
-			model.addAttribute("username", userdetails.getUsername());
-			model.addAttribute("balance", userdetails.getUserAccountDetails().getBalance());
-			return "UserDashboard";
-		}
-		return"LoginPage";
-		
+	    return "redirect:/LoginPage";
 	}
+
+
 	
 	@GetMapping("/portfolio")
 	public String getUserPortfolio(HttpSession session,Model model) {
@@ -59,7 +62,7 @@ public class UserDashboardController {
 	}
 	
 	
-	@GetMapping("/stocks")
+	@GetMapping("/stock")
 	public String getAllStocks(HttpSession session,Model model) {
 		UserLog user = (UserLog) session.getAttribute("userlog");
 		if(user!=null) {
@@ -110,7 +113,8 @@ public class UserDashboardController {
 	}
 	
 	@GetMapping("/logout")
-	public String getLogot() {
+	public String getLogot(HttpSession session) {
+		session.invalidate();
 		return "LoginPage";
 	}
 }

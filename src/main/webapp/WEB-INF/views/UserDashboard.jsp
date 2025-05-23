@@ -1,187 +1,183 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Dashboard</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<!-- styles are unchanged -->
 <style>
-:root {
-  --background: #000;
-  --card: #111;
-  --highlight: #FFA500;
-  --shadow: rgba(255, 165, 0, 0.2);
-}
+ body {
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f7f9;
+    }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+    header {
+        background-color: #0e1c36;
+        color: white;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
 
-body {
-  background-color: var(--background);
-  color: var(--highlight);
-  font-family: Arial, sans-serif;
-}
+    .header-left {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
 
-div {
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-  grid-template-rows: auto 1fr auto;
-  grid-template-areas: 
-    "header header"
-    "aside main"
-    "footer footer";
-  min-height: 100vh;
-}
+    .header-left input[type="text"] {
+        padding: 0.5rem;
+        border-radius: 6px;
+        border: none;
+        outline: none;
+        min-width: 200px;
+    }
 
-/* Header Section */
-header {
-  grid-area: header;
-  background-color: var(--card);
-  color: var(--highlight);
-  padding: 20px;
-  position: relative;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-}
+    .header-left button {
+        padding: 0.5rem 1rem;
+        background-color: #007bff;
+        border: none;
+        border-radius: 6px;
+        color: white;
+        cursor: pointer;
+    }
 
-header form {
-  display: flex;
-  gap: 0.5rem;
-}
+    h2 {
+        margin: 0;
+        font-size: 1.4rem;
+    }
 
-header input[type="text"] {
-  padding: 10px 15px;
-  width: 250px;
-  border: 1px solid var(--highlight);
-  border-radius: 8px;
-  background-color: #222;
-  color: var(--highlight);
-  box-shadow: 0 0 8px var(--shadow);
-}
+    .header-center {
+        text-align: center;
+    }
 
-header input[type="submit"] {
-  padding: 10px 20px;
-  background-color: var(--highlight);
-  color: #000;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  box-shadow: 0 0 8px var(--shadow);
-}
+    .header-right {
+        display: flex;
+        align-items: center;
+        gap: 1.2rem;
+    }
 
-header input[type="submit"]:hover {
-  background-color: #ffb733;
-}
+    .wallet-info {
+        background-color: #fff;
+        color: #0e1c36;
+        padding: 0.8rem 1.2rem;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
 
-header h2 {
-  font-size: 1.5rem;
-  margin-left: 1rem;
-}
+    .wallet-info h3 {
+        margin: 0;
+        font-size: 1.1rem;
+    }
 
-/* Wallet Box */
-.wallet-info {
-  background-color: #222;
-  padding: 15px;
-  width: 200px;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 0 10px var(--shadow);
-}
+    .wallet-info p {
+        font-size: 1.3rem;
+        margin: 0.5rem 0;
+        font-weight: bold;
+    }
 
-.wallet-info h3 {
-  margin-bottom: 10px;
-}
+    .wallet-info a {
+        text-decoration: none;
+        color: #007bff;
+        font-weight: bold;
+    }
 
-.wallet-info p {
-  font-size: 1.2rem;
-  font-weight: bold;
-}
+    .icon-btn {
+        color: white;
+        font-size: 1.5rem;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
 
-.wallet-info a {
-  display: inline-block;
-  margin-top: 10px;
-  color: var(--highlight);
-  text-decoration: none;
-  border: 1px solid var(--highlight);
-  padding: 5px 10px;
-  border-radius: 5px;
-}
+    .icon-btn:hover {
+        color: #ffc107;
+    }
 
-.wallet-info a:hover {
-  background-color: var(--highlight);
-  color: black;
-}
+    aside {
+        background-color: #1e2d50;
+        color: white;
+        width: 200px;
+        min-height: 100vh;
+        float: left;
+        padding: 2rem 1rem;
+    }
 
-/* Icons */
-.icon-btn {
-  color: var(--highlight);
-  font-size: 1.5rem;
-  margin-left: 1rem;
-  text-decoration: none;
-}
+    aside ul {
+        list-style-type: none;
+        padding: 0;
+    }
 
-.icon-btn:hover {
-  color: #fff;
-}
+    aside ul li {
+        margin-bottom: 1.5rem;
+    }
 
-/* Aside Sidebar */
-aside {
-  grid-area: aside;
-  background-color: #111;
-  padding-top: 20px;
-  min-height: 100vh;
-}
+    aside ul li a {
+        text-decoration: none;
+        color: white;
+        font-weight: 500;
+        transition: color 0.3s;
+    }
 
-aside ul {
-  list-style: none;
-  padding: 0;
-}
+    aside ul li a:hover {
+        color: #ffd700;
+    }
 
-aside li {
-  padding: 15px;
-  font-size: 18px;
-  text-align: center;
-  border-bottom: 1px solid #333;
-}
+ /* MAIN CONTENT */
+  main {
+    grid-area: main;
+    padding: 2rem 3rem;
+    background-color: var(--color-white);
+    overflow-y: auto;
+  }
+  main p {
+    font-size: 1.15rem;
+    margin-bottom: 1.2rem;
+  }
+  main p strong {
+    display: inline-block;
+    width: 140px;
+    color: var(--color-primary);
+  }
+  main button {
+    background-color: #007bff;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 25px;
+    font-size: 1rem;
+    color: var(--color-text-light);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  main button a {
+    color: inherit;
+    text-decoration: none;
+  }
 
-aside li:hover {
-  background-color: #222;
-}
+    footer {
+        clear: both;
+        padding: 1rem;
+        text-align: center;
+        background-color: #0e1c36;
+        color: white;
+        margin-top: 2rem;
+    }
 
-aside a {
-  color: var(--highlight);
-  text-decoration: none;
-}
-
-/* Main Section */
-main {
-  grid-area: main;
-  padding: 40px;
-  background-color: var(--background);
-}
-
-/* Footer */
-footer {
-  grid-area: footer;
-  background-color: var(--card);
-  color: var(--highlight);
-  text-align: center;
-  padding: 1rem;
-}
 </style>
 </head>
 <body>
 <div>
   <header>
-    <form action="/user/search" method="get">
+    <form action="/search" method="get">
       <input type="text" name="query" placeholder="Search">
       <input type="submit" value="Search" />
     </form>
@@ -191,37 +187,110 @@ footer {
     <div class="wallet-info">
       <h3>Wallet Balance</h3>
       <p>${balance}</p>
-      <a href="/user/addbalance">Add Balance</a>
+      <a href="/addbalance">Add Balance</a>
     </div>
 
-    <a href="${pageContext.request.contextPath}/user/profile" class="icon-btn" title="Profile">
+    <a href="${pageContext.request.contextPath}/profile" class="icon-btn" title="Profile">
       <i class="fas fa-user-circle"></i>
     </a>
-    <a href="${pageContext.request.contextPath}/user/logout" class="icon-btn" title="Logout">
+    <a href="${pageContext.request.contextPath}/logout" class="icon-btn" title="Logout">
       <i class="fas fa-sign-out-alt"></i>
     </a>
   </header>
 
   <aside>
     <ul>
-      <li><a href="${pageContext.request.contextPath}/user/profile">Profile</a></li>
-      <li><a href="${pageContext.request.contextPath}/user/dashBoard">Dashboard</a></li>
-      <li><a href="${pageContext.request.contextPath}/user/portfolio">Portfolio</a></li>
-      <li><a href="${pageContext.request.contextPath}/user/stocks">Stocks</a></li>
-      <li><a href="${pageContext.request.contextPath}/user/trades">Buy/Sell</a></li>
-      <li><a href="${pageContext.request.contextPath}/user/transactions">Transaction</a></li>
-      <li><a href="${pageContext.request.contextPath}/user/wallet">Wallet</a></li>
-      <li><a href="${pageContext.request.contextPath}/user/logout">Log Out</a></li>
+	  <li><a href="${pageContext.request.contextPath}/profile">Profile</a></li>
+      <li><a href="${pageContext.request.contextPath}/dashboard">Dashboard</a></li>
+      <li><a href="${pageContext.request.contextPath}/portfolio">Portfolio</a></li>
+      <li><a href="${pageContext.request.contextPath}/stocks">Stocks</a></li>
+      <li><a href="${pageContext.request.contextPath}/trades">Buy/Sell</a></li>
+      <li><a href="${pageContext.request.contextPath}/growthreport">Profile</a></li>
+      <li><a href="${pageContext.request.contextPath}/transactions">Transaction</a></li>
+      <li><a href="${pageContext.request.contextPath}/wallet">Wallet</a></li>
+      <li><a href="${pageContext.request.contextPath}/logout">Log Out</a></li>
     </ul>
   </aside>
 
   <main>
-    <!-- Your dashboard content goes here -->
+    <h2>Market Highlights</h2>
+    <div class="stock-cards">
+      <c:forEach var="stock" items="${stocks}">
+        <div class="stock-card">
+          <h3>${stock.symbol}</h3>
+          <p><strong>High:</strong> ${stock.high}</p>
+          <p><strong>Low:</strong> ${stock.low}</p>
+        </div>
+      </c:forEach>
+    </div>
+
+    <h2 style="margin-top: 50px;">Stock Overview Table</h2>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Symbol</th>
+            <th>High</th>
+            <th>Low</th>
+          </tr>
+        </thead>
+        <tbody>
+          <c:forEach var="stock" items="${stocks}">
+            <tr>
+              <td>${stock.symbol}</td>
+              <td>${stock.high}</td>
+              <td>${stock.low}</td>
+            </tr>
+          </c:forEach>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 style="margin-top: 50px;">Stock Price Comparison</h2>
+    <canvas id="stockChart" width="900" height="400"></canvas>
   </main>
 
   <footer>
     &copy; 2025 Trading App | All rights reserved
   </footer>
 </div>
+
+<script>
+const stockSymbols = [<c:forEach var="s" items="${stocks}" varStatus="status">'${s.symbol}'<c:if test="${!status.last}">,</c:if></c:forEach>];
+const stockHighs = [<c:forEach var="s" items="${stocks}" varStatus="status">${s.high}<c:if test="${!status.last}">,</c:if></c:forEach>];
+const stockLows = [<c:forEach var="s" items="${stocks}" varStatus="status">${s.low}<c:if test="${!status.last}">,</c:if></c:forEach>];
+
+const ctx = document.getElementById('stockChart').getContext('2d');
+new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: stockSymbols,
+    datasets: [
+      {
+        label: 'High Price',
+        backgroundColor: 'orange',
+        data: stockHighs
+      },
+      {
+        label: 'Low Price',
+        backgroundColor: 'grey',
+        data: stockLows
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        labels: { color: 'orange' }
+      }
+    },
+    scales: {
+      x: { ticks: { color: 'orange' } },
+      y: { ticks: { color: 'orange' } }
+    }
+  }
+});
+</script>
 </body>
 </html>

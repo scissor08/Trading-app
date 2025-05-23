@@ -184,46 +184,48 @@
        </div>
 
        <div class="header-center">
-           <h2>WELCOME ${userDetails.username}</h2>
+           <h2>WELCOME ${userDetails.name}</h2>
        </div>
 
        <div class="header-right">
            <div class="wallet-info">
                <h3>Wallet Balance</h3>
                <p>${userAccount.balance}</p>
-               <a href="/user/addbalance">Add Balance</a>
+               <a href="/addbalance">Add Balance</a>
            </div>
-           <a href="${pageContext.request.contextPath}/user/profile" class="icon-btn" title="Profile">
+           <a href="${pageContext.request.contextPath}/profile" class="icon-btn" title="Profile">
                <i class="fas fa-user-circle"></i>
            </a>
-           <a href="${pageContext.request.contextPath}/user/logout" class="icon-btn" title="Logout">
+           <a href="${pageContext.request.contextPath}/logout" class="icon-btn" title="Logout">
                <i class="fas fa-sign-out-alt"></i>
            </a>
        </div>
    </header>
 
    <aside>
-        <ul>
-            <li><a href="${pageContext.request.contextPath}/user/profile">Profile</a></li>
-            <li><a href="${pageContext.request.contextPath}/user/dashBoard">Dashboard</a></li>
-            <li><a href="${pageContext.request.contextPath}/portfolio">Portfolio</a></li>
-            <li><a href="${pageContext.request.contextPath}/api/stocks/view">Stocks</a></li>
-            <li><a href="${pageContext.request.contextPath}/trades">Buy/Sell</a></li>
-            <li><a href="${pageContext.request.contextPath}/transactions">Transaction</a></li>
-            <li><a href="${pageContext.request.contextPath}/user/wallet">Wallet</a></li>
-            <li><a href="${pageContext.request.contextPath}/user/logout">Log Out</a></li>
-        </ul>
-   </aside>
+    <ul>
+      <li><a href="${pageContext.request.contextPath}/profile">Profile</a></li>
+      <li><a href="${pageContext.request.contextPath}/dashboard">Dashboard</a></li>
+      <li><a href="${pageContext.request.contextPath}/portfolio">Portfolio</a></li>
+      <li><a href="${pageContext.request.contextPath}/stocks">Stocks</a></li>
+      <li><a href="${pageContext.request.contextPath}/trades">Buy/Sell</a></li>
+      <li><a href="${pageContext.request.contextPath}/growthreport">Profile</a></li>
+      <li><a href="${pageContext.request.contextPath}/transactions">Transaction</a></li>
+      <li><a href="${pageContext.request.contextPath}/wallet">Wallet</a></li>
+      <li><a href="${pageContext.request.contextPath}/logout">Log Out</a></li>
+    </ul>
+  </aside>
+
 
    <main>
-      <p><strong>UserId:</strong> ${userDetails.userId}</p>
-      <p><strong>Name:</strong> ${userDetails.username}</p>
+      <p><strong>Name:</strong> ${userDetails.name}</p>
+      <p><strong>Username:</strong> ${userDetails.username}</p>
       <p><strong>Email:</strong> ${userDetails.email}</p>
       <p><strong>Mobile:</strong> ${userDetails.mobile}</p>
       <p><strong>PAN NO:</strong> ${userDetails.pan}</p>
       <p><strong>DOB:</strong> ${userDetails.dateOfBirth}</p>
       <p><strong>Wallet Balance:</strong> ${userAccount.balance}</p>
-      <button><a href="${pageContext.request.contextPath}/user/addbalance">Add Balance</a></button>   </main>
+      <button><a href="${pageContext.request.contextPath}/addbalance">Add Balance</a></button>   </main>
 
    <footer>
        &copy; 2025 Trading App | All rights reserved

@@ -6,7 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class UserRequestDTO {
 
-	
+	private String name;
 	private String username;
 	private String password;
 	private String cpass;
@@ -78,10 +78,19 @@ public class UserRequestDTO {
 		this.cpass = cpass;
 	}
 
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	@Override
 	public String toString() {
-		return "UserRequestDTO [username=" + username + ", password=" + password + ", cpass=" + cpass + ", email="
-				+ email + ", mobile=" + mobile + ", pan=" + pan + ", dateOfBirth=" + dateOfBirth + "]";
+		return "UserRequestDTO [name=" + name + ", username=" + username + ", password=" + password + ", cpass=" + cpass
+				+ ", email=" + email + ", mobile=" + mobile + ", pan=" + pan + ", dateOfBirth=" + dateOfBirth + "]";
 	}
 	
 	

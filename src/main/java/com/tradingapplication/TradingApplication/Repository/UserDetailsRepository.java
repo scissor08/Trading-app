@@ -18,5 +18,4 @@ public interface UserDetailsRepository extends JpaRepository<UserDetails,Integer
 	
 	Optional<UserDetails> findByUsername(String username);
 	
-	Optional<UserDetails> findByEmail(String email);
 }
