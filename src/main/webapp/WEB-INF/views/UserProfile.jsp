@@ -209,7 +209,7 @@
       <li><a href="${pageContext.request.contextPath}/portfolio">Portfolio</a></li>
       <li><a href="${pageContext.request.contextPath}/stocks">Stocks</a></li>
       <li><a href="${pageContext.request.contextPath}/trades">Buy/Sell</a></li>
-      <li><a href="${pageContext.request.contextPath}/growthreport">Profile</a></li>
+      <li><a href="${pageContext.request.contextPath}/growthreport">Profit/Loss Report</a></li>
       <li><a href="${pageContext.request.contextPath}/transactions">Transaction</a></li>
       <li><a href="${pageContext.request.contextPath}/wallet">Wallet</a></li>
       <li><a href="${pageContext.request.contextPath}/logout">Log Out</a></li>
