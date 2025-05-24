@@ -2,7 +2,7 @@
 package com.tradingapplication.TradingApplication.Service;
 
 
-import java.util.Date;   
+import java.util.Date;    
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +12,18 @@ import com.tradingapplication.TradingApplication.Entity.Portfolio;
 import com.tradingapplication.TradingApplication.Entity.Stock;
 import com.tradingapplication.TradingApplication.Entity.TransactionBuySell;
 import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
+import com.tradingapplication.TradingApplication.Entity.UserDetails;
+import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Exception.DataNotFoundException;
 import com.tradingapplication.TradingApplication.Repository.PortfolioRepository;
 import com.tradingapplication.TradingApplication.Repository.StockRepository;
 import com.tradingapplication.TradingApplication.Repository.TransactionRepository;
 import com.tradingapplication.TradingApplication.Repository.UserAccountDetailsRepository;
+import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
 import com.tradingapplication.TradingApplication.dto.BuyRequestDTO;
 import com.tradingapplication.TradingApplication.dto.BuyResponseDTO;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,14 +42,21 @@ public class BuyService implements BuyServiceInterface {
 
     @Autowired
     private StockRepository stockRepository;
-
+    @Autowired
+private UserDetailsRepository userDetailsRepository;
     @Autowired
     private UserAccountDetailsRepository userAccountDetailsRepository;
     @Autowired
     TransactionRepository transcationRepository;
 
-    public BuyResponseDTO buyStock(int id, BuyRequestDTO request) {
+    public BuyResponseDTO buyStock(HttpSession session, BuyRequestDTO request) {
     	
+    	
+    	UserLog getuser= (UserLog) session.getAttribute("userlog");
+    	
+    	
+    	UserDetails getid = userDetailsRepository.findByUsername(getuser.getUsername()).orElseThrow(()-> new DataNotFoundException("User not Found...."));	
+    	int id = getid.getUserId();
     	log.info("BuyStock Method Invoked for userId: {}, symbol: {}, quantity: {}",
     	         id, request.getSymbol(), request.getQuantity());
 

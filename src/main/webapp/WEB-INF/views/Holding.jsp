@@ -31,11 +31,11 @@
                 <tr>
                     <td>${h.symbol}</td>
                     <td>${h.quantity}</td>
-                    <td>${h.buyPrice}</td>
-                    <td>${h.currentPrice}</td>
-                    <td>${h.quantity * h.buyPrice}</td>
-                    <td>${h.quantity * h.currentPrice}</td>
-                    <c:set var="gain" value="${h.quantity * (h.currentPrice - h.buyPrice)}"/>
+                    <td>${h.price}</td>
+                  
+                    <td>${h.quantity * h.price}</td>
+                    <td>${h.quantity * 2}</td>
+                    <c:set var="gain" value="${h.quantity * (1000 - h.price)}"/>
                     <td style="color: ${gain >= 0 ? 'green' : 'red'};">₹${gain}</td>
                 </tr>
             </c:forEach>

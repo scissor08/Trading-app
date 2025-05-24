@@ -20,6 +20,7 @@ import com.tradingapplication.TradingApplication.dto.BuyResponseDTO;
 import com.tradingapplication.TradingApplication.dto.SellRequestDTO;
 import com.tradingapplication.TradingApplication.dto.SellResponseDTO;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
@@ -29,27 +30,27 @@ public class BuyRequestController {
 	BuyServiceInterface buyServiceInterface;
 	
 	@PostMapping("/buy")
-	public ResponseEntity<?> buyRequest(@RequestParam int id,@RequestBody BuyRequestDTO dto){
+	public ResponseEntity<?> buyRequest(@RequestBody BuyRequestDTO dto,HttpSession session){
 		log.info("Received buy request: userId={}, stockSymbol={}, quantity={}",
-		         id, dto.getSymbol(), dto.getQuantity());
+		          dto.getSymbol(), dto.getQuantity());
 
 		try {
-		BuyResponseDTO response = buyServiceInterface.buyStock(id, dto);
+		BuyResponseDTO response = buyServiceInterface.buyStock(session, dto);
 		
 		
 		return ResponseEntity.ok(response);
 		}catch(DataNotFoundException e) {
-			 log.warn("Data not found during buy request for userId {}: {}", id, e.getMessage());
+			 log.warn("Data not found during buy request for userId {}: {}",  e.getMessage());
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 			
 			
 			
 		}catch(IllegalArgumentException e) {
-			log.warn("Bad request during buy operation for userId {}: {}", id, e.getMessage());
+			log.warn("Bad request during buy operation for userId {}: {}",  e.getMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
 			
 		}catch(Exception e) {
-			log.error("Unexpected error during buy operation for userId {}: {}", id, e.getMessage(), e);
+			log.error("Unexpected error during buy operation for userId {}: {}", e.getMessage(), e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
 		
