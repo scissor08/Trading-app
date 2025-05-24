@@ -80,9 +80,9 @@ public class GrowthReportService implements GrowthReportServiceInterface {
 			growthRe.setProfitValue(profitvalue);
 			growthRe.setCurrentHoldings(stockholdings);
 			growthRe.setCurrentProfitValue(currentprofit);
+			if (growthRe.getTotalBuyPrice()>0.0) {
 			growthReport.add(growthRe);
-			
-			
+			}
 		}
 		
 		return growthReport;
