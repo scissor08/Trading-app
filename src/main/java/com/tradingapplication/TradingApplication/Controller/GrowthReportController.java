@@ -1,5 +1,6 @@
 package com.tradingapplication.TradingApplication.Controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired; 
@@ -11,6 +12,7 @@ import com.tradingapplication.TradingApplication.Entity.GrowthReportEntity;
 import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Service.GrowthReportServiceInterface;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -26,7 +28,13 @@ public class GrowthReportController {
 		List<GrowthReportEntity> growth=growthReport.getGrowthReport(username,model);
 		model.addAttribute("report", growth);
 		return "GrowthReportPage";
-		
 	}
+
+    @GetMapping("/download/csv")
+    public void downloadCsv(HttpServletResponse response) throws IOException {
+        response.setContentType("text/csv");
+        response.setHeader("Content-Disposition", "attachment; filename=growth_report.csv");
+        growthReport.exportCsv(response.getWriter());
+    }
 
 }

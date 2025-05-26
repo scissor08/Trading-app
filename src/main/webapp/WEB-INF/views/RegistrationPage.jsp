@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -142,35 +144,71 @@ form button:hover {
 </main>
 <script>
 function validateForm() {
-	let username = document.getElementById("username").value.trim();
-	let email = document.getElementById("email").value.trim();
-	let mobile = document.getElementById("mobile").value.trim();
-	let pan = document.getElementById("pan").value.trim();
+    // Get form values
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const mobile = document.getElementById("mobile").value.trim();
+    const password = document.getElementById("password").value;
+    const cpass = document.getElementById("cpass").value;
+    const pan = document.getElementById("pan").value.trim();
 
-	const nameRegex = /^[A-Za-z ]+$/;
-	const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
-	const mobileRegex = /^[6-9]\d{9}$/;
-	const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+     const dob = new Date(document.getElementById("dateOfBirth").value);
+    const today = new Date();
+    const age = today.getFullYear() - dob.getFullYear();
+    const m = today.getMonth() - dob.getMonth();
 
-	if (!nameRegex.test(username)) {
-		alert("Name must contain only letters and spaces.");
-		return false;
-	}
-	if (!emailRegex.test(email)) {
-		alert("Please enter a valid email address.");
-		return false;
-	}
-	if (!mobileRegex.test(mobile)) {
-		alert("Mobile number must be exactly 10 digits and start with 6-9.");
-		return false;
-	}
-	if (!panRegex.test(pan.toUpperCase())) {
-		alert("Invalid PAN format. Example: ABCDE1234F");
-		return false;
-	}
+    // 1. Name validation - letters and space only
+    const nameRegex = /^[A-Za-z\s]+$/;
+    if (!nameRegex.test(name)) {
+        alert("Name must contain only letters and spaces.");
+        return false;
+    }
 
-	return true;
+    // 2. Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert("Please enter a valid email address.");
+        return false;
+    }
+
+    // 3. Mobile number validation - 10 digits, first digit 6-9
+    const mobileRegex = /^[6-9]\d{9}$/;
+    if (!mobileRegex.test(mobile)) {
+        alert("Mobile number must be 10 digits and start with 6, 7, 8, or 9.");
+        return false;
+    }
+
+    // 4. Password validation - min 8 chars, one uppercase, one lowercase, one number, one special character
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#\$%@&\*])[A-Za-z\d#\$%@&\*]{8,}$/;
+    if (!passwordRegex.test(password)) {
+        alert("Password must be at least 8 characters long and include uppercase, lowercase, number, and special character (#$%@&*).");
+        return false;
+    }
+
+    // 5. Confirm password match
+    if (password !== cpass) {
+        alert("Confirm password does not match the password.");
+        return false;
+    }
+
+    // 6. PAN validation - 5 letters, 4 digits, 1 letter
+    const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]$/i;
+    if (!panRegex.test(pan)) {
+        alert("PAN must be 10 characters: 5 letters, 4 digits, and 1 letter (e.g., ABCDE1234F).");
+        return false;
+    }
+     // Adjust age if birthday hasn't occurred yet this year
+    const actualAge = (m < 0 || (m === 0 && today.getDate() < dob.getDate())) ? age - 1 : age;
+
+    if (actualAge < 18) {
+        alert("You must be at least 18 years old to register.");
+        return false;
+    }
+
+    // All validations passed
+    return true;
 }
 </script>
+
 </body>
 </html>
