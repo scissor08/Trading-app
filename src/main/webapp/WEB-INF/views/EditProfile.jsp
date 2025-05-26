@@ -1,6 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -138,97 +139,69 @@
   main {
     flex-grow: 1;
     padding: 2rem;
-    background-color: #ffffff;
-    overflow-y: auto;
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
   }
 
-  .download-dropdown {
-    position: relative;
-    display: inline-block;
-    float: right;
-    margin-bottom: 1.5rem;
+  .profile-container {
+    background-color: white;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
   }
 
-  .dropdown-button {
+  .profile-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+    color: #333;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="date"],
+  input[type="file"] {
+    padding: 10px;
+    width: 100%;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+  }
+
+  button {
     background-color: #007bff;
     color: white;
-    padding: 0.6rem 1rem;
     border: none;
+    padding: 10px;
+    width: 100%;
     border-radius: 6px;
+    margin-top: 20px;
     cursor: pointer;
     font-weight: bold;
   }
 
-  .dropdown-button:hover {
+  button:hover {
     background-color: #0056b3;
   }
 
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    right: 0;
-    background-color: #ffffff;
-    min-width: 180px;
-    box-shadow: 0px 8px 16px rgba(0,0,0,0.15);
-    z-index: 1;
-    border-radius: 6px;
-    overflow: hidden;
-  }
-
-  .dropdown-content a {
-    color: #0e1c36;
-    padding: 0.75rem 1rem;
-    text-decoration: none;
+  img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border: 2px solid #007bff;
+    border-radius: 8px;
     display: block;
-    transition: background 0.3s;
-  }
-
-  .dropdown-content a:hover {
-    background-color: #f1f1f1;
-  }
-
-  .download-dropdown:hover .dropdown-content {
-    display: block;
-  }
-
-  h2 {
-    margin: 0;
-    color: #0e1c36;
-  }
-
-  main h2 {
-    margin-bottom: 1.5rem;
-    color: #0e1c36;
-  }
-
-  .table-responsive {
-    overflow-x: auto;
-    background-color: #fff;
-    padding: 1rem;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.95rem;
-  }
-
-  th, td {
-    padding: 0.75rem 1rem;
-    text-align: center;
-    border: 1px solid #dee2e6;
-  }
-
-  thead {
-    background-color: #0e1c36;
-    color: white;
-  }
-
-  tbody tr:hover {
-    background-color: #f1f1f1;
+    margin: 10px auto;
   }
 
   footer {
@@ -285,56 +258,39 @@
     </aside>
 
     <main>
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h2>Growth Report</h2>
+      <div class="profile-container">
+        <h2>Edit Profile - ${userDetails.name}</h2>
 
-        <div class="download-dropdown">
-          <button class="dropdown-button"><i class="fas fa-download"></i> Download Report</button>
-          <div class="dropdown-content">
-            <a href="${pageContext.request.contextPath}/download/pdf">Download as PDF</a>
-            <a href="${pageContext.request.contextPath}/download/excel">Download as Excel</a>
-            <a href="${pageContext.request.contextPath}/download/csv">Download as CSV</a>
-          </div>
-        </div>
-      </div>
+        <form action="updated" method="post" enctype="multipart/form-data">
+          <label>Name:</label>
+          <input type="text" name="name" value="${userDetails.name}" required>
 
-      <div class="table-responsive">
-        <table>
-          <thead>
-            <tr>
-              <th>Stock Symbol</th>
-              <th>Total Buy Qty</th>
-              <th>Total Buy Price</th>
-              <th>Total Sell Qty</th>
-              <th>Total Sell Price</th>
-              <th>Avg Buy</th>
-              <th>Avg Sell</th>
-              <th>Holdings</th>
-              <th>Profit</th>
-              <th>Current Profit</th>
-            </tr>
-          </thead>
-          <tbody>
-            <c:forEach var="r" items="${report}">
-              <tr>
-                <td>${r.stockSymbol}</td>
-                <td>${r.totalBuyQuantity}</td>
-                <td>${r.totalBuyPrice}</td>
-                <td>${r.totalSellQuantity}</td>
-                <td>${r.totalSellPrice}</td>
-                <td>${r.averageBuyValue}</td>
-                <td>${r.averageSellValue}</td>
-                <td>${r.currentHoldings}</td>
-                <td>${r.profitValue}</td>
-                <td>${r.currentProfitValue}</td>
-              </tr>
-            </c:forEach>
-          </tbody>
-        </table>
+          <label>Username:</label>
+          <input type="text" name="username" value="${userDetails.username}" required>
+
+          <label>Email:</label>
+          <input type="email" name="email" value="${userDetails.email}" required>
+
+          <label>Mobile:</label>
+          <input type="text" name="mobile" value="${userDetails.mobile}" required>
+
+          <label>PAN Number:</label>
+          <input type="text" name="pan" value="${userDetails.pan}" required>
+
+          <label>Date of Birth:</label>
+		  <fmt:formatDate value="${userDetails.dateOfBirth}" pattern="yyyy-MM-dd" var="formattedDob" />
+		  <input type="date" name="dateOfBirth" value="${formattedDob}" required>
+
+          <label>Profile Photo:</label>
+          <img src="${userDetails.profileImage}" alt="Current Photo">
+          <input type="file" name="profileImage" accept="image/*">
+
+          <button type="submit">Update Profile</button>
+        </form>
       </div>
     </main>
   </div>
-  
+
   <footer>
     &copy; 2025 Trading App | All rights reserved
   </footer>

@@ -1,5 +1,6 @@
 package com.tradingapplication.TradingApplication.Service;
 
+import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;  
@@ -77,7 +78,13 @@ public class UserDashboardService implements UserDashboardServiceInterface {
     public String getUserDetail(UserLog user, Model model) {
         UserDetails userDetails = getUserDetailsByUsername(user);
         UserAccountDetails userAccount = userDetails.getUserAccountDetails();
-
+        if (userDetails.getProfileImage() != null) {
+            String base64Image = Base64.getEncoder().encodeToString(userDetails.getProfileImage());
+            model.addAttribute("profileImageBase64", base64Image);
+        } else {
+            model.addAttribute("profileImageBase64", null);
+        }
+        
         model.addAttribute("userDetails", userDetails);
         model.addAttribute("userAccount", userAccount);
 

@@ -1,6 +1,8 @@
 package com.tradingapplication.TradingApplication.Service;
 
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.Random; 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import com.tradingapplication.TradingApplication.Entity.UserDetails;
 import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Exception.DataNotFoundException;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
+import com.tradingapplication.TradingApplication.dto.UpdateRequestDTO;
 import com.tradingapplication.TradingApplication.dto.UserRequestDTO;
 import com.tradingapplication.TradingApplication.dto.UserResponseDTO;
 import com.tradingapplication.TradingApplication.globalException.UserAlreadyExist;
@@ -106,5 +109,49 @@ public class UserService implements UserServiceInterface{
 		javaMailSender.send(message);
 		return "OTPPage";
 	}
+
+	@Override
+	public String getEditPage(HttpSession session, Model model) {
+		UserLog userlog=(UserLog) session.getAttribute("userlog");
+		UserDetails userdetails=userDetailsRepository.findByUsername(userlog.getUsername()).orElseThrow(()->new DataNotFoundException("LoginPage"));
+		model.addAttribute("userDetails",userdetails);
+		return "EditProfile";
+	}
+
+	@Override
+	public String updateData(UpdateRequestDTO requestDto, HttpSession session,Model model) {
+
+		UserLog userlog = (UserLog) session.getAttribute("userlog");
+		UserDetails user=userDetailsRepository.findByUsername(userlog.getUsername()).orElseThrow(()->new DataNotFoundException("LoginPage"));
+		
+		user.setName(requestDto.getName().toUpperCase());
+		user.setEmail(requestDto.getEmail());
+		user.setMobile(requestDto.getMobile());
+		user.setDateOfBirth(requestDto.getDateOfBirth());
+		user.setUsername(requestDto.getUsername());
+		user.setPan(requestDto.getPan().toUpperCase());
+		
+		
+		 if (requestDto.getProfileImage() != null && !requestDto.getProfileImage().isEmpty()) {
+		        try {
+		        	user.setProfileImage(requestDto.getProfileImage().getBytes());
+		        } catch (IOException e) {
+					e.printStackTrace();
+				}
+		    }     
+		 byte[] imageBytes = user.getProfileImage();
+		 String base64Image = Base64.getEncoder().encodeToString(imageBytes);
+		 model.addAttribute("base64Image", base64Image);
+				   
+		userDetailsRepository.save(user);
+		return "redirect:/profile";
+	
+	}
+
+
+	
+
+
+	
 
 }
