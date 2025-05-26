@@ -102,7 +102,7 @@ public class GrowthReportService implements GrowthReportServiceInterface {
 	}
 
 	public double changeValue(double value) {
-		return Double.parseDouble(String.format("%.2f", value));
+		return Double.parseDouble(String.format("%.3f", value));
 	}
 	
 	@Override
