@@ -22,7 +22,7 @@ import jakarta.servlet.http.HttpSession;
 
 
 @Controller
-@RequestMapping("/api")
+
 public class PortfolioController {
 	@Autowired
 	private PortfolioServiceInterface portfolioServiceInterface;

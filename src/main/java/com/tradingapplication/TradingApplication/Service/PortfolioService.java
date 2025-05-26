@@ -46,7 +46,8 @@ public class PortfolioService implements PortfolioServiceInterface {
 		//List<Portfolio> portfolios = portfolioRepository.findByUser_Id(id);
 		
 		return portfolios.stream().map(Portfolio-> new PortfolioResponseDTO(Portfolio.getQuantity()
-				,Portfolio.getSymbol(),Portfolio.getPrice(),Portfolio.getTrancationAmount())).collect(Collectors.toList());
+				,Portfolio.getSymbol(),Portfolio.getPrice(),
+				Portfolio.getTrancationAmount())).collect(Collectors.toList());
 		
 			
 			
