@@ -26,14 +26,13 @@ import jakarta.servlet.http.HttpSession;
 public class PortfolioController {
 	@Autowired
 	private PortfolioServiceInterface portfolioServiceInterface;
-	@Autowired
-	private  PortfolioService  portfolioService;
+	
 
 	  @GetMapping("holdings")
 	    public String showHoldingsById(HttpSession session, Model model) {
 		  
-		 UserLog name=  (UserLog) session.getAttribute("userlog");
-	        List<PortfolioResponseDTO> holdings = portfolioService.getPortfolio(name);
+		// UserLog name=  (UserLog) session.getAttribute("userlog");
+	        List<PortfolioResponseDTO> holdings = portfolioServiceInterface.getPortfolio(session);
 	        model.addAttribute("holdings", holdings);
 	        return "Holding"; // JSP page name
 	    }

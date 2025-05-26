@@ -843,7 +843,7 @@
         }
     });
 
-    // Buy stock function
+    // Buy stock function - Updated to use session-based authentication
     async function handleBuyStock() {
         const quantity = parseInt(document.getElementById('quantityInput').value);
         
@@ -861,9 +861,8 @@
         showLoadingModal();
 
         try {
-            const userId = getUserId();
-            
-            const response = await fetch('/api/buy?id=' + userId, {
+            // Removed user ID parameter since controller uses HttpSession
+            const response = await fetch('/api/buy', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -886,7 +885,7 @@
         }
     }
 
-    // Sell stock function
+    // Sell stock function - Updated to use session-based authentication
     async function handleSellStock() {
         const quantity = parseInt(document.getElementById('quantityInput').value);
         
@@ -904,9 +903,8 @@
         showLoadingModal();
 
         try {
-            const userId = getUserId();
-            
-            const response = await fetch('/api/sell?id=' + userId, {
+            // Removed user ID parameter since controller uses HttpSession
+            const response = await fetch('/api/sell', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -982,12 +980,6 @@
     function closeModal() {
         document.getElementById('resultModal').style.display = 'none';
         document.getElementById('loadingModal').style.display = 'none';
-    }
-
-    // Get user ID - implement based on your authentication system
-    function getUserId() {
-        // Replace with your actual implementation
-        return 1;
     }
 
     // Close modal when clicking outside

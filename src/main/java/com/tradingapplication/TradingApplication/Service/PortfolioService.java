@@ -15,6 +15,7 @@ import com.tradingapplication.TradingApplication.Repository.UserDetailsRepositor
 import com.tradingapplication.TradingApplication.dto.PortfolioResponseDTO;
 import com.tradingapplication.TradingApplication.globalException.DataNotFoundException;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -30,15 +31,17 @@ public class PortfolioService implements PortfolioServiceInterface {
 	UserAccountDetailsRepository userAccountDetailsRepository;
 	
 	
-	public List<PortfolioResponseDTO> getPortfolio(UserLog name) {
+	public List<PortfolioResponseDTO> getPortfolio(HttpSession session) {
+		
+		UserLog getname = (UserLog) session.getAttribute("userlog");
 
-		
-		
+		UserDetails getusername = userDetailsRepository.findByUsername(getname.getUsername()).orElseThrow(()-> new DataNotFoundException("user not found"));
+		int id = getusername.getUserId();
 //		UserAccountDetails user = userAccountDetailsRepository.findById(id)
 //				.orElseThrow(()->new DataNotFoundException("User Not Found"));
 		
-		UserDetails user = userDetailsRepository.findByUsername(name.getUsername()).orElseThrow(()->new DataNotFoundException("User Not Found"));
-		List<Portfolio> portfolios = portfolioRepository.findByUser(user);
+		//UserDetails user = userDetailsRepository.findByUsername(name.getUsername()).orElseThrow(()->new DataNotFoundException("User Not Found"));
+		List<Portfolio> portfolios = portfolioRepository.findByUser_Id(id);
 
 		//List<Portfolio> portfolios = portfolioRepository.findByUser_Id(id);
 		
