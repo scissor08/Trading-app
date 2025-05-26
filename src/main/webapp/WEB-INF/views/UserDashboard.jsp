@@ -22,8 +22,8 @@
     }
 
     header {
-        background-color: #0e1c36;
-        color: white;
+        background-color: #f8f8ff;
+        color: black;
         padding: 1rem 2rem;
         display: flex;
         justify-content: space-between;
@@ -33,12 +33,14 @@
         left: 200px;
         right: 0;
         z-index: 1000;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
 
     .header-left {
         display: flex;
         align-items: center;
         gap: 1rem;
+        
     }
 
     .header-left input[type="text"] {
@@ -47,6 +49,8 @@
         border: none;
         outline: none;
         min-width: 200px;
+         border : 1px solid black;
+         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
 
     .header-left button {
@@ -56,6 +60,7 @@
         border-radius: 6px;
         color: white;
         cursor: pointer;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
 
     .wallet-info {
@@ -65,6 +70,8 @@
         border-radius: 10px;
         text-align: center;
         box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        border : 1px solid black;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
 
     .wallet-info h3 {
@@ -85,10 +92,11 @@
     }
 
     .icon-btn {
-        color: white;
+        color: black;
         font-size: 1.5rem;
         text-decoration: none;
         transition: color 0.3s;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
 
     .icon-btn:hover {
@@ -133,7 +141,8 @@
         padding: 2rem 3rem;
         height: calc(100vh - 80px);
         overflow-y: auto;
-        background-color: #f4f7f9;
+     background: linear-gradient(to bottom right, #627aff, #8e65e6) !important;
+
     }
 
     .table-container {
@@ -167,30 +176,29 @@
     footer {
         padding: 1rem;
         text-align: center;
-        background-color: #0e1c36;
-        color: white;
+        background-color: #f8f8ff;
+        color: black;
         position: relative;
         z-index: 1;
     }
 </style>
 </head>
 <body>
-  <aside>
-    <ul>
-      <li><a href="${pageContext.request.contextPath}/profile">Profile</a></li>
-      <li><a href="${pageContext.request.contextPath}/dashboard">Dashboard</a></li>
-      <li><a href="${pageContext.request.contextPath}/api/holdings">Portfolio</a></li>
-       <li><a href="${pageContext.request.contextPath}/api/holdings">Holdings</a></li>
-      <li><a href="${pageContext.request.contextPath}/stocks">Stocks</a></li>
-      <li><a href="${pageContext.request.contextPath}/trades">Buy/Sell</a></li>
-      <li><a href="${pageContext.request.contextPath}/transactions">Transaction</a></li>
-      <li><a href="${pageContext.request.contextPath}/wallet">Wallet</a></li>
+<aside>
+  <ul>
+    <li><a href="${pageContext.request.contextPath}/profile">Profile</a></li>
+    <li><a href="${pageContext.request.contextPath}/dashboard">Dashboard</a></li>
+    <li><a href="${pageContext.request.contextPath}/portfolio">Portfolio</a></li>
+    <li><a href="${pageContext.request.contextPath}/holdings">Hold</a></li>
+    <li><a href="${pageContext.request.contextPath}/stocks">Stocks</a></li>
+    <li><a href="${pageContext.request.contextPath}/trades">Buy/Sell</a></li>
+    <li><a href="${pageContext.request.contextPath}/growthreport">Profit/Loss Report</a></li>
+    <li><a href="${pageContext.request.contextPath}/transactions">Transaction</a></li>
+    <li><a href="${pageContext.request.contextPath}/wallet">Wallet</a></li>
+    <li><a href="${pageContext.request.contextPath}/logout">Log Out</a></li>
+  </ul>
+</aside>
 
-
-
-      <li><a href="${pageContext.request.contextPath}/logout">Log Out</a></li>
-    </ul>
-  </aside>
 
   <header>
     <div class="header-left">
@@ -198,7 +206,7 @@
       <button onclick="filterTable()">Search</button>
     </div>
 
-    <h2>Welcome, ${username}</h2>
+    <h2 >Welcome, ${username}</h2>
 
     <div class="wallet-info">
       <h3>Wallet Balance</h3>
@@ -215,19 +223,20 @@
   </header>
 
 
-  <aside>
-    <ul>
-	  <li><a href="${pageContext.request.contextPath}/profile">Profile</a></li>
-      <li><a href="${pageContext.request.contextPath}/dashboard">Dashboard</a></li>
-      <li><a href="${pageContext.request.contextPath}/portfolio">Portfolio</a></li>
-      <li><a href="${pageContext.request.contextPath}/stocks">Stocks</a></li>
-      <li><a href="${pageContext.request.contextPath}/trades">Buy/Sell</a></li>
-      <li><a href="${pageContext.request.contextPath}/growthreport">Profit/Loss Report</a></li>
-      <li><a href="${pageContext.request.contextPath}/transactions">Transaction</a></li>
-      <li><a href="${pageContext.request.contextPath}/wallet">Wallet</a></li>
-      <li><a href="${pageContext.request.contextPath}/logout">Log Out</a></li>
-    </ul>
-  </aside>
+<aside>
+  <ul>
+    <li><a href="${pageContext.request.contextPath}/profile"><i class="fas fa-user"></i> Profile</a></li>
+    <li><a href="${pageContext.request.contextPath}/dashboard"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+    <li><a href="${pageContext.request.contextPath}/holdings"><i class="fas fa-hand-holding-usd"></i> Holdings</a></li>
+    <li><a href="${pageContext.request.contextPath}/stocks"><i class="fas fa-coins"></i> Stocks</a></li>
+    <li><a href="${pageContext.request.contextPath}/trades"><i class="fas fa-exchange-alt"></i> Buy/Sell</a></li>
+    <li><a href="${pageContext.request.contextPath}/growthreport"><i class="fas fa-chart-pie"></i>Report</a></li>
+    <li><a href="${pageContext.request.contextPath}/transactions"><i class="fas fa-receipt"></i> Transaction</a></li>
+    <li><a href="${pageContext.request.contextPath}/wallet"><i class="fas fa-wallet"></i> Wallet</a></li>
+    <li><a href="${pageContext.request.contextPath}/logout"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
+  </ul>
+</aside>
+
 
   <main>
    <h2 style="margin-top: 80px;">Stock Overview Table</h2>
@@ -261,6 +270,8 @@
     &copy; 2025 Trading App | All rights reserved
   </footer>
 
+
+</body>
   <script>
     const stockSymbols = [<c:forEach var="s" items="${stocks}" varStatus="status">'${s.symbol}'<c:if test="${!status.last}">,</c:if></c:forEach>];
     const stockHighs = [<c:forEach var="s" items="${stocks}" varStatus="status">${s.high}<c:if test="${!status.last}">,</c:if></c:forEach>];
@@ -313,5 +324,4 @@
       }
     }
   </script>
-</body>
 </html>

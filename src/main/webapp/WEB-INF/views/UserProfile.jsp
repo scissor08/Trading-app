@@ -202,19 +202,20 @@
        </div>
    </header>
 
-   <aside>
-    <ul>
-      <li><a href="${pageContext.request.contextPath}/profile">Profile</a></li>
-      <li><a href="${pageContext.request.contextPath}/dashboard">Dashboard</a></li>
-      <li><a href="${pageContext.request.contextPath}/portfolio">Portfolio</a></li>
-      <li><a href="${pageContext.request.contextPath}/stocks">Stocks</a></li>
-      <li><a href="${pageContext.request.contextPath}/trades">Buy/Sell</a></li>
-      <li><a href="${pageContext.request.contextPath}/growthreport">Profit/Loss Report</a></li>
-      <li><a href="${pageContext.request.contextPath}/transactions">Transaction</a></li>
-      <li><a href="${pageContext.request.contextPath}/wallet">Wallet</a></li>
-      <li><a href="${pageContext.request.contextPath}/logout">Log Out</a></li>
-    </ul>
-  </aside>
+<aside>
+  <ul>
+    <li><a href="${pageContext.request.contextPath}/profile"><i class="fas fa-user"></i> Profile</a></li>
+    <li><a href="${pageContext.request.contextPath}/dashboard"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+    <li><a href="${pageContext.request.contextPath}/holdings"><i class="fas fa-hand-holding-usd"></i> Holdings</a></li>
+    <li><a href="${pageContext.request.contextPath}/stocks"><i class="fas fa-coins"></i> Stocks</a></li>
+    <li><a href="${pageContext.request.contextPath}/trades"><i class="fas fa-exchange-alt"></i> Buy/Sell</a></li>
+    <li><a href="${pageContext.request.contextPath}/growthreport"><i class="fas fa-chart-pie"></i>Report</a></li>
+    <li><a href="${pageContext.request.contextPath}/transactions"><i class="fas fa-receipt"></i> Transaction</a></li>
+    <li><a href="${pageContext.request.contextPath}/wallet"><i class="fas fa-wallet"></i> Wallet</a></li>
+    <li><a href="${pageContext.request.contextPath}/logout"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
+  </ul>
+</aside>
+
 
 
    <main>
