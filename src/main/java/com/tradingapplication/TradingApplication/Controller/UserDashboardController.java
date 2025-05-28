@@ -26,15 +26,6 @@ public class UserDashboardController {
 	@Autowired
 	UserService service;
 	
-	
-
-
-
-
-
-
-	
-	
 	@GetMapping("/profile")
 	public String getUserDetails(HttpSession session,Model model) {
 		
@@ -83,14 +74,14 @@ public class UserDashboardController {
 	}
 	
 	
-	@GetMapping("/purchase")
-	public String getPurchasePage(HttpSession session,Model model) {
-		UserLog user = (UserLog) session.getAttribute("userlog");
-		if(user!=null) {
-			return "";
-		}
-		return "LoginPage";
-	}
+//	@GetMapping("/purchase")
+//	public String getPurchasePage(HttpSession session,Model model) {
+//		UserLog user = (UserLog) session.getAttribute("userlog");
+//		if(user!=null) {
+//			return "";
+//		}
+//		return "LoginPage";
+//	}
 	
 	
 	@GetMapping("/wallet")
@@ -112,6 +103,7 @@ public class UserDashboardController {
 	return "LoginPage";
 	}
 	
+	
 	@PostMapping("/add")
 	public String addBalance(HttpSession session,Model model,@RequestParam Double cash) {
 		UserLog user = (UserLog) session.getAttribute("userlog");
@@ -120,8 +112,9 @@ public class UserDashboardController {
 			return dashboardService.addAccountBalance(user,model,cashh);
 		}
 		
-		return null;
+		return "LoginPage";
 	}
+	
 	
 	@GetMapping("/logout")
 	public String getLogot(HttpSession session) {

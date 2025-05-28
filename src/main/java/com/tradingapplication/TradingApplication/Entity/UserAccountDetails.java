@@ -24,7 +24,5 @@ public class UserAccountDetails {
 	@OneToOne(mappedBy="userAccountDetails")
 	UserDetails userdetails;
 	
-	@OneToOne(mappedBy="userAccountDetails")
-	UserLog userLog;
 	
 }

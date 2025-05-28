@@ -16,13 +16,12 @@ public class UserLog {
 	@Id
 	private String username;
 	private String password;
+	private String role;
 	
 	@OneToOne(mappedBy="userLog")
 	@JsonIgnore
 	UserDetails userDetails;
 	
-	@OneToOne
-	UserAccountDetails userAccountDetails;
 
 	public String getUsername() {
 		return username;
@@ -39,6 +38,15 @@ public class UserLog {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+	
 	
 	
 }
