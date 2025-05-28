@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tradingapplication.TradingApplication.Entity.Portfolio;
 import com.tradingapplication.TradingApplication.Entity.Stock;
@@ -57,8 +58,8 @@ private UserDetailsRepository userDetailsRepository;
     	
     	UserDetails getid = userDetailsRepository.findByUsername(getuser.getUsername()).orElseThrow(()-> new DataNotFoundException("User not Found...."));	
     	int id = getid.getUserId();
-    	log.info("BuyStock Method Invoked for userId: {}, symbol: {}, quantity: {}",
-    	         id, request.getSymbol(), request.getQuantity());
+    	log.info("BuyStock Method Invoked for userId: {}, symbol: {}, quantity: {},price {}",
+    	         id, request.getSymbol(), request.getQuantity(),request.getPrice());
 
 
         validateBuyRequest(request);
@@ -99,7 +100,7 @@ private UserDetailsRepository userDetailsRepository;
                 portfolio.setQuantity(quantity);
                 portfolio.setTrancationAmount(transactionAmount);
                 portfolio.setUser(user.getUserdetails());
-                portfolio.setPrice(request.getCurrentPrice());
+                portfolio.setPrice(request.getPrice());
                 portfolio.setSymbol(request.getSymbol());
                 portfolio.setStocks(stock);
             }
@@ -118,7 +119,7 @@ private UserDetailsRepository userDetailsRepository;
         transaction.setUserDetails(user.getUserdetails());
         transaction.setTransactionType(TRANSACTION_TYPE_BUY);
         transcationRepository.save(transaction);
-        log.info("Transaction completed. Order ID: {}, Amount: {}", transaction.getOrderId(), transactionAmount);
+        log.info("Transaction completed. Order ID:"+ transaction.getOrderId() + "  Amount:"  +transactionAmount);
 
 
         BuyResponseDTO response = new BuyResponseDTO();
@@ -153,5 +154,10 @@ private UserDetailsRepository userDetailsRepository;
         return stockRepository.findBySymbol(symbol)
                 .orElseThrow(() -> new DataNotFoundException("Stock not found with symbol: " + symbol));
     }
+    
+//    private double convetToDouble() {
+//    	
+//    	return (Double) null;
+//    }
 
 }
