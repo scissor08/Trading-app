@@ -29,13 +29,11 @@ public class BuyRequestController {
 
 		try {
 		BuyResponseDTO response = buyServiceInterface.buyStock(session, dto);
-		
-		
 		return ResponseEntity.ok(response);
 		}catch(DataNotFoundException e) {
 			 log.warn("Data not found during buy request for userId {}: {}",  e.getMessage());
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-			
+	
 			
 			
 		}catch(IllegalArgumentException e) {

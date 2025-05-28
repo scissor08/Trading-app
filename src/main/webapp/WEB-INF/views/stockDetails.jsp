@@ -898,6 +898,8 @@
             if (response.ok) {
                 const result = await response.json();
                 showSuccessModal('Buy', result, quantity);
+                
+                
             } else {
                 const errorMessage = await response.text();
                 showErrorModal('Buy', errorMessage);
