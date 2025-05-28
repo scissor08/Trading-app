@@ -99,7 +99,7 @@ private UserDetailsRepository userDetailsRepository;
                 portfolio = new Portfolio();
                 portfolio.setQuantity(quantity);
                 portfolio.setTrancationAmount(transactionAmount);
-                //portfolio.setUser(user.getUserdetails());
+                portfolio.setUser(user.getUserdetails());
                 portfolio.setPrice(request.getPrice());
                 portfolio.setSymbol(request.getSymbol());
                 portfolio.setStocks(stock);
