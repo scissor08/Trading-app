@@ -38,8 +38,10 @@ public class GrowthReportService implements GrowthReportServiceInterface {
 
 		List<Stock> stocks = user.getStocks();
 		List<TransactionBuySell> transaction = user.getTransaction();
-		List<String> stockSymbols = Arrays.asList("AAPL", "GOOGL", "MSFT", "AMZN", "TSLA", "META", "NFLX", "NVDA",
-				"ADBE", "INTC");
+		List<String> stockSymbols=new ArrayList<String>();
+		for(Stock symbol : stocks) {
+		 stockSymbols.add(symbol.getSymbol());
+		}
 		List<GrowthReportEntity> growthReport = new ArrayList<>();
 
 		for (String stockname : stockSymbols) {

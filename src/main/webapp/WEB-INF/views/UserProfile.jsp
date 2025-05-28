@@ -237,7 +237,7 @@ main button {
     </div>
 
     <div class="profile-button">
-	   <button><a href="${pageContext.request.contextPath}/updatepage">Edit Profile</a></button>
+	   <button><a href="${pageContext.request.contextPath}/update">Edit Profile</a></button>
     </div>
 </main>
 

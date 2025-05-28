@@ -49,11 +49,9 @@ public class UserDashboardController {
 	        return "UserDashboard"; // Looks for UserDashboard.jsp
 	    }
 		
-	    return "redirect:/LoginPage";
+	    return "LoginPage";
 	}
 
-
-	
 	@GetMapping("/portfolio")
 	public String getUserPortfolio(HttpSession session,Model model) {
 		UserLog user = (UserLog) session.getAttribute("userlog");
@@ -73,24 +71,13 @@ public class UserDashboardController {
 		return "LoginPage";
 	}
 	
-	
-//	@GetMapping("/purchase")
-//	public String getPurchasePage(HttpSession session,Model model) {
-//		UserLog user = (UserLog) session.getAttribute("userlog");
-//		if(user!=null) {
-//			return "";
-//		}
-//		return "LoginPage";
-//	}
-	
-	
 	@GetMapping("/wallet")
 	public String getBalance(HttpSession session,Model model) {
 		UserLog user = (UserLog) session.getAttribute("userlog");
 		if(user!=null) {
 			return dashboardService.getAccountBalance(user,model);
 		}
-		return dashboardService.getAccountBalance(user,model);
+		return "LoginPage";
 	}
 	
 	

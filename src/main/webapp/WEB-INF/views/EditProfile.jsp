@@ -252,7 +252,7 @@
       <div class="profile-container">
         <h2>Edit Profile - ${userDetails.name}</h2>
 
-        <form action="/updated" method="post" enctype="multipart/form-data">
+        <form action="/update" method="post" enctype="multipart/form-data">
           <label>Name:</label>
           <input type="text" name="name" value="${userDetails.name}" required>
 
