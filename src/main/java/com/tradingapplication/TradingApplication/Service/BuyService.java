@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tradingapplication.TradingApplication.Entity.Portfolio;
 import com.tradingapplication.TradingApplication.Entity.Stock;
@@ -118,7 +119,7 @@ private UserDetailsRepository userDetailsRepository;
         transaction.setUserDetails(user.getUserdetails());
         transaction.setTransactionType(TRANSACTION_TYPE_BUY);
         transcationRepository.save(transaction);
-        log.info("Transaction completed. Order ID: {}, Amount: {}", transaction.getOrderId(), transactionAmount);
+        log.info("Transaction completed. Order ID:"+ transaction.getOrderId() + "  Amount:"  +transactionAmount);
 
 
         BuyResponseDTO response = new BuyResponseDTO();
@@ -153,5 +154,10 @@ private UserDetailsRepository userDetailsRepository;
         return stockRepository.findBySymbol(symbol)
                 .orElseThrow(() -> new DataNotFoundException("Stock not found with symbol: " + symbol));
     }
+    
+//    private double convetToDouble() {
+//    	
+//    	return (Double) null;
+//    }
 
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tradingapplication.TradingApplication.Exception.DataNotFoundException;
@@ -30,6 +31,7 @@ public class BuyRequestController {
 	BuyServiceInterface buyServiceInterface;
 	
 	@PostMapping("/buy")
+	@ResponseBody
 	public ResponseEntity<?> buyRequest(@RequestBody BuyRequestDTO dto,HttpSession session){
 		log.info("Received buy request: userId={}, stockSymbol={}, quantity={}",
 		          dto.getSymbol(), dto.getQuantity());

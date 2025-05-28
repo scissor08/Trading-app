@@ -1,15 +1,19 @@
 package com.tradingapplication.TradingApplication.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tradingapplication.TradingApplication.Service.SellServiceInterface;
 import com.tradingapplication.TradingApplication.dto.SellRequestDTO;
 import com.tradingapplication.TradingApplication.dto.SellResponseDTO;
-
+@Controller
+@RequestMapping("/api")
 public class SellController {
 	@Autowired
 	private SellServiceInterface sellServiceInterface;
@@ -19,6 +23,7 @@ public class SellController {
 	}
 	
 	@PostMapping("/sell")
+	@ResponseBody
 	public String sellStock(@RequestParam("userId") int userId,
 	                        @RequestParam("symbol") String symbol,
 	                        @RequestParam("quantity") int quantity,
