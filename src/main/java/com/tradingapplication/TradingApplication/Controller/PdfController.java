@@ -25,7 +25,8 @@ public class PdfController {
         ByteArrayInputStream bis = pdfService.generatePdf(session);
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "inline; filename=transactions.pdf");
+       // headers.add("Content-Disposition", "inline; filename=transactions.pdf"); // for inline view of the pdf
+        headers.add("Content-Disposition", "attachment; filename=transactions.pdf");
 
         return ResponseEntity
                 .ok()
