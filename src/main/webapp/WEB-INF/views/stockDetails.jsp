@@ -615,15 +615,17 @@
 <body>
 
 <div class="container">
-    <!-- Header Section -->
     <div class="header">
         <h2>${stock.symbol}</h2>
-        <div class="stock-price">$${stock.price}</div>
+        <%-- Removed the extra '$' here. The JSP expression ${stock.price} should render the number.
+             If your backend already includes '$' in the price string, remove it from the backend.
+             Otherwise, the JavaScript will add '$' where needed (e.g., in chart tooltips and modal).
+             For consistent display, consider having your Java backend always return a clean number,
+             and format it with '$' in the frontend (JSP/JS) as needed. --%>
+        <div class="stock-price">${stock.price}</div>
     </div>
 
-    <!-- Main Content Grid -->
     <div class="content-grid">
-        <!-- Stock Information -->
         <div class="stock-info">
             <h3 style="margin-bottom: 20px; color: #0e1c36;">Stock Information</h3>
             <div class="info-grid">
@@ -666,22 +668,19 @@
             </div>
         </div>
 
-        <!-- Company and Trading Section -->
         <div>
-            <!-- Company Logo -->
             <c:if test="${stock.domain != null && !stock.domain.isEmpty()}">
                 <div class="company-section">
-                    <img src="https://logo.clearbit.com/${stock.domain}" 
-                         alt="${stock.symbol} logo" 
+                    <img src="https://logo.clearbit.com/${stock.domain}"
+                         alt="${stock.symbol} logo"
                          class="company-logo"
                          onerror="this.style.display='none'" />
                 </div>
             </c:if>
 
-            <!-- Trading Section -->
             <div class="trading-section">
                 <h3 style="margin-bottom: 20px; color: #0e1c36;">Trade ${stock.symbol}</h3>
-                
+
                 <div class="quantity-container">
                     <span class="quantity-label">Quantity:</span>
                     <div class="quantity-controls">
@@ -699,7 +698,6 @@
         </div>
     </div>
 
-    <!-- Chart Section -->
     <div class="chart-section">
         <h3 class="chart-title">${stock.symbol} Price Chart</h3>
         <canvas id="priceChart"></canvas>
@@ -708,7 +706,6 @@
     <a href="${pageContext.request.contextPath}/stocks" class="back-link">← Back to All Stocks</a>
 </div>
 
-<!-- Loading Modal -->
 <div id="loadingModal" class="modal">
     <div class="modal-content">
         <div class="loading">
@@ -718,7 +715,6 @@
     </div>
 </div>
 
-<!-- Result Modal -->
 <div id="resultModal" class="modal">
     <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
@@ -726,7 +722,31 @@
             <h3 id="modalTitle">Transaction Result</h3>
         </div>
         <div id="modalBody">
-            <!-- Content will be populated by JavaScript -->
+            <div class="purchase-summary">
+                <h4>Transaction Summary</h4>
+                <div class="summary-row">
+                    <span class="summary-label">Stock:</span>
+                    <span class="summary-value" id="summaryStockSymbol"></span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Quantity:</span>
+                    <span class="summary-value" id="summaryQuantity"></span>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Price per Share:</span>
+                    <span class="summary-value" id="summaryPricePerShare"></span> <%-- Removed hardcoded '$' --%>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Total Amount:</span>
+                    <span class="summary-value" id="summaryTotalAmount"></span> <%-- Removed hardcoded '$' --%>
+                </div>
+                <div class="summary-row">
+                    <span class="summary-label">Operation:</span>
+                    <span class="summary-value" id="summaryOperation"></span>
+                </div>
+            </div>
+            <p class="success-message" id="successMessage"></p>
+            <p class="error-message" id="errorMessage"></p>
         </div>
         <button onclick="closeModal()" class="btn" style="background-color: #ff7f00; color: white; margin-top: 20px;">Close</button>
     </div>
@@ -736,14 +756,17 @@
     // Stock data from JSP
     const stockData = {
         symbol: '${stock.symbol}',
+        // Ensure stock.price from backend is a clean number string (e.g., "199.5701")
         price: parseFloat('${stock.price}'),
         change: '${stock.change}',
         changePercent: '${stock.changePercent}'
     };
 
     // Chart initialization with responsive options
+    // Using a placeholder for historical data for now.
+    // In a real application, you'd fetch this from your backend.
     const labels = ['2025-05-10', '2025-05-11', '2025-05-12', '2025-05-13', '2025-05-14', '2025-05-15', '2025-05-16'];
-    const prices = [335, 338, 340, 337, 339, 341, stockData.price];
+    const prices = [335, 338, 340, 337, 339, 341, stockData.price]; // Last price is the current stock price
 
     const ctx = document.getElementById('priceChart').getContext('2d');
     new Chart(ctx, {
@@ -751,7 +774,7 @@
         data: {
             labels: labels,
             datasets: [{
-                label: stockData.symbol + ' Price ($)',
+                label: stockData.symbol + ' Price ($)', // Label includes '$'
                 data: prices,
                 borderColor: '#ff7f00',
                 backgroundColor: 'rgba(255, 127, 0, 0.2)',
@@ -770,7 +793,7 @@
             },
             scales: {
                 x: {
-                    ticks: { 
+                    ticks: {
                         color: '#0e1c36',
                         maxRotation: 45,
                         minRotation: 0
@@ -778,10 +801,10 @@
                     grid: { color: '#e0e0e0' }
                 },
                 y: {
-                    ticks: { 
+                    ticks: {
                         color: '#0e1c36',
                         callback: function(value) {
-                            return '$' + value.toFixed(2);
+                            return '$' + value.toFixed(2); // Adds '$' for y-axis labels
                         }
                     },
                     grid: { color: '#e0e0e0' },
@@ -790,7 +813,7 @@
             },
             plugins: {
                 legend: {
-                    labels: { 
+                    labels: {
                         color: '#0e1c36',
                         padding: 20
                     }
@@ -803,7 +826,7 @@
                     borderWidth: 1,
                     callbacks: {
                         label: function(context) {
-                            return context.dataset.label + ': $' + context.parsed.y.toFixed(2);
+                            return context.dataset.label + ': $' + context.parsed.y.toFixed(2); // Adds '$' to tooltip
                         }
                     }
                 }
@@ -835,7 +858,7 @@
         const value = parseInt(this.value);
         const min = parseInt(this.min) || 1;
         const max = parseInt(this.max) || 1000;
-        
+
         if (isNaN(value) || value < min) {
             this.value = min;
         } else if (value > max) {
@@ -846,7 +869,7 @@
     // Buy stock function - Updated to use session-based authentication
     async function handleBuyStock() {
         const quantity = parseInt(document.getElementById('quantityInput').value);
-        
+
         if (quantity < 1) {
             alert('Please enter a valid quantity');
             return;
@@ -875,6 +898,8 @@
             if (response.ok) {
                 const result = await response.json();
                 showSuccessModal('Buy', result, quantity);
+                
+                
             } else {
                 const errorMessage = await response.text();
                 showErrorModal('Buy', errorMessage);
@@ -888,7 +913,7 @@
     // Sell stock function - Updated to use session-based authentication
     async function handleSellStock() {
         const quantity = parseInt(document.getElementById('quantityInput').value);
-        
+
         if (quantity < 1) {
             alert('Please enter a valid quantity');
             return;
@@ -930,33 +955,47 @@
     // Modal functions
     function showLoadingModal() {
         document.getElementById('loadingModal').style.display = 'block';
+        // Ensure loading spinner is visible
+        document.querySelector('#loadingModal .loading').style.display = 'block';
     }
 
     function hideLoadingModal() {
         document.getElementById('loadingModal').style.display = 'none';
+        document.querySelector('#loadingModal .loading').style.display = 'none';
     }
 
     function showSuccessModal(operation, result, quantity) {
         const modal = document.getElementById('resultModal');
         const title = document.getElementById('modalTitle');
-        const body = document.getElementById('modalBody');
+        const successMessageEl = document.getElementById('successMessage');
+        const errorMessageEl = document.getElementById('errorMessage');
+        const quantity1 = parseFloat(document.getElementById('quantityInput').value);
+        // Clear previous messages and ensure error message is hidden
+        successMessageEl.style.display = 'none';
+        errorMessageEl.style.display = 'none';
+        successMessageEl.textContent = '';
+        errorMessageEl.textContent = '';
+
+        // Ensure summary section is visible for success
+        document.querySelector('.purchase-summary').style.display = 'block';
 
         title.textContent = operation + ' Transaction Successful';
-        title.className = 'success';
+        title.className = 'success'; // Apply success color
 
-        const totalAmount = quantity * stockData.price;
-        
-        body.innerHTML = `
-            <div class="purchase-summary">
-                <h4>Transaction Summary</h4>
-                <p><strong>Stock:</strong> <span>${stockData.symbol}</span></p>
-                <p><strong>Quantity:</strong> <span>${quantity}</span></p>
-                <p><strong>Price per Share:</strong> <span>$${stockData.price}</span></p>
-                <p><strong>Total Amount:</strong> <span>$${totalAmount.toFixed(2)}</span></p>
-                <p><strong>Operation:</strong> <span>${operation}</span></p>
-            </div>
-            <p class="success">✅ Transaction completed successfully!</p>
-        `;
+        const amount = quantity1 * stockData.price;
+        const price =stockData.price.toFixed(2);
+        const totalAmount = amount.toFixed(2);
+
+        // Populate the pre-existing elements with formatted values
+        document.getElementById('summaryStockSymbol').textContent = stockData.symbol || 'N/A';
+        document.getElementById('summaryQuantity').textContent = quantity;
+        document.getElementById('summaryPricePerShare').textContent ="$"+price;
+        document.getElementById('summaryTotalAmount').textContent ="$"+totalAmount ;
+        document.getElementById('summaryOperation').textContent = operation;
+
+        successMessageEl.textContent = '✅ Transaction completed successfully!';
+        successMessageEl.style.display = 'block';
+        successMessageEl.className = 'success-message success'; // Ensure success styling
 
         modal.style.display = 'block';
     }
@@ -964,15 +1003,24 @@
     function showErrorModal(operation, errorMessage) {
         const modal = document.getElementById('resultModal');
         const title = document.getElementById('modalTitle');
-        const body = document.getElementById('modalBody');
+        const successMessageEl = document.getElementById('successMessage');
+        const errorMessageEl = document.getElementById('errorMessage');
+
+        // Clear previous messages and ensure success message is hidden
+        successMessageEl.style.display = 'none';
+        errorMessageEl.style.display = 'none';
+        successMessageEl.textContent = '';
+        errorMessageEl.textContent = '';
+
+        // Hide summary section for error
+        document.querySelector('.purchase-summary').style.display = 'none';
 
         title.textContent = operation + ' Transaction Failed';
-        title.className = 'error';
+        title.className = 'error'; // Apply error color
 
-        body.innerHTML = `
-            <p class="error">❌ Transaction failed: ${errorMessage}</p>
-            <p>Please try again or contact support if the problem persists.</p>
-        `;
+        errorMessageEl.textContent = `❌ Transaction failed: ${errorMessage || 'Unknown error'}`;
+        errorMessageEl.style.display = 'block';
+        errorMessageEl.className = 'error-message error'; // Ensure error styling
 
         modal.style.display = 'block';
     }
@@ -980,18 +1028,34 @@
     function closeModal() {
         document.getElementById('resultModal').style.display = 'none';
         document.getElementById('loadingModal').style.display = 'none';
+        // Clear content when closing the modal, especially for re-opening
+        const successMessageEl = document.getElementById('successMessage');
+        const errorMessageEl = document.getElementById('errorMessage');
+        successMessageEl.textContent = '';
+        errorMessageEl.textContent = '';
+        successMessageEl.style.display = 'none';
+        errorMessageEl.style.display = 'none';
+
+        // Clear summary details and ensure summary is visible for next success
+        document.getElementById('summaryStockSymbol').textContent = '';
+        document.getElementById('summaryQuantity').textContent = '';
+        document.getElementById('summaryPricePerShare').textContent = '';
+        document.getElementById('summaryTotalAmount').textContent = '';
+        document.getElementById('summaryOperation').textContent = '';
+        document.querySelector('.purchase-summary').style.display = 'block'; // Reset display for next time
     }
 
     // Close modal when clicking outside
     window.onclick = function(event) {
         const resultModal = document.getElementById('resultModal');
         const loadingModal = document.getElementById('loadingModal');
-        
+
         if (event.target === resultModal) {
-            resultModal.style.display = 'none';
+            closeModal(); // Use closeModal to ensure cleanup
         }
         if (event.target === loadingModal) {
-            loadingModal.style.display = 'none';
+            loadingModal.style.display = 'none'; // Loading modal doesn't need full cleanup
+            document.querySelector('#loadingModal .loading').style.display = 'none';
         }
     }
 
@@ -1000,6 +1064,14 @@
         if (event.key === 'Escape') {
             closeModal();
         }
+    });
+
+    // Initial display of loading spinner needs to be handled
+    // The .loading class has display: none; by default. When showLoadingModal() is called, it should set it to 'block'.
+    // The spinner inside it will then animate.
+    document.addEventListener('DOMContentLoaded', function() {
+        // You might want to pre-set any initial states here if needed.
+        // For modals, it's usually handled by display: none in CSS and JS toggling to 'block'.
     });
 </script>
 

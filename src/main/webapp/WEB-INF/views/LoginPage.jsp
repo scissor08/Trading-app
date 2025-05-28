@@ -108,6 +108,22 @@ button {
 button:hover {
 	background-color: #e66900;
 }
+
+.links {
+	text-align: center;
+	margin-top: 1rem;
+}
+
+.links a {
+	color: #0e1c36;
+	text-decoration: none;
+	display: inline-block;
+	margin: 5px 0;
+}
+
+.links a:hover {
+	text-decoration: underline;
+}
 </style>
 </head>
 <body>
@@ -127,6 +143,11 @@ button:hover {
 				</div>
 
 				<button type="submit">Login</button>
+
+				<div class="links">
+					<a href="/">Forgot Password?</a><br>
+					<span>Don't have an account? <a href="/registration">Register here</a></span>
+				</div>
 			</form>
 		</section>
 	</main>
@@ -147,3 +168,4 @@ button:hover {
 	</script>
 </body>
 </html>
+

@@ -85,6 +85,9 @@
 
     <div class="error">${error}</div>
     <div class="message">${message}</div>
+    <div style="margin-top: 15px;">
+    <a href="/verification" style="color: var(--highlight); text-decoration: none; margin-right: 10px;">Resend OTP</a>
+	</div>
 </div>
 </body>
 </html>

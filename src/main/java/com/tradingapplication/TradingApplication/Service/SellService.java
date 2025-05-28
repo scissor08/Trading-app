@@ -11,14 +11,18 @@ import com.tradingapplication.TradingApplication.Entity.Portfolio;
 import com.tradingapplication.TradingApplication.Entity.Stock;
 import com.tradingapplication.TradingApplication.Entity.TransactionBuySell;
 import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
+import com.tradingapplication.TradingApplication.Entity.UserDetails;
+import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Exception.DataNotFoundException;
 import com.tradingapplication.TradingApplication.Repository.PortfolioRepository;
 import com.tradingapplication.TradingApplication.Repository.StockRepository;
 import com.tradingapplication.TradingApplication.Repository.TransactionRepository;
 import com.tradingapplication.TradingApplication.Repository.UserAccountDetailsRepository;
+import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
 import com.tradingapplication.TradingApplication.dto.SellRequestDTO;
 import com.tradingapplication.TradingApplication.dto.SellResponseDTO;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,15 +46,20 @@ public class SellService implements SellServiceInterface {
 
     @Autowired
    private  TransactionRepository transcationRepository;
+    @Autowired
+    private UserDetailsRepository userDetailsRepository;
 
     @Override
-    public SellResponseDTO sellStock(int id, SellRequestDTO request) {
+    public SellResponseDTO sellStock( SellRequestDTO request,HttpSession session) {
+
+
+        validateSellRequest(request);
+UserLog getuser= (UserLog) session.getAttribute("userlog");
+    	UserDetails getid = userDetailsRepository.findByUsername(getuser.getUsername()).orElseThrow(()-> new DataNotFoundException("User not Found...."));	
+    	int id = getid.getUserId();
 
         log.info("SellStock Method Invoked for userId: {}, symbol: {}, quantity: {}",
                 id, request.getSymbol(), request.getQuantity());
-
-        validateSellRequest(request);
-
         UserAccountDetails user = userAccountDetailsRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("User not found"));
 
@@ -106,7 +115,6 @@ public class SellService implements SellServiceInterface {
             throw new IllegalArgumentException("Invalid sell request");
         }
     }
-
     private Stock getStockOrThrow(String symbol) {
         return stockRepository.findBySymbol(symbol)
                 .orElseThrow(() -> new DataNotFoundException("Stock not found with symbol: " + symbol));

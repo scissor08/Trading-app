@@ -23,7 +23,7 @@ public class UserLoginController {
 	@Autowired
 	UserServiceInterface service;
 	
-	@GetMapping("/loginpage")
+	@GetMapping("/login")
 	public String getRegistrationPage() {
 	    return "LoginPage";
 	}
@@ -39,7 +39,7 @@ public class UserLoginController {
 	}
 	
 	
-	@GetMapping("/updatepage")
+	@GetMapping("/update")
 	public String getUpdatePage(HttpSession session,Model model) {
 		UserLog user=(UserLog)session.getAttribute("userlog");
 		if(user!=null) {
@@ -48,7 +48,7 @@ public class UserLoginController {
 		return "LoginPage";
 	}
 	
-	@PostMapping("/updated")
+	@PostMapping("/update")
 	public String update(HttpSession session,@ModelAttribute UpdateRequestDTO requestDto,Model model) {
 		UserLog user=(UserLog) session.getAttribute("userlog");
 		 if(user!=null) {

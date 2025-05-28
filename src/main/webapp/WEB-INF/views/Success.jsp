@@ -59,7 +59,7 @@
   <div class="success-container">
     <h1>${message}</h1>
     <p>Your registration was completed successfully.</p>
-    <a href="${pageContext.request.contextPath}/loginpage" class="btn-home">Go to Login</a>
+    <a href="${pageContext.request.contextPath}/login" class="btn-home">Go to Login</a>
   </div>
 </body>
 </html>

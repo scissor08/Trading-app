@@ -2,7 +2,7 @@
 package com.tradingapplication.TradingApplication.Service;
 
 
-import java.util.Date;    
+import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,8 +57,8 @@ private UserDetailsRepository userDetailsRepository;
     	
     	UserDetails getid = userDetailsRepository.findByUsername(getuser.getUsername()).orElseThrow(()-> new DataNotFoundException("User not Found...."));	
     	int id = getid.getUserId();
-    	log.info("BuyStock Method Invoked for userId: {}, symbol: {}, quantity: {}",
-    	         id, request.getSymbol(), request.getQuantity());
+    	log.info("BuyStock Method Invoked for userId: {}, symbol: {}, quantity: {},price {}",
+    	         id, request.getSymbol(), request.getQuantity(),request.getPrice());
 
 
         validateBuyRequest(request);
@@ -70,6 +70,7 @@ private UserDetailsRepository userDetailsRepository;
         int quantity = request.getQuantity();
         double stockPrice = Double.parseDouble(stock.getPrice());
         double transactionAmount = stockPrice * quantity;
+        System.out.println(transactionAmount);
 
         if (transactionAmount > user.getBalance()) {
         	 log.warn("Insufficient balance for userId {}: balance={}, required={}", 
@@ -82,7 +83,7 @@ private UserDetailsRepository userDetailsRepository;
 
         double updatedBalance = user.getBalance() - transactionAmount;
         log.info("User {} wallet updated. New balance: {}", user.getUserdetails().getUserId(), updatedBalance);
-        user.setBalance(updatedBalance);
+        user.setBalance(changeValue(updatedBalance));
         userAccountDetailsRepository.save(user);
         
         
@@ -98,8 +99,8 @@ private UserDetailsRepository userDetailsRepository;
                 portfolio = new Portfolio();
                 portfolio.setQuantity(quantity);
                 portfolio.setTrancationAmount(transactionAmount);
-                portfolio.setUser(user.getUserdetails());
-                portfolio.setPrice(request.getCurrentPrice());
+                //portfolio.setUser(user.getUserdetails());
+                portfolio.setPrice(request.getPrice());
                 portfolio.setSymbol(request.getSymbol());
                 portfolio.setStocks(stock);
             }
@@ -118,14 +119,14 @@ private UserDetailsRepository userDetailsRepository;
         transaction.setUserDetails(user.getUserdetails());
         transaction.setTransactionType(TRANSACTION_TYPE_BUY);
         transcationRepository.save(transaction);
-        log.info("Transaction completed. Order ID: {}, Amount: {}", transaction.getOrderId(), transactionAmount);
+        log.info("Transaction completed. Order ID:"+ transaction.getOrderId() + "  Amount:"  +transactionAmount);
 
 
         BuyResponseDTO response = new BuyResponseDTO();
         response.setStatus(TRANSACTION_STATUS_SUCCESS);
         response.setMessage(TRANSACTION_SUCCESS_MESSAGE);
-        response.setRemainingBalance(updatedBalance);
-        response.setTransactionAmount(transactionAmount);
+        response.setRemainingBalance(changeValue(updatedBalance));
+        response.setTransactionAmount(changeValue(transactionAmount));
         response.setStockSymbol(stock.getSymbol());
         response.setQuantity(quantity);
         
@@ -153,5 +154,9 @@ private UserDetailsRepository userDetailsRepository;
         return stockRepository.findBySymbol(symbol)
                 .orElseThrow(() -> new DataNotFoundException("Stock not found with symbol: " + symbol));
     }
-
+    
+    public double changeValue(double value) {
+		return Double.parseDouble(String.format("%.3f", value));
+	}
+	
 }
