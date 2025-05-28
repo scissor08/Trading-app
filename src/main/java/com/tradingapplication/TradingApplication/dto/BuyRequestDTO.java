@@ -12,7 +12,7 @@ public class BuyRequestDTO {
 	
 	private String symbol;
 	private Integer quantity;
-	private Double currentPrice;
+	private Double price;
 	
 
 }

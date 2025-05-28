@@ -57,8 +57,8 @@ private UserDetailsRepository userDetailsRepository;
     	
     	UserDetails getid = userDetailsRepository.findByUsername(getuser.getUsername()).orElseThrow(()-> new DataNotFoundException("User not Found...."));	
     	int id = getid.getUserId();
-    	log.info("BuyStock Method Invoked for userId: {}, symbol: {}, quantity: {}",
-    	         id, request.getSymbol(), request.getQuantity());
+    	log.info("BuyStock Method Invoked for userId: {}, symbol: {}, quantity: {},price {}",
+    	         id, request.getSymbol(), request.getQuantity(),request.getPrice());
 
 
         validateBuyRequest(request);
@@ -99,7 +99,7 @@ private UserDetailsRepository userDetailsRepository;
                 portfolio.setQuantity(quantity);
                 portfolio.setTrancationAmount(transactionAmount);
                 portfolio.setUser(user.getUserdetails());
-                portfolio.setPrice(request.getCurrentPrice());
+                portfolio.setPrice(request.getPrice());
                 portfolio.setSymbol(request.getSymbol());
                 portfolio.setStocks(stock);
             }
