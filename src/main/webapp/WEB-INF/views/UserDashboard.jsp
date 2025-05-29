@@ -185,10 +185,6 @@ aside ul li a:hover {
       <li><a href="${pageContext.request.contextPath}/logout"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
     </ul>
   </aside>
-<<<<<<< HEAD
-=======
-
->>>>>>> 8632be01aa75ebee456353f41d1ac1795e7171d3
 
   <main>
     <h2>Stock Overview Table</h2>
