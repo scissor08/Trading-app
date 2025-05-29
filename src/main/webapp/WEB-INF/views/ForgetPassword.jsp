@@ -87,7 +87,7 @@
 
     <!-- Step 2: Enter OTP -->
     <c:if test="${otpSent}">
-        <form method="post" action="/verify-otp" style="margin-top: 20px;">
+        <form method="post" action="/otpvalidate" style="margin-top: 20px;">
             <!-- Freeze and show user -->
             <div class="form-group">
                 <label>Email or Username:</label>
@@ -103,22 +103,54 @@
 
     <!-- Step 3: Reset Password -->
     <c:if test="${otpVerified}">
-        <form method="post" action="/update-password" style="margin-top: 20px;">
-            <!-- Freeze and show user -->
-            <div class="form-group">
-                <label>Email or Username:</label>
-                <div class="readonly-text">${emailOrUsername}</div>
-            </div>
-            <input type="hidden" name="emailOrUsername" value="${emailOrUsername}" />
-            <div class="form-group">
-                <input type="password" name="newPassword" placeholder="New Password" required />
-            </div>
-            <div class="form-group">
-                <input type="password" name="confirmPassword" placeholder="Confirm Password" required />
-            </div>
-            <button type="submit">Reset Password</button>
-        </form>
+        <form method="post" action="/updatePassword" style="margin-top: 20px;" onsubmit="return validatePassword();">
+    <!-- Freeze and show user -->
+    <div class="form-group">
+        <label>Email or Username:</label>
+        <div class="readonly-text">${emailOrUsername}</div>
+    </div>
+    <input type="hidden" name="emailOrUsername" value="${emailOrUsername}" />
+
+    <!-- New Password Field -->
+    <div class="form-group">
+        <input 
+            type="password" 
+            name="password" 
+            id="newPassword"
+            placeholder="New Password" 
+            required 
+            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+            title="Password must be at least 8 characters and include uppercase, lowercase, number, and symbol."
+        />
+    </div>
+
+    <!-- Confirm Password Field -->
+    <div class="form-group">
+        <input 
+            type="password" 
+            name="confirmPassword" 
+            id="confirmPassword"
+            placeholder="Confirm Password" 
+            required
+        />
+    </div>
+
+    <button type="submit">Reset Password</button>
+</form>
     </c:if>
 </div>
+<script>
+function validatePassword() {
+    const password = document.getElementById("newPassword").value;
+    const confirm = document.getElementById("confirmPassword").value;
+
+    if (password !== confirm) {
+        alert("Passwords do not match.");
+        return false; // Prevent form submission
+    }
+    return true;
+}
+</script>
+
 </body>
 </html>

@@ -186,7 +186,6 @@ aside ul li a:hover {
     </ul>
   </aside>
 
-
   <main>
     <h2>Stock Overview Table</h2>
     <div class="table-container">
