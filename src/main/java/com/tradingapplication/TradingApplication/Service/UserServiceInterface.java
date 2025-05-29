@@ -18,4 +18,5 @@ public interface UserServiceInterface {
 	String updateData(UpdateRequestDTO requestDto, HttpSession session, Model model);
 	String validation(UserRequestDTO requestDto, Model model);
 	boolean sendOtpToUser(String emailOrUsername, Model model, HttpSession session);
+	public String updatePassword(String password, String emailOrUsername);
 }

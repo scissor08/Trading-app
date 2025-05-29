@@ -21,7 +21,8 @@ public class GrowthReportEntity {
 	double averageBuyValue;
 	double averageSellValue;
 	double profitValue;
+	double totalProfitPercentage;
 	double currentHoldings;
 	double currentProfitValue;
-	
+	double currentProfitPercentage;
 }

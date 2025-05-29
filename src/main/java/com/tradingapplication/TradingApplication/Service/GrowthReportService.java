@@ -1,10 +1,8 @@
 package com.tradingapplication.TradingApplication.Service;
-
-import java.io.PrintWriter;
+ 
+import java.io.PrintWriter; 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +17,6 @@ import com.tradingapplication.TradingApplication.Repository.GrowthReportReposito
 import com.tradingapplication.TradingApplication.Repository.StockRepository;
 import com.tradingapplication.TradingApplication.Repository.TransactionRepository;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
-
 
 @Service
 public class GrowthReportService implements GrowthReportServiceInterface {
@@ -61,6 +58,8 @@ public class GrowthReportService implements GrowthReportServiceInterface {
 			String symbol = null;
 			double currentprofit = 0;
 			double currentprice = 0;
+			double totalprofitpercentage=0;
+			double currentprofitpercentage=0;
 			for (TransactionBuySell trans : transaction) {
 				if (trans.getStockName().equals(stockname) && trans.getTransactionType().equalsIgnoreCase("Buy")
 						&& trans.getUserDetails().getUserId() == user.getUserId()) {
@@ -82,12 +81,13 @@ public class GrowthReportService implements GrowthReportServiceInterface {
 			}
 			symbol = stockname;
 			stockholdings = totalbuystock - totalsellstock;
-			profitvalue = (totalbuystock - stockholdings) * averagebuyvalue - (totalsellstock * averagesellvalue);
-			currentprofit = (averagebuyvalue * stockholdings) - (currentprice * stockholdings);
+			profitvalue = (totalsellstock * averagesellvalue)-((totalbuystock - stockholdings) * averagebuyvalue);
+			totalprofitpercentage=(totalsellstock * averagesellvalue)/((totalbuystock - stockholdings) * averagebuyvalue)*100;
+			currentprofit = (currentprice * stockholdings)-(averagebuyvalue * stockholdings);
+			currentprofitpercentage=((currentprice*stockholdings)/(averagebuyvalue*stockholdings))*100;
 			
 			GrowthReportEntity growthRe = new GrowthReportEntity();
 			growthRe.setStockSymbol(symbol);
-
 			growthRe.setTotalBuyPrice(changeValue(totalbuyvalue));
 			growthRe.setTotalBuyQuantity(totalbuystock);
 			growthRe.setTotalSellPrice(changeValue(totalsellvalue));
@@ -97,14 +97,14 @@ public class GrowthReportService implements GrowthReportServiceInterface {
 			growthRe.setProfitValue(changeValue(profitvalue));
 			growthRe.setCurrentHoldings(stockholdings);
 			growthRe.setCurrentProfitValue(changeValue(currentprofit));
-
+			growthRe.setTotalProfitPercentage(totalprofitpercentage);
+			growthRe.setCurrentProfitPercentage(currentprofitpercentage);
 			if (growthRe.getTotalBuyPrice() > 0.0) {
 				growthReport.add(growthRe);
 				growthRepo.save(growthRe);
 				
 			}
 		}
-
 		return growthReport;
 	}
 

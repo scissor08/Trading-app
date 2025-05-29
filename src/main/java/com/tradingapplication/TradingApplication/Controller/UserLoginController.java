@@ -1,6 +1,6 @@
 package com.tradingapplication.TradingApplication.Controller;
 
-import org.springframework.beans.factory.annotation.Autowired;    
+import org.springframework.beans.factory.annotation.Autowired;     
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +13,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Service.UserServiceInterface;
 import com.tradingapplication.TradingApplication.dto.UpdateRequestDTO;
-import com.tradingapplication.TradingApplication.dto.UserRequestDTO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -46,7 +45,8 @@ public class UserLoginController {
 	
 	@PostMapping("/uservalidate")
 	public String sendOtp(@RequestParam String emailOrUsername, Model model,HttpSession session) {
-	    boolean userExists = service.sendOtpToUser(emailOrUsername, model, session);
+		session.setAttribute("name", emailOrUsername);
+		boolean userExists = service.sendOtpToUser(emailOrUsername, model, session);
 	    
 	    if (userExists) {
 	        model.addAttribute("emailOrUsername", emailOrUsername);
@@ -63,20 +63,22 @@ public class UserLoginController {
 	String userOtp = otp;
 	
 	if(userOtp==null || !userOtp.equals(givenOtp)){
-		redirectAttributes.addAttribute("error", "otp-mismatch");
-		return "redirect:/OTPPage";
+		model.addAttribute("error", "otp-mismatch");
+		return "ForgetPassword";
 	}
 	
 	if(userOtp!=null && userOtp.equals(givenOtp)) {
-//	UserRequestDTO requestDto= (UserRequestDTO) session.getAttribute("requestDto");	
-//	String message = userService.addNewUser(requestDto);
-//	model.addAttribute("message",message);
-//	session.removeAttribute("otp");
-		
-	return "Success";
+		model.addAttribute("otpVerified", true);
+	return "ForgetPassword";
 	
 	}
 	return "RegistrationPage";
+	}
+	
+	@PostMapping("/updatePassword")
+	public String upadatePassword(@RequestParam String password,HttpSession session,Model model) {
+		String emailOrUsername=(String) session.getAttribute("name");
+		return service.updatePassword(password,emailOrUsername);
 	}
 	
 	@GetMapping("/update")
