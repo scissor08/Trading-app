@@ -310,8 +310,10 @@
               <th>Avg Buy</th>
               <th>Avg Sell</th>
               <th>Holdings</th>
-              <th>Profit</th>
+              <th>Total Profit</th>
+              <th>Total Profit Percenntage</th>
               <th>Current Profit</th>
+              <th>Current Profit Percentage</th>
             </tr>
           </thead>
           <tbody>
@@ -326,7 +328,9 @@
                 <td>${r.averageSellValue}</td>
                 <td>${r.currentHoldings}</td>
                 <td>${r.profitValue}</td>
+                <td>${r.totalProfitPercentage}</td>
                 <td>${r.currentProfitValue}</td>
+                <td>${r.currentProfitPercentage}</td>
               </tr>
             </c:forEach>
           </tbody>
