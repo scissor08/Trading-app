@@ -145,7 +145,7 @@ button:hover {
 				<button type="submit">Login</button>
 
 				<div class="links">
-					<a href="/">Forgot Password?</a><br>
+					<a href="/forget">Forgot Password?</a><br>
 					<span>Don't have an account? <a href="/registration">Register here</a></span>
 				</div>
 			</form>
