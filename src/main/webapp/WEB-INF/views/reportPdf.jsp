@@ -288,6 +288,7 @@
         function downloadPdf() {
             showLoadingModal();
             window.location.href = '/pdf/download';
+            window.location.href = '/download/csv';
             setTimeout(hideLoadingModal, 2000);
         }
 
@@ -306,7 +307,7 @@
 
         function downloadOrderHistoryPdf() {
             showLoadingModal();
-            // TODO: Replace with actual PDF endpoint
+            window.location.href = '/pdf/download';
             console.log('Downloading Order History PDF...');
             setTimeout(hideLoadingModal, 2000);
         }
@@ -354,6 +355,7 @@
 
         function downloadPerformancePdf() {
             showLoadingModal();
+            window.location.href = '/download/csv';
             console.log('Downloading Performance PDF...');
             setTimeout(hideLoadingModal, 2000);
         }
