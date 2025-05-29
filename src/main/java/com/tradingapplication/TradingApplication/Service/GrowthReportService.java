@@ -16,6 +16,7 @@ import com.tradingapplication.TradingApplication.Entity.TransactionBuySell;
 import com.tradingapplication.TradingApplication.Entity.UserDetails;
 import com.tradingapplication.TradingApplication.Exception.DataNotFoundException;
 import com.tradingapplication.TradingApplication.Repository.GrowthReportRepository;
+import com.tradingapplication.TradingApplication.Repository.StockRepository;
 import com.tradingapplication.TradingApplication.Repository.TransactionRepository;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
 
@@ -29,6 +30,9 @@ public class GrowthReportService implements GrowthReportServiceInterface {
 	TransactionRepository transactionRepository;
 	@Autowired
 	GrowthReportRepository growthRepo;
+	@Autowired
+	StockRepository stockRepo;
+	
 	
 	@Override
 	public List<GrowthReportEntity> getGrowthReport(String username, Model model) {
@@ -36,12 +40,13 @@ public class GrowthReportService implements GrowthReportServiceInterface {
 		UserDetails user = userRepository.findByUsername(username)
 				.orElseThrow(() -> new DataNotFoundException("LoginPage"));
 
-		List<Stock> stocks = user.getStocks();
+		List<Stock> stocks = stockRepo.findAll();
 		List<TransactionBuySell> transaction = user.getTransaction();
 		List<String> stockSymbols=new ArrayList<String>();
 		for(Stock symbol : stocks) {
 		 stockSymbols.add(symbol.getSymbol());
 		}
+		System.out.println(stockSymbols);
 		List<GrowthReportEntity> growthReport = new ArrayList<>();
 
 		for (String stockname : stockSymbols) {
@@ -57,13 +62,13 @@ public class GrowthReportService implements GrowthReportServiceInterface {
 			double currentprofit = 0;
 			double currentprice = 0;
 			for (TransactionBuySell trans : transaction) {
-				if (trans.getStockName().equals(stockname) && trans.getTransactionType().equals("Buy")
+				if (trans.getStockName().equals(stockname) && trans.getTransactionType().equalsIgnoreCase("Buy")
 						&& trans.getUserDetails().getUserId() == user.getUserId()) {
 					totalbuystock += trans.getNoOfStocks();
 					totalbuyvalue += trans.getTotalAmount();
 					averagebuyvalue = totalbuyvalue / totalbuystock;
 				}
-				if (trans.getStockName().equals(stockname) && trans.getTransactionType().equals("Sell")
+				if (trans.getStockName().equals(stockname) && trans.getTransactionType().equalsIgnoreCase("Sell")
 						&& trans.getUserDetails().getUserId() == user.getUserId()) {
 					totalsellstock += trans.getNoOfStocks();
 					totalsellvalue += trans.getTotalAmount();
@@ -79,7 +84,7 @@ public class GrowthReportService implements GrowthReportServiceInterface {
 			stockholdings = totalbuystock - totalsellstock;
 			profitvalue = (totalbuystock - stockholdings) * averagebuyvalue - (totalsellstock * averagesellvalue);
 			currentprofit = (averagebuyvalue * stockholdings) - (currentprice * stockholdings);
-
+			
 			GrowthReportEntity growthRe = new GrowthReportEntity();
 			growthRe.setStockSymbol(symbol);
 

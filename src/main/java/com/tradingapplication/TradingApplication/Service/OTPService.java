@@ -1,14 +1,11 @@
 package com.tradingapplication.TradingApplication.Service;
 
-import java.util.Random;
-
+import java.util.Random; 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
-
 import com.tradingapplication.TradingApplication.dto.UserRequestDTO;
-
 import jakarta.servlet.http.HttpSession;
 
 @Service

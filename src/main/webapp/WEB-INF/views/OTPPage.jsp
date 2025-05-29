@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,33 +63,27 @@
             background-color: #e69500;
         }
 
-        .error, .message {
-            margin-top: 10px;
-            font-size: 14px;
-        }
-
-        .error {
-            color: red;
-        }
-
-        .message {
-            color: lightgreen;
-        }
+       .error-msg {
+	color: red;
+	margin-top: 0.5rem;
+	font-size: 0.9rem;
+	font-weight: bold;
+}
     </style>
 </head>
 <body>
 <div class="otp-card">
     <h2>Enter OTP</h2>
     <form action="/register" method="post">
+    	<p>OTP send to your Registered Mail id</p>
         <input type="text" name="otp" placeholder="Enter OTP" required />
+       <c:if test="${param.error == 'otp-mismatch'}">
+    	<p class="error-msg">The OTP you entered is incorrect. Please try again.</p>
+		</c:if>
         <input type="submit" value="Verify" />
     </form>
 
-    <div class="error">${error}</div>
-    <div class="message">${message}</div>
-    <div style="margin-top: 15px;">
     <a href="/verification" style="color: var(--highlight); text-decoration: none; margin-right: 10px;">Resend OTP</a>
 	</div>
-</div>
 </body>
 </html>

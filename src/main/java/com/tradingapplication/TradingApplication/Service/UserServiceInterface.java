@@ -13,7 +13,9 @@ public interface UserServiceInterface {
 
 	public String addNewUser(UserRequestDTO requestDto);
 	String userLogin(UserLog userlog, Model model);
-	public String sendOtp(UserRequestDTO requestDto,HttpSession session);
+	public boolean sendOtp(UserRequestDTO requestDto,HttpSession session);
 	public String getEditPage(HttpSession session, Model model);
 	String updateData(UpdateRequestDTO requestDto, HttpSession session, Model model);
+	String validation(UserRequestDTO requestDto, Model model);
+	boolean sendOtpToUser(String emailOrUsername, Model model, HttpSession session);
 }

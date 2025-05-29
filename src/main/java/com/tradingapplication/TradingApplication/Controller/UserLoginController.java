@@ -1,6 +1,5 @@
 package com.tradingapplication.TradingApplication.Controller;
 
-
 import org.springframework.beans.factory.annotation.Autowired;    
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,13 +7,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Service.UserServiceInterface;
 import com.tradingapplication.TradingApplication.dto.UpdateRequestDTO;
+import com.tradingapplication.TradingApplication.dto.UserRequestDTO;
 
 import jakarta.servlet.http.HttpSession;
-
 
 @Controller
 @RequestMapping
@@ -38,6 +39,45 @@ public class UserLoginController {
 		return service.userLogin(userlog, model);
 	}
 	
+	@GetMapping("/forget")
+	public String getforgetPage() {
+		return "ForgetPassword";
+	}
+	
+	@PostMapping("/uservalidate")
+	public String sendOtp(@RequestParam String emailOrUsername, Model model,HttpSession session) {
+	    boolean userExists = service.sendOtpToUser(emailOrUsername, model, session);
+	    
+	    if (userExists) {
+	        model.addAttribute("emailOrUsername", emailOrUsername);
+	        model.addAttribute("otpSent", true);
+	        return "ForgetPassword"; 
+	    } else {
+	        model.addAttribute("error", "User not found.");
+	        return "ForgetPassword"; 
+	    }
+	}
+	@PostMapping("/otpvalidate")
+	public String otpValidat(@RequestParam("otp") String otp,HttpSession session,Model model,RedirectAttributes redirectAttributes) {
+	String givenOtp=(String) session.getAttribute("otp");
+	String userOtp = otp;
+	
+	if(userOtp==null || !userOtp.equals(givenOtp)){
+		redirectAttributes.addAttribute("error", "otp-mismatch");
+		return "redirect:/OTPPage";
+	}
+	
+	if(userOtp!=null && userOtp.equals(givenOtp)) {
+//	UserRequestDTO requestDto= (UserRequestDTO) session.getAttribute("requestDto");	
+//	String message = userService.addNewUser(requestDto);
+//	model.addAttribute("message",message);
+//	session.removeAttribute("otp");
+		
+	return "Success";
+	
+	}
+	return "RegistrationPage";
+	}
 	
 	@GetMapping("/update")
 	public String getUpdatePage(HttpSession session,Model model) {
@@ -56,6 +96,4 @@ public class UserLoginController {
 		}
 		return "LoginPage";
 	}
-	
-	
 }
