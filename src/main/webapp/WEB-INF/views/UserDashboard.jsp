@@ -14,135 +14,101 @@
         box-sizing: border-box;
     }
 
-    body, html {
+    html, body {
         margin: 0;
         padding: 0;
-        height: 100%;
+        height: 100vh;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        display: flex;
+        flex-direction: column;
     }
 
     header {
         background-color: #f8f8ff;
-        color: black;
         padding: 1rem 2rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        position: fixed;
-        top: 0;
-        left: 200px;
-        right: 0;
-        z-index: 1000;
+        height: 60px;
         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        z-index: 1000;
     }
 
     .header-left {
         display: flex;
-        align-items: center;
         gap: 1rem;
-        
     }
 
     .header-left input[type="text"] {
         padding: 0.5rem;
         border-radius: 6px;
-        border: none;
-        outline: none;
+        border: 1px solid #ccc;
         min-width: 200px;
-         border : 1px solid black;
-         box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+         margin-left: 300px;
     }
 
     .header-left button {
         padding: 0.5rem 1rem;
         background-color: #007bff;
         border: none;
+        color: white;
         border-radius: 6px;
-        color: white;
         cursor: pointer;
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
 
-    .wallet-info {
-        background-color: #fff;
-        color: #0e1c36;
-        padding: 0.8rem 1.2rem;
-        border-radius: 10px;
-        text-align: center;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        border : 1px solid black;
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    .main-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
     }
 
-    .wallet-info h3 {
-        margin: 0;
-        font-size: 1.1rem;
-    }
+  aside {
+    width: 220px;
+    background-color: #1e2d50;
+    color: white;
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* left align items */
+    justify-content: flex-start; /* align to top */
+}
 
-    .wallet-info p {
-        font-size: 1.3rem;
-        margin: 0.5rem 0;
-        font-weight: bold;
-    }
 
-    .wallet-info a {
-        text-decoration: none;
-        color: #007bff;
-        font-weight: bold;
-    }
+ aside ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
 
-    .icon-btn {
-        color: black;
-        font-size: 1.5rem;
-        text-decoration: none;
-        transition: color 0.3s;
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    }
 
-    .icon-btn:hover {
-        color: #ffc107;
-    }
+aside ul li {
+    margin-bottom: 1rem;
+}
 
-    aside {
-        background-color: #1e2d50;
-        color: white;
-        width: 200px;
-        height: 100vh;
-        position: fixed;
-        top: 0;
-        left: 0;
-        padding: 2rem 1rem;
-        overflow-y: auto;
-    }
+aside ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: background 0.3s ease, color 0.3s ease;
+}
 
-    aside ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    aside ul li {
-        margin-bottom: 1.5rem;
-    }
-
-    aside ul li a {
-        text-decoration: none;
-        color: white;
-        font-weight: 500;
-        transition: color 0.3s;
-    }
-
-    aside ul li a:hover {
-        color: #ffd700;
-    }
+aside ul li a:hover {
+    background-color: #2d3e68;
+    color: #ffd700;
+}
 
     main {
-        margin-left: 200px;
-        margin-top: 80px; /* Height of header */
-        padding: 2rem 3rem;
-        height: calc(100vh - 80px);
+        flex: 1;
+        padding: 2rem;
+        background: linear-gradient(to bottom right, #627aff, #8e65e6);
         overflow-y: auto;
-     background: linear-gradient(to bottom right, #627aff, #8e65e6) !important;
-
     }
 
     .table-container {
@@ -160,8 +126,8 @@
 
     th, td {
         padding: 0.75rem 1rem;
-        text-align: left;
         border-bottom: 1px solid #ddd;
+        text-align: left;
     }
 
     th {
@@ -174,32 +140,38 @@
     }
 
     footer {
+        background-color: #f8f8ff;
         padding: 1rem;
         text-align: center;
-        background-color: #f8f8ff;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px -2px 8px;
+    }
+
+    .icon-btn {
         color: black;
-        position: relative;
-        z-index: 1;
+        font-size: 1.5rem;
+        margin-left: 1rem;
+        text-decoration: none;
+    }
+
+    .icon-btn:hover {
+        color: #ffc107;
     }
 </style>
 </head>
 <body>
-<aside>
-  <ul>
-    <li><a href="${pageContext.request.contextPath}/profile">Profile</a></li>
-    <li><a href="${pageContext.request.contextPath}/dashboard">Dashboard</a></li>
-    <li><a href="${pageContext.request.contextPath}/portfolio">Portfolio</a></li>
-    <li><a href="${pageContext.request.contextPath}/holdings">Hold</a></li>
-    <li><a href="${pageContext.request.contextPath}/stocks">Stocks</a></li>
-    <li><a href="${pageContext.request.contextPath}/trades">Buy/Sell</a></li>
-    <li><a href="${pageContext.request.contextPath}/growthreport">Profit/Loss Report</a></li>
-    <li><a href="${pageContext.request.contextPath}/transactions">Transaction</a></li>
-    <li><a href="${pageContext.request.contextPath}/wallet">Wallet</a></li>
-    <li><a href="${pageContext.request.contextPath}/logout">Log Out</a></li>
-  </ul>
-</aside>
 
+<header>
+  <div class="header-left">
+    <input type="text" id="searchInput" placeholder="Search stocks">
+    <button onclick="filterTable()">Search</button>
+  </div>
+  <div>
+    <a href="${pageContext.request.contextPath}/profile" class="icon-btn" title="Profile"><i class="fas fa-user-circle"></i></a>
+    <a href="${pageContext.request.contextPath}/logout" class="icon-btn" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+  </div>
+</header>
 
+<<<<<<< HEAD
   <header>
     <div class="header-left">
       <input type="text" id="searchInput" placeholder="Search stocks">
@@ -231,16 +203,31 @@
     <li><a href="${pageContext.request.contextPath}/stocks"><i class="fas fa-coins"></i> Stocks</a></li>
     <li><a href="${pageContext.request.contextPath}/trades"><i class="fas fa-exchange-alt"></i> Buy/Sell</a></li>
     <li><a href="${pageContext.request.contextPath}/growthreport"><i class="fas fa-chart-pie"></i>Report</a></li>
-    <li><a href="${pageContext.request.contextPath}/transactions"><i class="fas fa-receipt"></i> Transaction</a></li>
+    <li><a href="${pageContext.request.contextPath}/pdf/report"><i class="fas fa-receipt"></i> Transaction</a></li>
     <li><a href="${pageContext.request.contextPath}/wallet"><i class="fas fa-wallet"></i> Wallet</a></li>
     <li><a href="${pageContext.request.contextPath}/logout"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
   </ul>
 </aside>
 
+=======
+<div class="main-wrapper">
+  <aside>
+    <ul>
+      <li><a href="${pageContext.request.contextPath}/profile"><i class="fas fa-user"></i> Profile</a></li>
+      <li><a href="${pageContext.request.contextPath}/dashboard"><i class="fas fa-chart-line"></i> Dashboard</a></li>
+      <li><a href="${pageContext.request.contextPath}/holdings"><i class="fas fa-hand-holding-usd"></i> Holdings</a></li>
+      <li><a href="${pageContext.request.contextPath}/stocks"><i class="fas fa-coins"></i> Stocks</a></li>
+      <li><a href="${pageContext.request.contextPath}/trades"><i class="fas fa-exchange-alt"></i> Buy/Sell</a></li>
+      <li><a href="${pageContext.request.contextPath}/growthreport"><i class="fas fa-chart-pie"></i> Report</a></li>
+      <li><a href="${pageContext.request.contextPath}/transactions"><i class="fas fa-receipt"></i> Transaction</a></li>
+      <li><a href="${pageContext.request.contextPath}/wallet"><i class="fas fa-wallet"></i> Wallet</a></li>
+      <li><a href="${pageContext.request.contextPath}/logout"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
+    </ul>
+  </aside>
+>>>>>>> f709aafbc6eb5ec804655f3976ff3332e8db7a27
 
   <main>
-   <h2 style="margin-top: 80px;">Stock Overview Table</h2>
-
+    <h2>Stock Overview Table</h2>
     <div class="table-container">
       <table id="stockTable">
         <thead>
@@ -265,63 +252,64 @@
     <h2 style="margin-top: 50px;">Stock Price Comparison</h2>
     <canvas id="stockChart" width="900" height="400"></canvas>
   </main>
+</div>
 
-  <footer>
-    &copy; 2025 Trading App | All rights reserved
-  </footer>
+<footer>
+  &copy; 2025 Trading App | All rights reserved
+</footer>
 
+<script>
+  const stockSymbols = [<c:forEach var="s" items="${stocks}" varStatus="status">'${s.symbol}'<c:if test="${!status.last}">,</c:if></c:forEach>];
+  const stockHighs = [<c:forEach var="s" items="${stocks}" varStatus="status">${s.high}<c:if test="${!status.last}">,</c:if></c:forEach>];
+  const stockLows = [<c:forEach var="s" items="${stocks}" varStatus="status">${s.low}<c:if test="${!status.last}">,</c:if></c:forEach>];
 
-</body>
-  <script>
-    const stockSymbols = [<c:forEach var="s" items="${stocks}" varStatus="status">'${s.symbol}'<c:if test="${!status.last}">,</c:if></c:forEach>];
-    const stockHighs = [<c:forEach var="s" items="${stocks}" varStatus="status">${s.high}<c:if test="${!status.last}">,</c:if></c:forEach>];
-    const stockLows = [<c:forEach var="s" items="${stocks}" varStatus="status">${s.low}<c:if test="${!status.last}">,</c:if></c:forEach>];
-
-    const ctx = document.getElementById('stockChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: stockSymbols,
-        datasets: [
-          {
-            label: 'High Price',
-            backgroundColor: 'orange',
-            data: stockHighs
-          },
-          {
-            label: 'Low Price',
-            backgroundColor: 'grey',
-            data: stockLows
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        plugins: {
-          legend: {
-            labels: { color: 'orange' }
-          }
+  const ctx = document.getElementById('stockChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: stockSymbols,
+      datasets: [
+        {
+          label: 'High Price',
+          backgroundColor: 'orange',
+          data: stockHighs
         },
-        scales: {
-          x: { ticks: { color: 'orange' } },
-          y: { ticks: { color: 'orange' } }
+        {
+          label: 'Low Price',
+          backgroundColor: 'grey',
+          data: stockLows
         }
-      }
-    });
-
-    function filterTable() {
-      var input = document.getElementById("searchInput");
-      var filter = input.value.toUpperCase();
-      var table = document.getElementById("stockTable");
-      var tr = table.getElementsByTagName("tr");
-
-      for (var i = 1; i < tr.length; i++) {
-        var td = tr[i].getElementsByTagName("td")[0];
-        if (td) {
-          var txtValue = td.textContent || td.innerText;
-          tr[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
-        }       
+      ]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          labels: { color: 'black' }
+        }
+      },
+      scales: {
+        x: { ticks: { color: 'black' } },
+        y: { ticks: { color: 'black' } }
       }
     }
-  </script>
+  });
+
+  function filterTable() {
+    var input = document.getElementById("searchInput");
+    var filter = input.value.toUpperCase();
+    var table = document.getElementById("stockTable");
+    var tr = table.getElementsByTagName("tr");
+
+    for (var i = 1; i < tr.length; i++) {
+      var td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        var txtValue = td.textContent || td.innerText;
+        tr[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+      }
+    }
+  }
+</script>
+
+</body>
 </html>

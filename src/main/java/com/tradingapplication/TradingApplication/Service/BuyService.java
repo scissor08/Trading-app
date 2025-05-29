@@ -2,12 +2,11 @@
 package com.tradingapplication.TradingApplication.Service;
 
 
-import java.util.Date;    
+import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tradingapplication.TradingApplication.Entity.Portfolio;
 import com.tradingapplication.TradingApplication.Entity.Stock;
@@ -71,6 +70,7 @@ private UserDetailsRepository userDetailsRepository;
         int quantity = request.getQuantity();
         double stockPrice = Double.parseDouble(stock.getPrice());
         double transactionAmount = stockPrice * quantity;
+        System.out.println(transactionAmount);
 
         if (transactionAmount > user.getBalance()) {
         	 log.warn("Insufficient balance for userId {}: balance={}, required={}", 
@@ -83,7 +83,7 @@ private UserDetailsRepository userDetailsRepository;
 
         double updatedBalance = user.getBalance() - transactionAmount;
         log.info("User {} wallet updated. New balance: {}", user.getUserdetails().getUserId(), updatedBalance);
-        user.setBalance(updatedBalance);
+        user.setBalance(changeValue(updatedBalance));
         userAccountDetailsRepository.save(user);
         
         
@@ -125,8 +125,8 @@ private UserDetailsRepository userDetailsRepository;
         BuyResponseDTO response = new BuyResponseDTO();
         response.setStatus(TRANSACTION_STATUS_SUCCESS);
         response.setMessage(TRANSACTION_SUCCESS_MESSAGE);
-        response.setRemainingBalance(updatedBalance);
-        response.setTransactionAmount(transactionAmount);
+        response.setRemainingBalance(changeValue(updatedBalance));
+        response.setTransactionAmount(changeValue(transactionAmount));
         response.setStockSymbol(stock.getSymbol());
         response.setQuantity(quantity);
         
@@ -155,9 +155,8 @@ private UserDetailsRepository userDetailsRepository;
                 .orElseThrow(() -> new DataNotFoundException("Stock not found with symbol: " + symbol));
     }
     
-//    private double convetToDouble() {
-//    	
-//    	return (Double) null;
-//    }
-
+    public double changeValue(double value) {
+		return Double.parseDouble(String.format("%.3f", value));
+	}
+	
 }
