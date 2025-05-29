@@ -171,45 +171,6 @@ aside ul li a:hover {
   </div>
 </header>
 
-<<<<<<< HEAD
-  <header>
-    <div class="header-left">
-      <input type="text" id="searchInput" placeholder="Search stocks">
-      <button onclick="filterTable()">Search</button>
-    </div>
-
-    <h2 >Welcome, ${username}</h2>
-
-    <div class="wallet-info">
-      <h3>Wallet Balance</h3>
-      <p>${balance}</p>
-      <a href="/addbalance">Add Balance</a>
-    </div>
-
-    <a href="${pageContext.request.contextPath}/profile" class="icon-btn" title="Profile">
-      <i class="fas fa-user-circle"></i>
-    </a>
-    <a href="${pageContext.request.contextPath}/logout" class="icon-btn" title="Logout">
-      <i class="fas fa-sign-out-alt"></i>
-    </a>
-  </header>
-
-
-<aside>
-  <ul>
-    <li><a href="${pageContext.request.contextPath}/profile"><i class="fas fa-user"></i> Profile</a></li>
-    <li><a href="${pageContext.request.contextPath}/dashboard"><i class="fas fa-chart-line"></i> Dashboard</a></li>
-    <li><a href="${pageContext.request.contextPath}/holdings"><i class="fas fa-hand-holding-usd"></i> Holdings</a></li>
-    <li><a href="${pageContext.request.contextPath}/stocks"><i class="fas fa-coins"></i> Stocks</a></li>
-    <li><a href="${pageContext.request.contextPath}/trades"><i class="fas fa-exchange-alt"></i> Buy/Sell</a></li>
-    <li><a href="${pageContext.request.contextPath}/growthreport"><i class="fas fa-chart-pie"></i>Report</a></li>
-    <li><a href="${pageContext.request.contextPath}/pdf/report"><i class="fas fa-receipt"></i> Transaction</a></li>
-    <li><a href="${pageContext.request.contextPath}/wallet"><i class="fas fa-wallet"></i> Wallet</a></li>
-    <li><a href="${pageContext.request.contextPath}/logout"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
-  </ul>
-</aside>
-
-=======
 <div class="main-wrapper">
   <aside>
     <ul>
@@ -224,7 +185,6 @@ aside ul li a:hover {
       <li><a href="${pageContext.request.contextPath}/logout"><i class="fas fa-sign-out-alt"></i> Log Out</a></li>
     </ul>
   </aside>
->>>>>>> f709aafbc6eb5ec804655f3976ff3332e8db7a27
 
   <main>
     <h2>Stock Overview Table</h2>

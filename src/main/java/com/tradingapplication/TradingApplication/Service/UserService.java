@@ -154,6 +154,25 @@ public class UserService implements UserServiceInterface{
 	}
 
 	@Override
+	public String updatePassword(String password, String emailOrUsername) {
+
+		UserDetails userdetails = null;
+		
+		if(emailOrUsername.contains("@")) {
+			userdetails=userDetailsRepository.findByEmail(emailOrUsername).orElseThrow(()->new DataNotFoundException("LoginPage"));
+		}
+		else{
+			userdetails=userDetailsRepository.findByUsername(emailOrUsername).orElseThrow(()->new DataNotFoundException("LoginPage"));
+		}
+		System.out.println(userdetails.getUserLog().getPassword());
+		userdetails.getUserLog().setPassword(password);
+		System.out.println(userdetails.getUserLog().getPassword());
+		userDetailsRepository.save(userdetails);
+		
+		return "LoginPage";
+	}
+	
+	@Override
 	public String getEditPage(HttpSession session, Model model) {
 		UserLog userlog=(UserLog) session.getAttribute("userlog");
 		UserDetails userdetails=userDetailsRepository.findByUsername(userlog.getUsername()).orElseThrow(()->new DataNotFoundException("LoginPage"));
@@ -188,6 +207,4 @@ public class UserService implements UserServiceInterface{
 		userDetailsRepository.save(user);
 		return "redirect:/profile";	
 	}
-	
-
 }
