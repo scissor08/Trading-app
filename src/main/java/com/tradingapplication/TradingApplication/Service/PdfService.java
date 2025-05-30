@@ -55,13 +55,22 @@ public class PdfService {
     private static final DeviceRgb ACCENT_COLOR = new DeviceRgb(52, 152, 219);
     private static final DeviceRgb WATERMARK_COLOR = new DeviceRgb(240, 240, 240);
     
-    public ByteArrayInputStream generatePdf(HttpSession session) {
+    
+    public ByteArrayInputStream callPdfGenerator(HttpSession session) {
+    	 UserLog getuser = (UserLog) session.getAttribute("userlog");
+         UserDetails getuserName = userDetailsRepository.findByUsername(getuser.getUsername())
+                 .orElseThrow(() -> new DataNotFoundException("No such user found"));
+         
+         
+    	
+		return generatePdf(getuserName);
+    	
+    }
+    
+    
+    public ByteArrayInputStream generatePdf(UserDetails getuserName ) {
         try {
-            UserLog getuser = (UserLog) session.getAttribute("userlog");
-            UserDetails getuserName = userDetailsRepository.findByUsername(getuser.getUsername())
-                    .orElseThrow(() -> new DataNotFoundException("No such user found"));
-            
-            int id = getuserName.getUserId();
+        	int id = getuserName.getUserId();
             List<TransactionBuySell> data = transactionRepository.findAllByUser_Id(id);
             
             ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -108,7 +117,7 @@ public class PdfService {
                 
                 // Set transparency
                 PdfExtGState gState = new PdfExtGState();
-                gState.setFillOpacity(0.1f);
+                gState.setFillOpacity(0.5f);
                 pdfCanvas.setExtGState(gState);
                 
                 // Calculate center position
