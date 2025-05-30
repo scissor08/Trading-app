@@ -22,7 +22,7 @@ public class PdfController {
 
     @GetMapping("/download")
     public ResponseEntity<byte[]> downloadPdf(HttpSession session) {
-        ByteArrayInputStream bis = pdfService.generatePdf(session);
+        ByteArrayInputStream bis = pdfService.callPdfGenerator(session);
 
         HttpHeaders headers = new HttpHeaders();
        // headers.add("Content-Disposition", "inline; filename=transactions.pdf"); // for browser view of the pdf

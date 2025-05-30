@@ -70,7 +70,7 @@ private UserDetailsRepository userDetailsRepository;
         int quantity = request.getQuantity();
         double stockPrice = Double.parseDouble(stock.getPrice());
         double transactionAmount = stockPrice * quantity;
-        System.out.println(transactionAmount);
+       
 
         if (transactionAmount > user.getBalance()) {
         	 log.warn("Insufficient balance for userId {}: balance={}, required={}", 
