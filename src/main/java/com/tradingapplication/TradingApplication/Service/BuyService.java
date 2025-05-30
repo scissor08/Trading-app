@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.tradingapplication.TradingApplication.Entity.Portfolio;
 import com.tradingapplication.TradingApplication.Entity.Stock;
@@ -48,6 +49,8 @@ private UserDetailsRepository userDetailsRepository;
     private UserAccountDetailsRepository userAccountDetailsRepository;
     @Autowired
     TransactionRepository transcationRepository;
+    @Autowired
+    private GrowthReportServiceInterface growthReportServiceInterface;
 
     public BuyResponseDTO buyStock(HttpSession session, BuyRequestDTO request) {
     	
@@ -119,6 +122,7 @@ private UserDetailsRepository userDetailsRepository;
         transaction.setUserDetails(user.getUserdetails());
         transaction.setTransactionType(TRANSACTION_TYPE_BUY);
         transcationRepository.save(transaction);
+        growthReportServiceInterface.  getGrowthReport(getuser.getUsername());
         log.info("Transaction completed. Order ID:"+ transaction.getOrderId() + "  Amount:"  +transactionAmount);
 
 
