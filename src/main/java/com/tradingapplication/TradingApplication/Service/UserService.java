@@ -36,17 +36,17 @@ public class UserService implements UserServiceInterface{
 	public String validation (UserRequestDTO requestDto,Model model) {		
 		log.info("validation service...");
 						
-		if (userDetailsRepository.existsByUsername(requestDto.getUsername())) {
+		if (userDetailsRepository.existsByUsername(requestDto.getUsername())||requestDto.getUsername().isBlank()) {
 		        return "username";
 	    }
-	    if (userDetailsRepository.existsByEmail(requestDto.getEmail())) {
+	    if (userDetailsRepository.existsByEmail(requestDto.getEmail())||requestDto.getEmail().isBlank()) {
 		        return "email";	    }
 	    
-	    if (userDetailsRepository.existsByMobile(requestDto.getMobile())) {
+	    if (userDetailsRepository.existsByMobile(requestDto.getMobile())||requestDto.getMobile().isBlank()) {
 		        return "mobile";	    
 		        }
 	    
-	    if (userDetailsRepository.existsByPan(requestDto.getPan())) {
+	    if (userDetailsRepository.existsByPan(requestDto.getPan())||requestDto.getPan().isBlank()) {
 		        return "pan";	    }
 		
 	    return "success";
