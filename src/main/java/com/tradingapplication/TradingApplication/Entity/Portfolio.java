@@ -33,7 +33,7 @@ public class Portfolio {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id") // Optional: matches `UserDetails.userId`
-	private UserDetails user;
+	private UserTable user;
 
 	
 	@ManyToOne(fetch = FetchType.LAZY)

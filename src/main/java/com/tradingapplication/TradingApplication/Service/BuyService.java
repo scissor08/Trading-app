@@ -2,19 +2,18 @@
 package com.tradingapplication.TradingApplication.Service;
 
 
-import java.util.Date;
+import java.util.Date; 
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import com.tradingapplication.TradingApplication.Entity.Portfolio;
 import com.tradingapplication.TradingApplication.Entity.Stock;
 import com.tradingapplication.TradingApplication.Entity.TransactionBuySell;
 import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
-import com.tradingapplication.TradingApplication.Entity.UserDetails;
 import com.tradingapplication.TradingApplication.Entity.UserLog;
+import com.tradingapplication.TradingApplication.Entity.UserTable;
 import com.tradingapplication.TradingApplication.Exception.DataNotFoundException;
 import com.tradingapplication.TradingApplication.Repository.PortfolioRepository;
 import com.tradingapplication.TradingApplication.Repository.StockRepository;
@@ -58,7 +57,7 @@ private UserDetailsRepository userDetailsRepository;
     	UserLog getuser= (UserLog) session.getAttribute("userlog");
     	
     	
-    	UserDetails getid = userDetailsRepository.findByUsername(getuser.getUsername()).orElseThrow(()-> new DataNotFoundException("User not Found...."));	
+    	UserTable getid = userDetailsRepository.findByUsername(getuser.getUsername()).orElseThrow(()-> new DataNotFoundException("User not Found...."));	
     	int id = getid.getUserId();
     	log.info("BuyStock Method Invoked for userId: {}, symbol: {}, quantity: {},price {}",
     	         id, request.getSymbol(), request.getQuantity(),request.getPrice());

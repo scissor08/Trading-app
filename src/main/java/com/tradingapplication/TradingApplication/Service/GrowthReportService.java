@@ -1,6 +1,6 @@
 package com.tradingapplication.TradingApplication.Service;
  
-import java.io.PrintWriter; 
+import java.io.PrintWriter;  
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +11,7 @@ import org.springframework.ui.Model;
 import com.tradingapplication.TradingApplication.Entity.GrowthReportEntity;
 import com.tradingapplication.TradingApplication.Entity.Stock;
 import com.tradingapplication.TradingApplication.Entity.TransactionBuySell;
-import com.tradingapplication.TradingApplication.Entity.UserDetails;
+import com.tradingapplication.TradingApplication.Entity.UserTable;
 import com.tradingapplication.TradingApplication.Exception.DataNotFoundException;
 import com.tradingapplication.TradingApplication.Repository.GrowthReportRepository;
 import com.tradingapplication.TradingApplication.Repository.StockRepository;
@@ -34,7 +34,7 @@ public class GrowthReportService implements GrowthReportServiceInterface {
 	@Override
 	public List<GrowthReportEntity> getGrowthReport(String username) {
 
-		UserDetails user = userRepository.findByUsername(username)
+		UserTable user = userRepository.findByUsername(username)
 				.orElseThrow(() -> new DataNotFoundException("LoginPage"));
 
 		List<Stock> stocks = stockRepo.findAll();

@@ -1,6 +1,6 @@
 package com.tradingapplication.TradingApplication.scheduler;
 
-import java.io.File;
+import java.io.File; 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
@@ -13,7 +13,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.tradingapplication.TradingApplication.Entity.UserDetails;
+import com.tradingapplication.TradingApplication.Entity.UserTable;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
 import com.tradingapplication.TradingApplication.Service.PdfService;
 
@@ -36,11 +36,11 @@ public class ScheduledReportGenerator {
 	@Scheduled(cron = "0 20 15 * * ?") // 9:00
 	public void sendScheduledReport() throws Exception {
 
-		List<UserDetails> getAllUserName = userDetailsRepository.findAll();
+		List<UserTable> getAllUserName = userDetailsRepository.findAll();
 
 		Map<String, File> reportMap = new HashMap<>();
 
-		for (UserDetails obj : getAllUserName) {
+		for (UserTable obj : getAllUserName) {
 
 			byte[] data = pdfService.generatePdf(obj).readAllBytes();
 			File pdfFile = ScheduledReportGenerator.convertByteArrayToFile(data, "growthReport.pdf");

@@ -11,8 +11,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tradingapplication.TradingApplication.Entity.UserLog;
+import com.tradingapplication.TradingApplication.Service.CaptchaValidator;
 import com.tradingapplication.TradingApplication.Service.UserServiceInterface;
 import com.tradingapplication.TradingApplication.dto.UpdateRequestDTO;
+import com.tradingapplication.TradingApplication.dto.UserLogDTO;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -29,13 +31,44 @@ public class UserLoginController {
 	}
 		
 	@PostMapping("/login")
-	public String getDashboard(HttpSession session,UserLog userlog,Model model) {
+	public String getDashboard(  @RequestParam String username,
+		    @RequestParam String password,
+		    @RequestParam(name = "g-recaptcha-response", required = false) String captcha,
+		    HttpSession session,
+		    Model model) {
 	
-		session.setAttribute("userlog", userlog);
-	
+		UserLogDTO userlog=new UserLogDTO();
+		userlog.setUsername(username);
+		userlog.setPassword(password);
+		userlog.setCaptcha(captcha);
+		
+		int attempts = session.getAttribute("ATTEMPTS") == null ? 0 : (int) session.getAttribute("ATTEMPTS");
+		  
+		    boolean validCaptcha = true;
+
+		    if (attempts >= 2) {
+		        String captchaResponse = userlog.getCaptcha();
+		        validCaptcha = CaptchaValidator.verify(captchaResponse);
+		    }
+
+		    if (!validCaptcha) {
+		    	model.addAttribute("error", "CAPTCHA_FAILED");
+		    	return "LoginPage";
+		    }    
+		    
 		model.addAttribute("Username", userlog.getUsername());
-	
-		return service.userLogin(userlog, model);
+		String loginResult = service.userLogin(userlog, model, session); // pass session
+
+	    // If login failed, increase attempts
+	    if (loginResult.equals("LoginPage")) {
+	        session.setAttribute("ATTEMPTS", ++attempts);
+	    } else {
+	        // Reset attempts on successful login
+	        session.setAttribute("ATTEMPTS", 0);
+	        
+	        return loginResult;
+	    }
+		return service.userLogin(userlog, model, session);
 	}
 	
 	@GetMapping("/forget")
