@@ -20,7 +20,7 @@ public class UserLog {
 	
 	@OneToOne(mappedBy="userLog")
 	@JsonIgnore
-	UserDetails userDetails;
+	UserTable userDetails;
 	
 
 	public String getUsername() {

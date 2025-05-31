@@ -1,6 +1,6 @@
 package com.tradingapplication.TradingApplication.Controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.tradingapplication.TradingApplication.Entity.UserDetails;
 import com.tradingapplication.TradingApplication.Entity.UserLog;
+import com.tradingapplication.TradingApplication.Entity.UserTable;
 import com.tradingapplication.TradingApplication.Service.UserDashboardServiceInterface;
 import com.tradingapplication.TradingApplication.Service.UserService;
 
@@ -42,7 +42,7 @@ public class UserDashboardController {
 		UserLog user = (UserLog) session.getAttribute("userlog");
 
 	    if (user != null) {
-	        UserDetails userdetails = dashboardService.getDashboard(user, model);
+	    	UserTable userdetails = dashboardService.getDashboard(user, model);
 	        model.addAttribute("username", userdetails.getUsername());
 	        model.addAttribute("balance", userdetails.getUserAccountDetails().getBalance());
 	        model.addAttribute("stocks", dashboardService.getAllStockData()); // Set stocks for JSP

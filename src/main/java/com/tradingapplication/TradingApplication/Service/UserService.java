@@ -1,7 +1,7 @@
 package com.tradingapplication.TradingApplication.Service;
 
-
-import java.io.IOException;   
+ 
+import java.io.IOException;    
 import java.util.Base64;
 import java.util.Map;
 import java.util.Random; 
@@ -16,8 +16,8 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
-import com.tradingapplication.TradingApplication.Entity.UserDetails;
 import com.tradingapplication.TradingApplication.Entity.UserLog;
+import com.tradingapplication.TradingApplication.Entity.UserTable;
 import com.tradingapplication.TradingApplication.Exception.DataNotFoundException;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
 import com.tradingapplication.TradingApplication.Repository.UserLogRepository;
@@ -71,7 +71,7 @@ public class UserService implements UserServiceInterface{
 		UserAccountDetails accountDetails = new UserAccountDetails();
 		accountDetails.setBalance(0);
 			
-		UserDetails userDetails = new UserDetails();
+		UserTable userDetails = new UserTable();
 		userDetails.setName(requestDto.getName().toUpperCase());
 		userDetails.setUsername(requestDto.getUsername());
 		userDetails.setEmail(requestDto.getEmail());
@@ -152,7 +152,7 @@ public class UserService implements UserServiceInterface{
 	@Override
 	public boolean sendOtpToUser(String emailOrUsername,Model model,HttpSession session) {
 		 
-		UserDetails userdetails = null;
+		UserTable userdetails = null;
 		
 		if(emailOrUsername.contains("@") && userDetailsRepository.existsByEmail(emailOrUsername)) {
 			userdetails=userDetailsRepository.findByEmail(emailOrUsername).orElseThrow(()->new DataNotFoundException("LoginPage"));
@@ -187,7 +187,7 @@ public class UserService implements UserServiceInterface{
 	@Override
 	public String updatePassword(String password, String emailOrUsername) {
 
-		UserDetails userdetails = null;
+		UserTable userdetails = null;
 		
 		if(emailOrUsername.contains("@")) {
 			userdetails=userDetailsRepository.findByEmail(emailOrUsername).orElseThrow(()->new DataNotFoundException("LoginPage"));
@@ -206,7 +206,7 @@ public class UserService implements UserServiceInterface{
 	@Override
 	public String getEditPage(HttpSession session, Model model) {
 		UserLog userlog=(UserLog) session.getAttribute("userlog");
-		UserDetails userdetails=userDetailsRepository.findByUsername(userlog.getUsername()).orElseThrow(()->new DataNotFoundException("LoginPage"));
+		UserTable userdetails=userDetailsRepository.findByUsername(userlog.getUsername()).orElseThrow(()->new DataNotFoundException("LoginPage"));
 		model.addAttribute("userDetails",userdetails);
 		return "EditProfile";
 	}
@@ -215,7 +215,7 @@ public class UserService implements UserServiceInterface{
 	public String updateData(UpdateRequestDTO requestDto, HttpSession session,Model model) {
 
 		UserLog userlog = (UserLog) session.getAttribute("userlog");
-		UserDetails user=userDetailsRepository.findByUsername(userlog.getUsername()).orElseThrow(()->new DataNotFoundException("LoginPage"));
+		UserTable user=userDetailsRepository.findByUsername(userlog.getUsername()).orElseThrow(()->new DataNotFoundException("LoginPage"));
 		
 		user.setName(requestDto.getName().toUpperCase());
 		user.setEmail(requestDto.getEmail());

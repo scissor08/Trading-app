@@ -22,7 +22,7 @@ public class UserAccountDetails {
 	
 	
 	@OneToOne(mappedBy="userAccountDetails")
-	UserDetails userdetails;
+	UserTable userdetails;
 	
 	
 }

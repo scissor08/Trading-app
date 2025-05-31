@@ -1,6 +1,6 @@
 package com.tradingapplication.TradingApplication.configuration;
 
-import java.text.SimpleDateFormat; 
+import java.text.SimpleDateFormat;  
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
-import com.tradingapplication.TradingApplication.Entity.UserDetails;
 import com.tradingapplication.TradingApplication.Entity.UserLog;
+import com.tradingapplication.TradingApplication.Entity.UserTable;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
 
 @Configuration
@@ -25,7 +25,7 @@ public class ForUserConfiguration {
 	        return args -> {
 	        	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	            Date dob = sdf.parse("1997-05-22");
-	           UserDetails user = new UserDetails();
+	            UserTable user = new UserTable();
 	           UserAccountDetails account = new UserAccountDetails();
 	           UserLog userlog = new UserLog();
 	           user.setName("test");

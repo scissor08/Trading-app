@@ -34,7 +34,7 @@ import lombok.NoArgsConstructor;
         @UniqueConstraint(columnNames = "pan")
     }
 )
-public class UserDetails {
+public class UserTable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,6 +1,6 @@
 package com.tradingapplication.TradingApplication.Service;
 
-import java.util.Base64;
+import java.util.Base64; 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;  
@@ -11,8 +11,8 @@ import com.tradingapplication.TradingApplication.Entity.Portfolio;
 import com.tradingapplication.TradingApplication.Entity.Stock;
 
 import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
-import com.tradingapplication.TradingApplication.Entity.UserDetails;
 import com.tradingapplication.TradingApplication.Entity.UserLog;
+import com.tradingapplication.TradingApplication.Entity.UserTable;
 import com.tradingapplication.TradingApplication.Repository.StockRepository;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
 import com.tradingapplication.TradingApplication.globalException.DataNotFoundException;
@@ -76,7 +76,7 @@ public class UserDashboardService implements UserDashboardServiceInterface {
     // Fetches user profile and account details
     @Override
     public String getUserDetail(UserLog user, Model model) {
-        UserDetails userDetails = getUserDetailsByUsername(user);
+    	UserTable userDetails = getUserDetailsByUsername(user);
         UserAccountDetails userAccount = userDetails.getUserAccountDetails();
         if (userDetails.getProfileImage() != null) {
             String base64Image = Base64.getEncoder().encodeToString(userDetails.getProfileImage());
@@ -106,7 +106,7 @@ public class UserDashboardService implements UserDashboardServiceInterface {
     // Fetch and display account balance
     @Override
     public String getAccountBalance(UserLog user, Model model) {
-        UserDetails userDetails = getUserDetailsByUsername(user);
+    	UserTable userDetails = getUserDetailsByUsername(user);
 
         model.addAttribute("balance", userDetails.getUserAccountDetails().getBalance());
         model.addAttribute("username", userDetails.getUsername());
@@ -116,14 +116,14 @@ public class UserDashboardService implements UserDashboardServiceInterface {
 
     // Get full user dashboard details
     @Override
-    public UserDetails getDashboard(UserLog user, Model model) {
+    public UserTable getDashboard(UserLog user, Model model) {
         return getUserDetailsByUsername(user);
     }
 
     // Add balance to user account and return updated wallet page
     @Override
     public String addAccountBalance(UserLog user, Model model, double cash) {
-        UserDetails userDetails = getUserDetailsByUsername(user);
+    	UserTable userDetails = getUserDetailsByUsername(user);
 
         UserAccountDetails account = userDetails.getUserAccountDetails();
         account.setBalance(account.getBalance() + cash);
@@ -137,7 +137,7 @@ public class UserDashboardService implements UserDashboardServiceInterface {
     }
 
     // Utility method to fetch user details or redirect
-    private UserDetails getUserDetailsByUsername(UserLog user) {
+    private UserTable getUserDetailsByUsername(UserLog user) {
         return userDetailsRepository.findByUsername(user.getUsername())
                 .orElseThrow(() -> new DataNotFoundException("LoginPage"));
     }
