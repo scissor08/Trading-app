@@ -25,7 +25,7 @@ public class GrowthReportController {
 	public String getGrowth(HttpSession session,Model model) {
 		UserLog userlog=(UserLog) session.getAttribute("userlog");
 		String username=userlog.getUsername();
-		List<GrowthReportEntity> growth=growthReport.getGrowthReport(username,model);
+		List<GrowthReportEntity> growth=growthReport.getGrowthReport(username);
 		model.addAttribute("report", growth);
 		return "GrowthReportPage";
 	}

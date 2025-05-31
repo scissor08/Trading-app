@@ -32,7 +32,7 @@ public class GrowthReportService implements GrowthReportServiceInterface {
 	
 	
 	@Override
-	public List<GrowthReportEntity> getGrowthReport(String username, Model model) {
+	public List<GrowthReportEntity> getGrowthReport(String username) {
 
 		UserDetails user = userRepository.findByUsername(username)
 				.orElseThrow(() -> new DataNotFoundException("LoginPage"));
