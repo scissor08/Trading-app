@@ -1,11 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Login Page</title>
-
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <style>
 body {
 	margin: 0;
@@ -134,21 +136,42 @@ button:hover {
 	<main>
 		<section>
 			<form action="/login" method="post">
-				<label for="username">User name</label> 
-				<input type="text" name="username" required> 
-				
-				<label for="password">Password</label>
-				<div class="password-wrapper">
-					<input type="password" name="password" id="password" required>
-				</div>
+    <label for="username">User name</label> 
+    <input type="text" name="username" required> 
+    
+    <label for="password">Password</label>
+    <div class="password-wrapper">
+        <input type="password" name="password" id="password" required>
+    </div>
+    
+    <c:if test="${sessionScope.ATTEMPTS >= 2}">
+        <div class="g-recaptcha" data-sitekey="6Ldl-VArAAAAAAlU_PMEXmBCzeF8Go5E3EvSpWHV"></div>
+    </c:if>
+    
+    <!-- Error Messages -->
+    <c:if test="${not empty loginError}">
+        <div style="color: red; margin-bottom: 10px;">
+            <c:choose>
+                <c:when test="${loginError == 'USER_NOT_FOUND'}">
+                    User details not found.
+                </c:when>
+                <c:when test="${loginError == 'PASSWORD_MISMATCH'}">
+                    Username and password mismatch.
+                </c:when>
+                <c:otherwise>
+                    ${loginError}
+                </c:otherwise>
+            </c:choose>
+        </div>
+    </c:if>
+    
+    <button type="submit">Login</button>
 
-				<button type="submit">Login</button>
-
-				<div class="links">
-					<a href="/forget">Forgot Password?</a><br>
-					<span>Don't have an account? <a href="/registration">Register here</a></span>
-				</div>
-			</form>
+    <div class="links">
+        <a href="/forget">Forgot Password?</a><br>
+        <span>Don't have an account? <a href="/registration">Register here</a></span>
+    </div>
+</form>
 		</section>
 	</main>
 
@@ -165,6 +188,7 @@ button:hover {
 				icon.classList.add("fa-eye");
 			}
 		}
+		
 	</script>
 </body>
 </html>

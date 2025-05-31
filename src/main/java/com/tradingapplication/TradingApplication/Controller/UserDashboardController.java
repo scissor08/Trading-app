@@ -37,7 +37,7 @@ public class UserDashboardController {
 	}
 	
 	@GetMapping("/dashboard")
-	public String userDashboard(UserLog userlog,HttpSession session, Model model) {
+	public String userDashboard(HttpSession session, Model model) {
 		
 		UserLog user = (UserLog) session.getAttribute("userlog");
 

@@ -3,6 +3,7 @@ package com.tradingapplication.TradingApplication.Service;
 
 import java.io.IOException;   
 import java.util.Base64;
+import java.util.Map;
 import java.util.Random; 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +11,18 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
 import com.tradingapplication.TradingApplication.Entity.UserDetails;
 import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Exception.DataNotFoundException;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
+import com.tradingapplication.TradingApplication.Repository.UserLogRepository;
 import com.tradingapplication.TradingApplication.dto.UpdateRequestDTO;
+import com.tradingapplication.TradingApplication.dto.UserLogDTO;
 import com.tradingapplication.TradingApplication.dto.UserRequestDTO;
 import com.tradingapplication.TradingApplication.dto.UserResponseDTO;
 
@@ -27,6 +33,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserService implements UserServiceInterface{
 	
+	@Autowired
+	UserLogRepository userlogrepo;
 	@Autowired
 	UserDetailsRepository userDetailsRepository;
 	@Autowired
@@ -82,19 +90,42 @@ public class UserService implements UserServiceInterface{
 	}
 
 	@Override
-	public String userLogin(UserLog userlog,Model model) {
+	public String userLogin(UserLogDTO userlog,Model model,HttpSession session) {
+		
 		String username = userlog.getUsername();
 		String password = userlog.getPassword();	
-		
-		UserDetails existingUsers=userDetailsRepository.findByUsername(username).orElseThrow(()->new DataNotFoundException("LoginPage"));
-				
-		if(username.equals(existingUsers.getUserLog().getUsername()) && password.equals(existingUsers.getUserLog().getPassword())) {
-			model.addAttribute("balance",existingUsers.getUserAccountDetails().getBalance());
-			model.addAttribute("username", existingUsers.getUsername());
-			log.info("user login service sucessfully...");
-			return "redirect:/dashboard";
+		System.out.println(username+password);
+		if(!userlogrepo.existsByUsername(username)) {
+			model.addAttribute("loginError", "USER_NOT_FOUND");
+			return "LoginPage";
 		}
-		return "LoginPage";			
+		if(userlogrepo.existsByUsername(username)) {
+			UserLog existingUsers = userlogrepo.findById(username).orElseThrow(()->new DataNotFoundException("User Not Found"));
+			if(!password.equals(existingUsers.getPassword())) {
+				model.addAttribute("loginError", "PASSWORD_MISMATCH");
+				return "LoginPage";
+			}
+			if(username.equals(existingUsers.getUsername()) && password.equals(existingUsers.getPassword())) {
+				model.addAttribute("username", existingUsers.getUsername());
+				UserLog userlogg = new UserLog();
+			    userlogg.setUsername(userlog.getUsername());
+			    userlogg.setPassword(userlog.getPassword());
+		        session.setAttribute("userlog", userlogg);
+				log.info("user login service sucessfully...");		
+				return "redirect:/dashboard";
+			}
+			}
+			Integer attempts = (Integer) session.getAttribute("ATTEMPTS");
+		    if (attempts != null && attempts >= 3) {
+		        String captchaResponse = userlog.getCaptcha(); // Add this field in UserLog
+		        boolean verified = verifyCaptcha(captchaResponse);
+		        if (!verified) {
+		            model.addAttribute("loginError", "CAPTCHA_FAILED");
+		            return "LoginPage";
+		        }
+		    }
+		model.addAttribute("loginError", "USER_NOT_FOUND");
+		return "LoginPage";
 	}
 
 	@Override
@@ -206,5 +237,18 @@ public class UserService implements UserServiceInterface{
 				   
 		userDetailsRepository.save(user);
 		return "redirect:/profile";	
+	}
+	@Override
+	public boolean verifyCaptcha(String captchaResponse) {
+		 	String secret = "6Ldl-VArAAAAACpiLeSjvn58qJZbGe-BYOVahFsV";
+		    String url = "https://www.google.com/recaptcha/api/siteverify";
+
+		    RestTemplate restTemplate = new RestTemplate();
+		    MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+		    params.add("secret", secret);
+		    params.add("response", captchaResponse);
+
+		    Map<String, Object> response = restTemplate.postForObject(url, params, Map.class);
+		    return (Boolean) response.get("success");	
 	}
 }
