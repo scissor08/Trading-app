@@ -1,0 +1,180 @@
+* {
+        box-sizing: border-box;
+    }
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        display: flex;
+        flex-direction: column;
+    }
+
+    header {
+        background-color: #f8f8ff;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 60px;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        z-index: 1000;
+        position: fixed; /* Make header fixed */
+        top: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+    }
+
+    .header-left {
+        display: flex;
+        gap: 1rem;
+        align-items: center; /* Align items vertically */
+    }
+
+    .header-left input[type="text"] {
+        padding: 0.5rem;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        min-width: 200px;
+    }
+
+    .header-left button {
+        padding: 0.5rem 1rem;
+        background-color: #007bff;
+        border: none;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    .header-nav-links {
+        display: flex;
+        gap: 1.5rem;
+        margin-left: auto; /* Push navigation to the right */
+        margin-right: 2rem;
+    }
+
+    .header-nav-links a {
+        text-decoration: none;
+        color: black;
+        font-weight: bold;
+        transition: color 0.3s ease;
+        padding: 0.5rem 0;
+    }
+
+    .header-nav-links a:hover {
+        color: #007bff;
+    }
+
+    .icon-btn {
+        color: black;
+        font-size: 1.5rem;
+        margin-left: 1rem;
+        text-decoration: none;
+    }
+
+    .icon-btn:hover {
+        color: #ffc107;
+    }
+
+    .main-wrapper {
+        flex: 1;
+        display: flex;
+        flex-direction: column; /* Changed to column as aside is removed */
+        width: 100%;
+        padding-top: 60px; /* Space for fixed header */
+        padding-bottom: 60px; /* Space for fixed footer */
+        overflow-y: auto; /* Enable scrolling for main content */
+    }
+
+    main {
+        flex: 1;
+        padding: 2rem;
+        background: white;
+        overflow-y: auto; /* Should be handled by main-wrapper */
+    }
+
+    .table-container {
+        overflow-x: auto;
+        background-color: white;
+        padding: 1rem;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 0.75rem 1rem;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+    }
+
+    th {
+        background-color: #0e1c36;
+        color: white;
+    }
+
+    tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    footer {
+        background-color: #f8f8ff;
+        padding: 1rem;
+        text-align: center;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px -2px 8px;
+        position: fixed; /* Make footer fixed */
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        z-index: 1000;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        header {
+            flex-direction: column;
+            height: auto;
+            padding: 1rem;
+        }
+        .header-left {
+            width: 100%;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+        }
+        .header-left input[type="text"] {
+            margin-left: 0;
+        }
+        .header-nav-links {
+            width: 100%;
+            justify-content: center;
+            margin: 0.5rem 0;
+            flex-wrap: wrap; /* Allow links to wrap */
+        }
+        .header-right {
+            width: 100%;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+        .main-wrapper {
+            padding-top: 150px; /* Adjust for taller header on small screens */
+        }
+    }
+     @media (max-width: 480px) {
+        .header-nav-links a {
+            font-size: 0.9rem;
+            padding: 0.3rem 0.5rem;
+        }
+        .header-left input[type="text"] {
+            min-width: unset;
+            width: 70%;
+        }
+    }
