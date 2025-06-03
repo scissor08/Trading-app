@@ -75,7 +75,8 @@ public class SecurityConfig {
                 .requestMatchers(
                     "/arise/login", 
                     "/arise/registration", 
-                    "/arise/authenticate", 
+                    "/arise/authenticate",
+                    "/arise/validation",
                     "/arise/verification",
                     "/arise/register", 
                     "/arise/forget", 
