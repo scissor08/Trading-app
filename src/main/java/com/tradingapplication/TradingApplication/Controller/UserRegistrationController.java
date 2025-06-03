@@ -17,63 +17,66 @@ import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@RequestMapping
+@RequestMapping("/arise")
 @Slf4j
 public class UserRegistrationController {
 
-	@Autowired
-	UserServiceInterface userService;
-	
-	@GetMapping("/registration")
-	public String getRegistrationPage() {
-	    return "RegistrationPage";
-	}
+    @Autowired
+    private UserServiceInterface userService;
 
-	@PostMapping("/validation")
-	public String registerUser(@ModelAttribute UserRequestDTO requestDto,HttpSession session,Model model, RedirectAttributes redirectAttributes) {
-		session.setAttribute("requestDto",requestDto);
-		String result = userService.validation(requestDto, model);
-	    if (!"success".equals(result)) {
-	        redirectAttributes.addAttribute("error", result); 
-	        redirectAttributes.addFlashAttribute("user", requestDto);
-	        return "redirect:/registration";
-	    }
-	    return "forward:/verification"; 
-	}
-	
-	@PostMapping("/verification")
-	public String otpPage(HttpSession session) {
-		UserRequestDTO requestDto=(UserRequestDTO) session.getAttribute("requestDto");
-		boolean result=userService.sendOtp(requestDto, session);
-		if(result) {
-		return "OTPPage";
-		}
-		return "RegistrationPage";
-	}
-	
-	@PostMapping("/register")
-	public String addUsers(@RequestParam("otp") String otp,HttpSession session,Model model,RedirectAttributes redirectAttributes){
-		String givenOtp=(String) session.getAttribute("otp");
-		String userOtp = otp;
-		
-		if(userOtp==null || !userOtp.equals(givenOtp)){
-			redirectAttributes.addAttribute("error", "otp-mismatch");
-			return "redirect:/OTPPage";
-		}
-		
-		if(userOtp!=null && userOtp.equals(givenOtp)) {
-		UserRequestDTO requestDto= (UserRequestDTO) session.getAttribute("requestDto");	
-		String message = userService.addNewUser(requestDto);
-		model.addAttribute("message",message);
-		session.removeAttribute("otp");
-		return "Success";
-		
-		}
-		return "RegistrationPage";
-	}
-	
-	@GetMapping("/OTPPage")
-	public String showOtpPage() {
-	    return "OTPPage"; // JSP page located at /WEB-INF/views/OTPPage.jsp (if using InternalResourceViewResolver)
-	}
+    @GetMapping("/registration")
+    public String getRegistrationPage() {
+        return "auth/Arise";
+    }
+
+    @PostMapping("/validation")
+    public String registerUser(@ModelAttribute UserRequestDTO requestDto, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
+        session.setAttribute("requestDto", requestDto);
+        String result = userService.validation(requestDto, model);
+
+        if (!"success".equals(result)) {
+            redirectAttributes.addFlashAttribute("error", result);
+            redirectAttributes.addFlashAttribute("user", requestDto);
+            return "forward:/arise/registration";
+        }
+        return "forward:/arise/verification"; // Use redirect instead of forward
+    }
+
+    @PostMapping("/verification")
+    public String otpPage(HttpSession session) {
+        UserRequestDTO requestDto = (UserRequestDTO) session.getAttribute("requestDto");
+        boolean result = userService.sendOtp(requestDto, session);
+
+        if (result) {
+            return "auth/OTPPage";
+        }
+        return "auth/Arise";
+    }
+
+    @PostMapping("/register")
+    public String addUsers(@RequestParam("otp") String otp, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
+        String givenOtp = (String) session.getAttribute("otp");
+
+        if (otp == null || !otp.equals(givenOtp)) {
+            redirectAttributes.addFlashAttribute("error", "otp-mismatch");
+            return "redirect:/arise/OTPPage";
+        }
+
+        UserRequestDTO requestDto = (UserRequestDTO) session.getAttribute("requestDto");
+        String message = userService.addNewUser(requestDto);
+        model.addAttribute("message", message);
+
+        session.removeAttribute("otp"); // Remove OTP to prevent reuse
+        return "auth/Success";
+    }
+
+    @GetMapping("/OTPPage")
+    public String showOtpPage() {
+        return "auth/OTPPage";
+    }
+
+    @GetMapping("/success")
+    public String showSuccessPage() {
+        return "auth/Success";
+    }
 }

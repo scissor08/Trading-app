@@ -147,7 +147,14 @@
     <version>5.5.13.3</version>
 </dependency>
 
+    <!-- Spring security-->
     
+    <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-security</artifactId>
+</dependency>
+
 </dependencies>
 
 

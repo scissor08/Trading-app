@@ -17,7 +17,7 @@
             <a href="${pageContext.request.contextPath}/profile" class="icon-btn" title="Profile">
                 <i class="fas fa-user-circle"></i>
             </a>
-            <a href="${pageContext.request.contextPath}/logout" class="icon-btn" title="Logout">
+            <a href="${pageContext.request.contextPath}/arise/logout" class="icon-btn" title="Logout">
                 <i class="fas fa-sign-out-alt"></i>
             </a>
         </div>
