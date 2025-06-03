@@ -1,6 +1,6 @@
 package com.tradingapplication.TradingApplication.Controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired; 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Entity.UserTable;
+import com.tradingapplication.TradingApplication.Security.JwtUtil;
 import com.tradingapplication.TradingApplication.Service.UserDashboardServiceInterface;
 import com.tradingapplication.TradingApplication.Service.UserService;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,6 +30,8 @@ public class UserDashboardController {
 	UserDashboardServiceInterface dashboardService;
 	@Autowired
 	UserService service;
+	@Autowired
+	JwtUtil jwtUtil;
 
 	@GetMapping("/profile")
 	public String getUserDetails(Model model) {
@@ -41,27 +46,33 @@ public class UserDashboardController {
 	}
 
 	@GetMapping("/dashboard")
-	public String userDashboard(HttpSession session, Model model) {
+	public String userDashboard(HttpServletRequest request, Model model) {
+	    String token = null;
 
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    // ✅ Extract JWT token from cookies
+	    Cookie[] cookies = request.getCookies();
+	    if (cookies != null) {
+	        for (Cookie cookie : cookies) {
+	            if ("jwt".equals(cookie.getName())) {
+	                token = cookie.getValue();
+	                break;
+	            }
+	        }
+	    }
 
-		log.info("Principal class: {}", authentication.getPrincipal().getClass().getSimpleName());
-		log.info("Principal: {}", authentication.getPrincipal());
-		if (authentication != null && authentication.isAuthenticated()) {
-			String username = authentication.getName();
-			log.info(username);
+	    if (token != null && jwtUtil.validateToken(token, jwtUtil.extractUsername(token))) {
+	        String username = jwtUtil.extractUsername(token);
+	        log.info("Authenticated User: {}", username);
 
-			UserLog user = (UserLog) session.getAttribute("userlog");
+	        UserTable userdetails = dashboardService.getDashboard(username, model);
+	        model.addAttribute("username", userdetails.getUsername());
+	        model.addAttribute("balance", userdetails.getUserAccountDetails().getBalance());
+	        model.addAttribute("stocks", dashboardService.getAllStockData());
 
-			if (user != null) {
-				UserTable userdetails = dashboardService.getDashboard(username, model);
-				model.addAttribute("username", userdetails.getUsername());
-				model.addAttribute("balance", userdetails.getUserAccountDetails().getBalance());
-				model.addAttribute("stocks", dashboardService.getAllStockData()); // Set stocks for JSP
-				return "UserDashboard"; // Looks for UserDashboard.jsp
-			}
-		}
-		return "LoginPage";
+	        return "UserDashboard"; // Renders UserDashboard.jsp
+	    }
+
+	    return "LoginPage"; // Redirect to login if no valid token
 	}
 
 

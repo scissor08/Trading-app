@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.tradingapplication.TradingApplication.Service.UserServiceInterface;
 import com.tradingapplication.TradingApplication.dto.UserLogDTO;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
@@ -78,7 +81,16 @@ public class UserLoginController {
 	}
 
 	@GetMapping("/logout")
-	public String logout() {
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
+		 Cookie[] cookies = request.getCookies();
+		    if (cookies != null) {
+		        for (Cookie cookie : cookies) {
+		            cookie.setValue(null);
+		            cookie.setMaxAge(0); // Delete the cookie
+		            cookie.setPath("/"); // Make sure path matches original
+		            response.addCookie(cookie);
+		        }
+		    }
 		return "redirect:/arise/logout"; // Use Spring Security logout handling
 	}
 }

@@ -259,126 +259,126 @@
         <a href="/" class="home-btn">Home</a>
     </header>
 
-    <main>
-        <div class="auth-container">
-            <div class="tab-buttons">
-                <button class="tab-btn active" onclick="switchTab('login')">Sign In</button>
-                <button class="tab-btn" onclick="switchTab('register')">Sign Up</button>
+<main>
+    <div class="auth-container">
+        <div class="tab-buttons">
+            <button class="tab-btn active" onclick="switchTab('login')">Sign In</button>
+            <button class="tab-btn" onclick="switchTab('register')">Sign Up</button>
+        </div>
+
+        <div class="form-container">
+            <!-- Login Form -->
+            <div id="login-form" class="form-section active">
+                <!-- Google OAuth2 Sign In -->
+                <a href="/oauth2/authorization/google" class="google-signin-btn">
+                    <div class="google-icon"></div>
+                    Sign in with Google
+                </a>
+
+                <div class="oauth-divider">
+                    <span>or continue with email</span>
+                </div>
+
+                <form id="loginForm" action="/arise/login" method="post">
+                    <label for="login-username">User name</label> 
+                    <input type="text" id="login-username" name="username" required> 
+
+                    <label for="login-password">Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" name="password" id="login-password" required>
+                        <i class="fas fa-eye password-toggle" onclick="togglePassword('login-password', this)"></i>
+                    </div>
+
+                    <!-- reCAPTCHA (shows after 2 failed attempts) -->
+                    <div id="recaptcha-container" class="recaptcha-container" style="display: none;">
+                        <div class="g-recaptcha" data-sitekey="6Ldl-VArAAAAAAlU_PMEXmBCzeF8Go5E3EvSpWHV"></div>
+                    </div>
+
+                    <!-- Error Messages -->
+                    <div id="login-error" class="error-msg" style="display: none;"></div>
+
+                    <% if (request.getAttribute("error") != null) { %>
+                        <div class="error-msg">
+                            <% if ("CAPTCHA_FAILED".equals(request.getAttribute("error"))) { %>
+                                CAPTCHA verification failed. Please try again.
+                            <% } else { %>
+                                Login failed. Please check your credentials.
+                            <% } %>
+                        </div>
+                    <% } %>
+
+                    <c:if test="${not empty loginError}">
+                        <div style="color: red; margin-bottom: 10px;">
+                            <c:choose>
+                                <c:when test="${loginError == 'USER_NOT_FOUND'}">
+                                    User details not found.
+                                </c:when>
+                                <c:when test="${loginError == 'PASSWORD_MISMATCH'}">
+                                    Username and password mismatch.
+                                </c:when>
+                                <c:otherwise>
+                                    ${loginError}
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                    </c:if>
+
+                    <button type="submit">Login</button>
+
+                    <div class="links">
+                        <a href="/arise/forget">Forgot Password?</a>
+                    </div>
+
+                    <div class="switch-text">
+                        Don't have an account? <span class="switch-link" onclick="switchTab('register')">Sign up here</span>
+                    </div>
+                </form>
             </div>
-            
-            <div class="form-container">
-                <!-- Login Form -->
-                <div id="login-form" class="form-section active">
-                    <!-- Google OAuth2 Sign In -->
-                    <a href="/oauth2/authorization/google" class="google-signin-btn">
-                        <div class="google-icon"></div>
-                        Sign in with Google
-                    </a>
-                    
-                    <div class="oauth-divider">
-                        <span>or continue with email</span>
-                    </div>
 
-                    <form id="loginForm" action="/arise/login" method="post">
-                        <label for="login-username">User name</label> 
-                        <input type="text" id="login-username" name="username" required> 
-                        
-                        <label for="login-password">Password</label>
-                        <div class="password-wrapper">
-                            <input type="password" name="password" id="login-password" required>
-                            <i class="fas fa-eye password-toggle" onclick="togglePassword('login-password', this)"></i>
-                        </div>
-                        
-                        <!-- reCAPTCHA (shows after 2 failed attempts) -->
-                        <div id="recaptcha-container" class="recaptcha-container" style="display: none;">
-                            <div class="g-recaptcha" data-sitekey="6Ldl-VArAAAAAAlU_PMEXmBCzeF8Go5E3EvSpWHV"></div>
-                        </div>
-                        
-                        <!-- Error Messages -->
-                        <div id="login-error" class="error-msg" style="display: none;"></div>
-                        
-                        <% if (request.getAttribute("error") != null) { %>
-                            <div class="error-msg">
-                                <% if ("CAPTCHA_FAILED".equals(request.getAttribute("error"))) { %>
-                                    CAPTCHA verification failed. Please try again.
-                                <% } else { %>
-                                    Login failed. Please check your credentials.
-                                <% } %>
-                            </div>
-                        <% } %>
-                        <c:if test="${not empty loginError}">
-       						 <div style="color: red; margin-bottom: 10px;">
-          				  <c:choose>
-         			       <c:when test="${loginError == 'USER_NOT_FOUND'}">
-          			          User details not found.
-         			       </c:when>
-        			        <c:when test="${loginError == 'PASSWORD_MISMATCH'}">
-       			             Username and password mismatch.
-   			             </c:when>
-            			    <c:otherwise>
-        			            ${loginError}
-               			 </c:otherwise>
-       				     </c:choose>
-     				   </div>
- 				  	 </c:if>
-                        
-                        <button type="submit">Login</button>
+            <!-- Registration Form -->
+            <div id="register-form" class="form-section">
+                <!-- Google OAuth2 Sign Up -->
+                <a href="/oauth2/authorization/google" class="google-signin-btn">
+                    <div class="google-icon"></div>
+                    Sign up with Google
+                </a>
 
-                        <div class="links">
-                            <a href="/arise/forget">Forgot Password?</a>
-                        </div>
-                        
-                        <div class="switch-text">
-                            Don't have an account? <span class="switch-link" onclick="switchTab('register')">Sign up here</span>
-                        </div>
-                    </form>
+                <div class="oauth-divider">
+                    <span>or create account with email</span>
                 </div>
 
-                <!-- Registration Form -->
-                <div id="register-form" class="form-section">
-                    <!-- Google OAuth2 Sign Up -->
-                    <a href="/oauth2/authorization/google" class="google-signin-btn">
-                        <div class="google-icon"></div>
-                        Sign up with Google
-                    </a>
-                    
-                    <div class="oauth-divider">
-                        <span>or create account with email</span>
+                <form action="/arise/validation" method="post" novalidate onsubmit="return validateForm();">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required/>
+
+                    <label for="username">User Name</label>
+                    <input type="text" id="username" name="username" required/>
+
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" required/>
+
+                    <label for="password">Create Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" name="password" required/>
+                        <i class="fas fa-eye password-toggle" onclick="togglePassword('password', this)"></i>
                     </div>
 
-                    <form action="/arise/validation" method="post" novalidate onsubmit="return validateForm();">
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" required/>
+                    <label for="cpass">Confirm Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="cpass" name="cpass" required/>
+                        <i class="fas fa-eye password-toggle" onclick="togglePassword('cpass', this)"></i>
+                    </div>
 
-                        <label for="username">User Name</label>
-                        <input type="text" id="username" name="username" required/>
+                    <button type="submit">Register</button>
 
-                        <label for="email">E-mail</label>
-                        <input type="email" id="email" name="email" required/>
-
-                        <label for="password">Create Password</label>
-                        <div class="password-wrapper">
-                            <input type="password" id="password" name="password" required/>
-                            <i class="fas fa-eye password-toggle" onclick="togglePassword('password', this)"></i>
-                        </div>
-
-                        <label for="cpass">Confirm Password</label>
-                        <div class="password-wrapper">
-                            <input type="password" id="cpass" name="cpass" required/>
-                            <i class="fas fa-eye password-toggle" onclick="togglePassword('cpass', this)"></i>
-                        </div>
-                        
-                        <button type="submit">Register</button>
-                        
-                        <div class="switch-text">
-                            Already have an account? <span class="switch-link" onclick="switchTab('login')">Sign in here</span>
-                        </div>
-                    </form>
-                </div>
+                    <div class="switch-text">
+                        Already have an account? <span class="switch-link" onclick="switchTab('login')">Sign in here</span>
+                    </div>
+                </form>
             </div>
         </div>
-    </main>
-
+    </div>
+</main>
     <script>
         // Check if reCAPTCHA should be shown (from server-side session)
         <% 
@@ -493,6 +493,26 @@
                 console.log('Successfully logged out');
             }
         });
+        
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            let formData = new FormData(this);
+
+            fetch("/arise/login", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.token) {
+                    localStorage.setItem("jwtToken", data.token); // Store JWT
+                    window.location.href = data.redirect; // Redirect after storing token
+                }
+            })
+            .catch(error => console.error("Login error:", error));
+        });
+    
     </script>
 </body>
 </html>
