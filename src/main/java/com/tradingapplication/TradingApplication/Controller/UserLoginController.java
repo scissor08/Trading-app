@@ -1,101 +1,96 @@
 package com.tradingapplication.TradingApplication.Controller;
 
-import org.springframework.beans.factory.annotation.Autowired;     
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Service.UserServiceInterface;
-import com.tradingapplication.TradingApplication.dto.UpdateRequestDTO;
+import com.tradingapplication.TradingApplication.dto.UserLogDTO;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@RequestMapping
+@RequestMapping("/arise")
+@Slf4j
 public class UserLoginController {
 
-	@Autowired
-	UserServiceInterface service;
-	
+	private AuthenticationManager authenticationManager;
+	private UserServiceInterface service;
+
+	public UserLoginController(AuthenticationManager authenticationManager, UserServiceInterface service) {
+		super();
+		this.authenticationManager = authenticationManager;
+		this.service = service;
+	}
+
 	@GetMapping("/login")
-	public String getRegistrationPage() {
-	    return "LoginPage";
+	public String showLoginPage() {
+		return "auth/Arise";
 	}
-		
-	@PostMapping("/login")
-	public String getDashboard(HttpSession session,UserLog userlog,Model model) {
-	
-		session.setAttribute("userlog", userlog);
-	
-		model.addAttribute("Username", userlog.getUsername());
-	
-		return service.userLogin(userlog, model);
-	}
-	
+
+//	@PostMapping("/authenticate")
+//	public String authenticateUser(@RequestParam String username, @RequestParam String password,
+//			@RequestParam(name = "g-recaptcha-response", required = false) String captcha, HttpSession session,
+//			Model model) {
+//
+//		UserLogDTO userlog = new UserLogDTO(username, password, captcha);
+//		return service.userLogin(userlog, model, session); // Call service, don't duplicate authentication logic
+//	}
+
 	@GetMapping("/forget")
-	public String getforgetPage() {
-		return "ForgetPassword";
+	public String getForgetPage() {
+		return "auth/ForgetPassword";
 	}
-	
+
 	@PostMapping("/uservalidate")
-	public String sendOtp(@RequestParam String emailOrUsername, Model model,HttpSession session) {
+	public String sendOtp(@RequestParam String emailOrUsername, Model model, HttpSession session) {
 		session.setAttribute("name", emailOrUsername);
 		boolean userExists = service.sendOtpToUser(emailOrUsername, model, session);
-	    
-	    if (userExists) {
-	        model.addAttribute("emailOrUsername", emailOrUsername);
-	        model.addAttribute("otpSent", true);
-	        return "ForgetPassword"; 
-	    } else {
-	        model.addAttribute("error", "User not found.");
-	        return "ForgetPassword"; 
-	    }
+
+		if (userExists) {
+			model.addAttribute("otpSent", true);
+			return "auth/ForgetPassword";
+		} else {
+			model.addAttribute("error", "User not found.");
+			return "auth/ForgetPassword";
+		}
 	}
+
 	@PostMapping("/otpvalidate")
-	public String otpValidat(@RequestParam("otp") String otp,HttpSession session,Model model,RedirectAttributes redirectAttributes) {
-	String givenOtp=(String) session.getAttribute("otp");
-	String userOtp = otp;
-	
-	if(userOtp==null || !userOtp.equals(givenOtp)){
-		model.addAttribute("error", "otp-mismatch");
-		return "ForgetPassword";
-	}
-	
-	if(userOtp!=null && userOtp.equals(givenOtp)) {
+	public String otpValidate(@RequestParam("otp") String otp, HttpSession session, Model model) {
+		if (!otp.equals(session.getAttribute("otp"))) {
+			model.addAttribute("error", "OTP mismatch");
+			return "auth/ForgetPassword";
+		}
+
 		model.addAttribute("otpVerified", true);
-	return "ForgetPassword";
-	
+		return "auth/ForgetPassword";
 	}
-	return "RegistrationPage";
-	}
-	
+
 	@PostMapping("/updatePassword")
-	public String upadatePassword(@RequestParam String password,HttpSession session,Model model) {
-		String emailOrUsername=(String) session.getAttribute("name");
-		return service.updatePassword(password,emailOrUsername);
+	public String updatePassword(@RequestParam String password, HttpSession session) {
+		return service.updatePassword(password, (String) session.getAttribute("name"));
 	}
-	
-	@GetMapping("/update")
-	public String getUpdatePage(HttpSession session,Model model) {
-		UserLog user=(UserLog)session.getAttribute("userlog");
-		if(user!=null) {
-			return service.getEditPage(session,model);
-		}
-		return "LoginPage";
-	}
-	
-	@PostMapping("/update")
-	public String update(HttpSession session,@ModelAttribute UpdateRequestDTO requestDto,Model model) {
-		UserLog user=(UserLog) session.getAttribute("userlog");
-		 if(user!=null) {
-			return service.updateData(requestDto,session,model);
-		}
-		return "LoginPage";
+
+	@GetMapping("/logout")
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
+		 Cookie[] cookies = request.getCookies();
+		    if (cookies != null) {
+		        for (Cookie cookie : cookies) {
+		            cookie.setValue(null);
+		            cookie.setMaxAge(0); // Delete the cookie
+		            cookie.setPath("/"); // Make sure path matches original
+		            response.addCookie(cookie);
+		        }
+		    }
+		return "redirect:/arise/logout"; // Use Spring Security logout handling
 	}
 }

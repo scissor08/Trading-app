@@ -31,7 +31,7 @@ public class TransactionBuySell {
 	
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	private UserDetails userDetails;
+	private UserTable userDetails;
 
 
 }

@@ -2,7 +2,7 @@
 package com.tradingapplication.TradingApplication.Service;
 
 
-import java.util.Date;
+import java.util.Date; 
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +12,8 @@ import com.tradingapplication.TradingApplication.Entity.Portfolio;
 import com.tradingapplication.TradingApplication.Entity.Stock;
 import com.tradingapplication.TradingApplication.Entity.TransactionBuySell;
 import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
-import com.tradingapplication.TradingApplication.Entity.UserDetails;
 import com.tradingapplication.TradingApplication.Entity.UserLog;
+import com.tradingapplication.TradingApplication.Entity.UserTable;
 import com.tradingapplication.TradingApplication.Exception.DataNotFoundException;
 import com.tradingapplication.TradingApplication.Repository.PortfolioRepository;
 import com.tradingapplication.TradingApplication.Repository.StockRepository;
@@ -48,6 +48,8 @@ private UserDetailsRepository userDetailsRepository;
     private UserAccountDetailsRepository userAccountDetailsRepository;
     @Autowired
     TransactionRepository transcationRepository;
+    @Autowired
+    private GrowthReportServiceInterface growthReportServiceInterface;
 
     public BuyResponseDTO buyStock(HttpSession session, BuyRequestDTO request) {
     	
@@ -55,7 +57,7 @@ private UserDetailsRepository userDetailsRepository;
     	UserLog getuser= (UserLog) session.getAttribute("userlog");
     	
     	
-    	UserDetails getid = userDetailsRepository.findByUsername(getuser.getUsername()).orElseThrow(()-> new DataNotFoundException("User not Found...."));	
+    	UserTable getid = userDetailsRepository.findByUsername(getuser.getUsername()).orElseThrow(()-> new DataNotFoundException("User not Found...."));	
     	int id = getid.getUserId();
     	log.info("BuyStock Method Invoked for userId: {}, symbol: {}, quantity: {},price {}",
     	         id, request.getSymbol(), request.getQuantity(),request.getPrice());
@@ -70,7 +72,7 @@ private UserDetailsRepository userDetailsRepository;
         int quantity = request.getQuantity();
         double stockPrice = Double.parseDouble(stock.getPrice());
         double transactionAmount = stockPrice * quantity;
-        System.out.println(transactionAmount);
+       
 
         if (transactionAmount > user.getBalance()) {
         	 log.warn("Insufficient balance for userId {}: balance={}, required={}", 
@@ -119,6 +121,7 @@ private UserDetailsRepository userDetailsRepository;
         transaction.setUserDetails(user.getUserdetails());
         transaction.setTransactionType(TRANSACTION_TYPE_BUY);
         transcationRepository.save(transaction);
+        growthReportServiceInterface.  getGrowthReport(getuser.getUsername());
         log.info("Transaction completed. Order ID:"+ transaction.getOrderId() + "  Amount:"  +transactionAmount);
 
 

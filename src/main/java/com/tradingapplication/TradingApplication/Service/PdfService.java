@@ -1,6 +1,6 @@
 package com.tradingapplication.TradingApplication.Service;
 
-import java.io.ByteArrayInputStream;
+import java.io.ByteArrayInputStream; 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -33,8 +33,8 @@ import com.itextpdf.layout.properties.UnitValue;
 import com.itextpdf.layout.properties.VerticalAlignment;
 
 import com.tradingapplication.TradingApplication.Entity.TransactionBuySell;
-import com.tradingapplication.TradingApplication.Entity.UserDetails;
 import com.tradingapplication.TradingApplication.Entity.UserLog;
+import com.tradingapplication.TradingApplication.Entity.UserTable;
 import com.tradingapplication.TradingApplication.Exception.DataNotFoundException;
 import com.tradingapplication.TradingApplication.Repository.TransactionRepository;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
@@ -55,13 +55,22 @@ public class PdfService {
     private static final DeviceRgb ACCENT_COLOR = new DeviceRgb(52, 152, 219);
     private static final DeviceRgb WATERMARK_COLOR = new DeviceRgb(240, 240, 240);
     
-    public ByteArrayInputStream generatePdf(HttpSession session) {
+    
+    public ByteArrayInputStream callPdfGenerator(HttpSession session) {
+    	 UserLog getuser = (UserLog) session.getAttribute("userlog");
+    	 UserTable getuserName = userDetailsRepository.findByUsername(getuser.getUsername())
+                 .orElseThrow(() -> new DataNotFoundException("No such user found"));
+         
+         
+    	
+		return generatePdf(getuserName);
+    	
+    }
+    
+    
+    public ByteArrayInputStream generatePdf(UserTable getuserName ) {
         try {
-            UserLog getuser = (UserLog) session.getAttribute("userlog");
-            UserDetails getuserName = userDetailsRepository.findByUsername(getuser.getUsername())
-                    .orElseThrow(() -> new DataNotFoundException("No such user found"));
-            
-            int id = getuserName.getUserId();
+        	int id = getuserName.getUserId();
             List<TransactionBuySell> data = transactionRepository.findAllByUser_Id(id);
             
             ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -108,7 +117,7 @@ public class PdfService {
                 
                 // Set transparency
                 PdfExtGState gState = new PdfExtGState();
-                gState.setFillOpacity(0.1f);
+                gState.setFillOpacity(0.5f);
                 pdfCanvas.setExtGState(gState);
                 
                 // Calculate center position
@@ -135,7 +144,7 @@ public class PdfService {
         }
     }
     
-    private void addHeader(Document document, PdfFont boldFont, UserDetails userDetails) {
+    private void addHeader(Document document, PdfFont boldFont, UserTable userDetails) {
         try {
             // Company/App Name
             Paragraph title = new Paragraph("TRADING APPLICATION")

@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public interface GrowthReportServiceInterface {
 
-	List<GrowthReportEntity> getGrowthReport(String username,Model model);
+	List<GrowthReportEntity> getGrowthReport(String username);
 
 	void exportCsv(PrintWriter writer);
 

@@ -1,14 +1,14 @@
 package com.tradingapplication.TradingApplication.Service;
 
-import java.util.List; 
+import java.util.List;  
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tradingapplication.TradingApplication.Entity.Portfolio;
-import com.tradingapplication.TradingApplication.Entity.UserDetails;
 import com.tradingapplication.TradingApplication.Entity.UserLog;
+import com.tradingapplication.TradingApplication.Entity.UserTable;
 import com.tradingapplication.TradingApplication.Repository.PortfolioRepository;
 import com.tradingapplication.TradingApplication.Repository.UserAccountDetailsRepository;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
@@ -35,7 +35,7 @@ public class PortfolioService implements PortfolioServiceInterface {
 		
 		UserLog getname = (UserLog) session.getAttribute("userlog");
 
-		UserDetails getusername = userDetailsRepository.findByUsername(getname.getUsername()).orElseThrow(()-> new DataNotFoundException("user not found"));
+		UserTable getusername = userDetailsRepository.findByUsername(getname.getUsername()).orElseThrow(()-> new DataNotFoundException("user not found"));
 		int id = getusername.getUserId();
 //		UserAccountDetails user = userAccountDetailsRepository.findById(id)
 //				.orElseThrow(()->new DataNotFoundException("User Not Found"));

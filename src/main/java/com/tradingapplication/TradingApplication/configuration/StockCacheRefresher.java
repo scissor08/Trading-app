@@ -17,8 +17,9 @@ public class StockCacheRefresher {
 
     private final List<String> allSymbols = List.of("AAPL","GOOGL","MSFT", "AMZN", "TSLA", "META", "NFLX", "NVDA", "ADBE", "INTC");
 
-    // Every 10 minutes
-    @Scheduled(fixedRate = 10 * 60 * 1000)
+    public static final long TEN_MINUTES = 10 * 60 * 1000;
+
+    @Scheduled(fixedRate = TEN_MINUTES)
     public void refreshCache() {
         for (String symbol : allSymbols) {
             try {
