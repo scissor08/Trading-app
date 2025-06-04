@@ -18,10 +18,11 @@
                 <i class="fas fa-tachometer-alt"></i>
                 <span>Dashboard</span>
             </a>
+
             <a href="${pageContext.request.contextPath}/wallet" class="nav-link">
                 <i class="fas fa-wallet"></i>
                 <span>Wallet</span>
-            </a>
+        
             <a href="${pageContext.request.contextPath}/stocks" class="nav-link">
                 <i class="fas fa-chart-bar"></i>
                 <span>Stocks</span>
@@ -61,7 +62,7 @@
                         <span>Profile Settings</span>
                     </a>
                     <div class="dropdown-divider"></div>
-                    <a href="${pageContext.request.contextPath}/logout" class="dropdown-item logout-item">
+                    <a href="${pageContext.request.contextPath}/arise/logout" class="dropdown-item logout-item">
                         <i class="fas fa-sign-out-alt"></i>
                         <span>Logout</span>
                     </a>

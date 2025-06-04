@@ -2,7 +2,7 @@
 package com.tradingapplication.TradingApplication.Service;
 
 
-import java.util.Date; 
+import java.util.Date;  
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +51,7 @@ private UserDetailsRepository userDetailsRepository;
     @Autowired
     private GrowthReportServiceInterface growthReportServiceInterface;
 
+   
     public BuyResponseDTO buyStock(HttpSession session, BuyRequestDTO request) {
     	
     	

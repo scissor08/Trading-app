@@ -29,6 +29,7 @@ public class WalletReportService implements WalletReportInterface {
 
     @Override
     public void addMoney(double amount) {
+    	
         WalletReport tx = new WalletReport();
         tx.setAmount(amount);
         tx.setType("ADD");

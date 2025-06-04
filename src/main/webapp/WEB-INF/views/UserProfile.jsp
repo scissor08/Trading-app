@@ -83,15 +83,9 @@ main button {
       <p><strong>Name:</strong> ${userDetails.name}</p>
       <p><strong>Username:</strong> ${userDetails.username}</p>
       <p><strong>Email:</strong> ${userDetails.email}</p>
-      <p><strong>Mobile:</strong> ${userDetails.mobile}</p>
-      <p><strong>PAN NO:</strong> ${userDetails.pan}</p>
-      <p><strong>DOB:</strong> ${userDetails.dateOfBirth}</p>
       <p><strong>Wallet Balance:</strong> ${userAccount.balance}</p>
     </div>
 
-    <div class="profile-button">
-	   <button><a href="${pageContext.request.contextPath}/update">Edit Profile</a></button>
-    </div>
 </main>
 
 

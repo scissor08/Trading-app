@@ -46,6 +46,8 @@ public class UserLog {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
+	
 	
 	
 	
