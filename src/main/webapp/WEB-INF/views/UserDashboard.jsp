@@ -42,6 +42,14 @@
 <div class="main-wrapper">
   <main>
     <h2>Stock Overview Table</h2>
+    
+      <!-- KYC Button -->
+  <div style="margin-bottom: 20px; text-align: center;">
+    <form action="/kyc/form" method="get" style="display:inline;">
+        <input type="hidden" name="username" value="${username}" />
+        <button type="submit" class="btn btn-success btn-lg">Complete KYC Process</button>
+    </form>
+  </div>
     <canvas id="stockChart" height="100"></canvas>
     <div class="table-container mt-4">
       <table id="stockTable">
