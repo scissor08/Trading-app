@@ -21,10 +21,6 @@ public interface UserDetailsRepository extends JpaRepository<UserTable,Integer>{
     boolean existsByUsername(@Param("username") String username);
 	@Query(value = "SELECT COUNT(*) > 0 FROM users WHERE email = :email", nativeQuery = true)
     boolean existsByEmail(@Param("email") String email);
-	@Query(value = "SELECT COUNT(*) > 0 FROM users WHERE mobile = :mobile", nativeQuery = true)
-    boolean existsByMobile(@Param("mobile") String mobile);
-	@Query(value = "SELECT COUNT(*) > 0 FROM users WHERE pan = :pan", nativeQuery = true)
-    boolean existsByPan(@Param("pan") String pan);
 	
 	Optional<UserTable> findByUsername(String username);
 	Optional<UserTable> findByEmail(String emailOrUsername);
