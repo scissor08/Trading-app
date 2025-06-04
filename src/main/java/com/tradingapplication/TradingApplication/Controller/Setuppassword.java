@@ -37,14 +37,6 @@ public class Setuppassword {
 	@PersistenceContext
     private EntityManager entityManager;
 	
-//	@GetMapping("/setup-password")
-//	public String setupPassword(@RequestParam String token, Model model) {
-//	    String username = jwtProvider.extractUsername(token);
-//	    String email=jwtProvider.extractEmail(token);
-//	    model.addAttribute("username", username);
-//	    model.addAttribute("email", email);
-//	    return "auth/OauthRegistration";
-//	}
 	
 	@GetMapping("/setup-password")
 	public String setupPassword(@RequestParam String name, @RequestParam String email, Model model) {
