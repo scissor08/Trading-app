@@ -334,7 +334,7 @@
 
     <!-- Step 1: Enter Email or Username -->
     <c:if test="${empty otpSent and empty otpVerified}">
-        <form method="post" action="/uservalidate">
+        <form method="post" action="/arise/uservalidate">
             <div class="form-group">
                 <label for="emailOrUsername">Email or Username</label>
                 <input type="text" 
@@ -351,7 +351,7 @@
 
     <!-- Step 2: Enter OTP -->
     <c:if test="${otpSent}">
-        <form method="post" action="/otpvalidate">
+        <form method="post" action="/arise/otpvalidate">
             <div class="form-group">
                 <label>Email or Username:</label>
                 <div class="readonly-text">${emailOrUsername}</div>
@@ -374,7 +374,7 @@
 
     <!-- Step 3: Reset Password -->
     <c:if test="${otpVerified}">
-        <form method="post" action="/updatePassword" onsubmit="return validatePassword();">
+        <form method="post" action="/arise/updatePassword" onsubmit="return validatePassword();">
             <div class="form-group">
                 <label>Email or Username:</label>
                 <div class="readonly-text">${emailOrUsername}</div>

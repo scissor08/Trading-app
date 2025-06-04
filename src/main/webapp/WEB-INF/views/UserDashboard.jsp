@@ -132,6 +132,21 @@ $(document).ready(function() {
 	  });
 	});
 
+function getToken() {
+    return localStorage.getItem("jwtToken");
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    fetch('/dashboard', {
+        method: 'GET',
+        headers: {
+            "Authorization": "Bearer " + getToken()
+        }
+    })
+    .then(response => response.json())
+    .then(data => console.log("Dashboard Data:", data))
+    .catch(error => console.error("Error fetching dashboard data:", error));
+});
 </script>
 </body>
 </html>
