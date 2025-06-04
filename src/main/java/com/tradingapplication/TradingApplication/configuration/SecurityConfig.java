@@ -76,6 +76,7 @@ public class SecurityConfig {
                     "/arise/login", 
                     "/arise/registration", 
                     "/arise/authenticate", 
+                    "/arise/validation",
                     "/arise/verification",
                     "/arise/register", 
                     "/arise/forget", 
