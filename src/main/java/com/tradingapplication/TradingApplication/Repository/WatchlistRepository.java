@@ -9,5 +9,9 @@ import java.util.Optional;
 public interface WatchlistRepository extends JpaRepository<Watchlist, Long> {
     Optional<Watchlist> findBySymbol(String symbol);
     
+    
+    
+    
+    
 }
 
