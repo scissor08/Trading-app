@@ -28,5 +28,6 @@ public interface UserDashboardServiceInterface {
     String getAccountBalance(UserLog user, Model model);
 
     String addAccountBalance(UserLog user, Model model, double cash);	
+    String withdrawAccountBalance(UserLog user, Model model, double amount);
 
 }

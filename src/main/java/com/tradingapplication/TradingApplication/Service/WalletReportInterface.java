@@ -1,0 +1,12 @@
+package com.tradingapplication.TradingApplication.Service;
+
+import java.util.List;
+
+import com.tradingapplication.TradingApplication.dto.WalReportRequestDTO;
+import com.tradingapplication.TradingApplication.dto.WalResponseDTO;
+
+public interface WalletReportInterface {
+	  void addMoney(double amount);
+	    void withdrawMoney(double amount);
+	    List<WalResponseDTO> getAllTransactions();
+}

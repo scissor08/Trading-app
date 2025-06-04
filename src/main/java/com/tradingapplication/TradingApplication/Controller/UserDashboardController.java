@@ -1,10 +1,14 @@
 package com.tradingapplication.TradingApplication.Controller;
 
-import org.springframework.beans.factory.annotation.Autowired; 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -12,6 +16,10 @@ import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Entity.UserTable;
 import com.tradingapplication.TradingApplication.Service.UserDashboardServiceInterface;
 import com.tradingapplication.TradingApplication.Service.UserService;
+import com.tradingapplication.TradingApplication.Service.WalletReportInterface;
+import com.tradingapplication.TradingApplication.Service.WalletReportService;
+import com.tradingapplication.TradingApplication.dto.WalReportRequestDTO;
+import com.tradingapplication.TradingApplication.dto.WalResponseDTO;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
@@ -25,6 +33,9 @@ public class UserDashboardController {
 	UserDashboardServiceInterface dashboardService;
 	@Autowired
 	UserService service;
+	
+	@Autowired
+	WalletReportService  Wal;
 	
 	@GetMapping("/profile")
 	public String getUserDetails(HttpSession session,Model model) {
@@ -61,6 +72,11 @@ public class UserDashboardController {
 		return "LoginPage";
 	}
 	
+	 @GetMapping("/watchlist")
+	    public String showWatchlistPage() {
+	        return "watchlist"; // maps to /WEB-INF/views/watchlist.jsp
+	    }
+	
 	
 	@GetMapping("/stock")
 	public String getAllStocks(HttpSession session,Model model) {
@@ -91,6 +107,16 @@ public class UserDashboardController {
 	}
 	
 	
+	@PostMapping("/withdraw")
+	public String withdrawBalance(HttpSession session, Model model, @RequestParam Double amount) {
+	    UserLog user = (UserLog) session.getAttribute("userlog");
+	    if (user != null) {
+	        return dashboardService.withdrawAccountBalance(user, model, amount);
+	    }
+	    return "LoginPage";
+	}
+
+	
 	@PostMapping("/add")
 	public String addBalance(HttpSession session,Model model,@RequestParam Double cash) {
 		UserLog user = (UserLog) session.getAttribute("userlog");
@@ -108,4 +134,25 @@ public class UserDashboardController {
 		session.invalidate();
 		return "LoginPage";
 	}
+
+	  @GetMapping("/walletRep")
+	    public String showWallet(Model model) {
+	        List<WalResponseDTO> transactions = Wal.getAllTransactions();
+	        model.addAttribute("transactions", transactions);
+	        return "WalletPage"; // wallet.jsp
+	    }
+
+	    @PostMapping("/wallet/add")
+	    public String addMoney(@RequestParam double amount) {
+	    	log.warn("******************"+amount);
+	        Wal.addMoney(amount);
+	        return "redirect:/WalletPage";
+	    }
+
+	    @PostMapping("/wallet/withdraw")
+	    public String withdrawMoney(@RequestParam double amount) {
+	        Wal.withdrawMoney(amount);
+	        return "WalletPage";
+	    }
+
 }

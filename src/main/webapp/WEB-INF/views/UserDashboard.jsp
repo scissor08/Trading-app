@@ -10,6 +10,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
 <style>
+
   * { box-sizing: border-box; }
   html, body {
     margin: 0; padding: 0; height: 100vh;
@@ -40,6 +41,7 @@
 <body>
 <jsp:include page="header.jsp" />
 <div class="main-wrapper">
+<jsp:include page="ticker.jsp" />
   <main>
     <h2>Stock Overview Table</h2>
     <canvas id="stockChart" height="100"></canvas>
@@ -47,13 +49,13 @@
       <table id="stockTable">
         <thead>
           <tr>
-            <th>Symbol</th><th>High</th><th>Low</th><th>Action</th>
+            <th>Symbol</th><th>High</th><th>Low</th><th>Price</th><th>Change</th><th>Action</th>
           </tr>
         </thead>
         <tbody>
           <c:forEach var="stock" items="${stocks}">
-            <tr data-symbol="${stock.symbol}" data-high="${stock.high}" data-low="${stock.low}">
-              <td>${stock.symbol}</td><td>${stock.high}</td><td>${stock.low}</td>
+            <tr data-symbol="${stock.symbol}" data-high="${stock.high}" data-low="${stock.low}"  data-low="${stock.price}"  data-low ="${stock.change}">
+              <td>${stock.symbol}</td><td>${stock.high}</td><td>${stock.low}</td><td>${stock.price}</td><td>${stock.change}</td>
               <td><i class="fas fa-plus icon-btn plus-btn"></i></td>
             </tr>
           </c:forEach>
@@ -120,17 +122,23 @@ $(document).ready(function() {
 	    });
 	  });
 
-	  // Double click to increment quantity
-	  $('#stockTable tr').on('dblclick', function() {
-	    const symbol = $(this).data('symbol');
-	    $.ajax({
-	      url: '/api/watchlist/increment/' + symbol,
-	      method: 'PUT',
-	      success: () => alert("Quantity incremented for " + symbol),
-	      error: () => alert("Failed to increment quantity")
-	    });
-	  });
 	});
+	
+	
+function filterTable() {
+    var input = document.getElementById("searchInput");
+    var filter = input.value.toUpperCase();
+    var table = document.getElementById("stockTable");
+    var tr = table.getElementsByTagName("tr");
+
+    for (var i = 1; i < tr.length; i++) {
+      var td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        var txtValue = td.textContent || td.innerText;
+        tr[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+      }
+    }
+  }
 
 </script>
 </body>

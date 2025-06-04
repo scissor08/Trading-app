@@ -148,5 +148,29 @@ public class UserDashboardService implements UserDashboardServiceInterface {
 public List<Stock> getAllStockData() {
     return stockRepository.findAll();
 }
+
+@Override
+public String withdrawAccountBalance(UserLog user, Model model, double amount) {
+    UserTable userDetails = getUserDetailsByUsername(user);
+    UserAccountDetails account = userDetails.getUserAccountDetails();
+
+    double currentBalance = account.getBalance();
+
+    if (amount <= 0 || amount > currentBalance) {
+        model.addAttribute("error", "Invalid withdrawal amount");
+        model.addAttribute("balance", currentBalance);
+        model.addAttribute("username", userDetails.getUsername());
+        return "WalletPage"; // or a separate error page if desired
+    }
+
+    account.setBalance(currentBalance - amount);
+    userDetailsRepository.save(userDetails);
+
+    model.addAttribute("balance", account.getBalance());
+    model.addAttribute("username", userDetails.getUsername());
+
+    return "WalletPage";
+}
+
 	
 }
