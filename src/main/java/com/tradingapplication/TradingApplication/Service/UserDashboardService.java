@@ -42,7 +42,6 @@ public class UserDashboardService implements UserDashboardServiceInterface {
 	@Override
 	public String getAccountBalance(String user, Model model) {
 		UserTable userDetails = getUserDetailsByUsername(user);
-
 		model.addAttribute("balance", userDetails.getUserAccountDetails().getBalance());
 		model.addAttribute("username", userDetails.getUsername());
 

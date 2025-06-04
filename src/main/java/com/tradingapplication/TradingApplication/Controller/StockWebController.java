@@ -1,8 +1,10 @@
 package com.tradingapplication.TradingApplication.Controller;
 
 import com.tradingapplication.TradingApplication.Service.StockServiceInterface;
+import com.tradingapplication.TradingApplication.Service.UserDashboardServiceInterface;
 import com.tradingapplication.TradingApplication.dto.StockRequestDTO;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +15,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class StockWebController {
-
+	
     private final StockServiceInterface stockService;
 
     @GetMapping("/viewstock")
@@ -34,8 +36,9 @@ public class StockWebController {
     }
 
     @GetMapping("/stock/{symbol}")
-    public String getStockDetails(@PathVariable String symbol, Model model) {
+    public String getStockDetails(@PathVariable String symbol, Model model,HttpSession session) {
         try {
+        	
             StockRequestDTO stock = stockService.fetchStock(symbol.toUpperCase());
             model.addAttribute("stock", stock);
             return "stockDetails";  // stockDetails.jsp
@@ -47,8 +50,8 @@ public class StockWebController {
 
     @GetMapping("/stocks")
     public String getAllStocks(Model model) {
-        List<String> symbols = List.of("AAPL", "GOOGL", "MSFT", "AMZN", "TSLA", "META", "NFLX", "NVDA", "ADBE", "INTC");
-        List<StockRequestDTO> stocks = stockService.fetchMultipleStocks(symbols);
+      //  List<String> symbols = List.of("AAPL", "GOOGL", "MSFT", "AMZN", "TSLA", "META", "NFLX", "NVDA", "ADBE", "INTC");
+        List<StockRequestDTO> stocks = stockService.findAllStocks();
         model.addAttribute("stocks", stocks);
         return "allStocks"; // allStocks.jsp
     }
