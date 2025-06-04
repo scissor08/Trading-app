@@ -61,7 +61,9 @@ main button {
 </head>
 <body>
 <jsp:include page="header.jsp" />
+<jsp:include page="ticker.jsp" />
 <main>
+
   <div style="text-align: center; margin-bottom: 2rem;">
     <c:choose>
         <c:when test="${not empty profileImageBase64}">

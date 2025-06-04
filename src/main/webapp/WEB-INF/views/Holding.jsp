@@ -13,11 +13,11 @@
       padding: 0;
       height: 100%;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-       background: linear-gradient(to bottom right, #627aff, #8e65e6) !important;
+       background: white;
     }
 
     header {
-      background-color: #f8f8ff;
+      background-color: white;
       color: black;
       padding: 1rem 2rem;
       display: flex;

@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complete Registration</title>
+    <title>Complete Registration - Arise</title>
     <style>
         * {
             margin: 0;
@@ -15,7 +15,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #ffffff;
             min-height: 100vh;
             display: flex;
             align-items: center;
@@ -23,27 +23,40 @@
             padding: 20px;
         }
 
+        .header-logo {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
         .form-container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: #ffffff;
+            border: 2px solid #e8e9ea;
             padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             width: 100%;
             max-width: 420px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
             transform: translateY(0);
             transition: all 0.3s ease;
+            margin-top: 60px;
         }
 
         .form-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            border-color: #d1d3d4;
         }
 
         .form-title {
             text-align: center;
-            color: #333;
+            color: #2c3e50;
             font-size: 1.8rem;
             margin-bottom: 0.5rem;
             font-weight: 600;
@@ -51,7 +64,7 @@
 
         .form-subtitle {
             text-align: center;
-            color: #666;
+            color: #7f8c8d;
             margin-bottom: 2rem;
             font-size: 0.9rem;
         }
@@ -64,7 +77,7 @@
         label {
             display: block;
             margin-bottom: 0.5rem;
-            color: #444;
+            color: #34495e;
             font-weight: 500;
             font-size: 0.9rem;
             transition: color 0.3s ease;
@@ -73,23 +86,24 @@
         input {
             width: 100%;
             padding: 12px 16px;
-            border: 2px solid #e1e5e9;
-            border-radius: 12px;
+            border: 2px solid #e8e9ea;
+            border-radius: 8px;
             font-size: 1rem;
             transition: all 0.3s ease;
             background: white;
             outline: none;
+            color: #2c3e50;
         }
 
         input:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
             transform: translateY(-1px);
         }
 
         input:focus + label,
         input:not(:placeholder-shown) + label {
-            color: #667eea;
+            color: #3498db;
         }
 
         input[readonly] {
@@ -99,14 +113,14 @@
         }
 
         input[readonly]:focus {
-            border-color: #e1e5e9;
+            border-color: #e8e9ea;
             box-shadow: none;
             transform: none;
         }
 
         .password-requirements {
             font-size: 0.8rem;
-            color: #666;
+            color: #7f8c8d;
             margin-top: 0.5rem;
             opacity: 0;
             transform: translateY(-10px);
@@ -121,10 +135,10 @@
         .submit-btn {
             width: 100%;
             padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #2c3e50;
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 8px;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
@@ -134,8 +148,9 @@
         }
 
         .submit-btn:hover {
+            background: #34495e;
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 6px 20px rgba(44, 62, 80, 0.3);
         }
 
         .submit-btn:active {
@@ -163,7 +178,7 @@
             top: 50%;
             transform: translateY(-50%);
             font-size: 0.8rem;
-            color: #999;
+            color: #27ae60;
             pointer-events: none;
         }
 
@@ -192,14 +207,22 @@
         }
 
         @media (max-width: 480px) {
+            .header-logo {
+                font-size: 1.5rem;
+                top: 20px;
+            }
+            
             .form-container {
                 padding: 2rem 1.5rem;
                 margin: 10px;
+                margin-top: 80px;
             }
         }
     </style>
 </head>
 <body>
+    <div class="header-logo">ARISE</div>
+    
     <div class="form-container">
         <h1 class="form-title">Complete Registration</h1>
         <p class="form-subtitle">Set your password to finish setting up your account</p>
@@ -241,10 +264,10 @@
             const requirements = document.querySelector('.password-requirements');
             
             if (value.length >= 8 && /[A-Za-z]/.test(value) && /\d/.test(value)) {
-                requirements.style.color = '#28a745';
+                requirements.style.color = '#27ae60';
                 requirements.textContent = '✓ Password meets requirements';
             } else {
-                requirements.style.color = '#666';
+                requirements.style.color = '#7f8c8d';
                 requirements.textContent = 'Password should be at least 8 characters with letters and numbers';
             }
         });

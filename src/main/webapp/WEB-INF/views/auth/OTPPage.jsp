@@ -9,19 +9,19 @@
 <title>Verify OTP</title>
 <style>
 :root {
-	--background: #0a0a0a;
-	--card: #1a1a1a;
-	--card-hover: #242424;
-	--highlight: #FFA500;
-	--highlight-hover: #e69500;
-	--shadow: rgba(255, 165, 0, 0.15);
-	--shadow-strong: rgba(255, 165, 0, 0.3);
-	--text-primary: #ffffff;
-	--text-secondary: #b0b0b0;
+	--background: #ffffff;
+	--card: #ffffff;
+	--card-hover: #f8f9fa;
+	--highlight: #2980b9;
+	--highlight-hover: #1e6696;
+	--shadow: rgba(0, 0, 0, 0.1);
+	--shadow-strong: rgba(0, 0, 0, 0.15);
+	--text-primary: #333333;
+	--text-secondary: #666666;
 	--error: #ff4757;
-	--border: #333;
-	--input-bg: #222;
-	--input-focus: #2a2a2a;
+	--border: #e0e0e0;
+	--input-bg: #ffffff;
+	--input-focus: #f8f9fa;
 }
 
 * {
@@ -31,7 +31,7 @@
 }
 
 body {
-	background: linear-gradient(135deg, var(--background) 0%, #1a1a2e 100%);
+	background: #ffffff;
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 	color: var(--text-primary);
 	min-height: 100vh;
@@ -50,16 +50,13 @@ body {
 
 .otp-card {
 	background: var(--card);
-	background: linear-gradient(145deg, var(--card), #151515);
 	padding: 2.5rem;
 	border-radius: 16px;
 	box-shadow: 
 		0 8px 32px var(--shadow),
-		0 2px 8px rgba(0, 0, 0, 0.3),
-		inset 0 1px 0 rgba(255, 255, 255, 0.1);
+		0 2px 8px rgba(0, 0, 0, 0.05);
 	text-align: center;
-	border: 1px solid rgba(255, 165, 0, 0.1);
-	backdrop-filter: blur(10px);
+	border: 1px solid var(--border);
 	transition: all 0.3s ease;
 	position: relative;
 	overflow: hidden;
@@ -85,8 +82,8 @@ body {
 	transform: translateY(-2px);
 	box-shadow: 
 		0 12px 40px var(--shadow-strong),
-		0 4px 12px rgba(0, 0, 0, 0.4),
-		inset 0 1px 0 rgba(255, 255, 255, 0.15);
+		0 4px 12px rgba(0, 0, 0, 0.08);
+	background: var(--card-hover);
 }
 
 .otp-card h2 {
@@ -133,12 +130,12 @@ input[type="text"]:focus {
 }
 
 input[type="text"]::placeholder {
-	color: #666;
+	color: #999;
 }
 
 .btn-primary {
-	background: linear-gradient(135deg, var(--highlight), #ff8c00);
-	color: #000;
+	background: linear-gradient(135deg, var(--highlight),#2980b9);
+	color: #ffffff;
 	padding: 1rem 2rem;
 	border: none;
 	border-radius: 12px;
@@ -153,7 +150,7 @@ input[type="text"]::placeholder {
 }
 
 .btn-primary:hover {
-	background: linear-gradient(135deg, var(--highlight-hover), #e67300);
+	background: linear-gradient(135deg, var(--highlight-hover),#2980b9);
 	transform: translateY(-2px);
 	box-shadow: 0 6px 20px rgba(255, 165, 0, 0.4);
 }
@@ -179,7 +176,7 @@ input[type="text"]::placeholder {
 
 .btn-secondary:hover {
 	background-color: var(--highlight);
-	color: #000;
+	color: #ffffff;
 	transform: translateY(-1px);
 	box-shadow: 0 4px 12px rgba(255, 165, 0, 0.2);
 }
@@ -242,11 +239,11 @@ input[type="text"]::placeholder {
 	}
 }
 
-/* Dark mode enhancements */
-@media (prefers-color-scheme: dark) {
+/* Light mode enhancements */
+@media (prefers-color-scheme: light) {
 	:root {
-		--shadow: rgba(255, 165, 0, 0.2);
-		--shadow-strong: rgba(255, 165, 0, 0.35);
+		--shadow: rgba(0, 0, 0, 0.08);
+		--shadow-strong: rgba(0, 0, 0, 0.12);
 	}
 }
 
@@ -294,7 +291,7 @@ input[type="text"]::placeholder {
 			</form>
 
 			<div class="actions">
-				<form action="/arise/validation" method="POST" style="display: inline;">
+				<form action="/arise/verification" method="POST" style="display: inline;">
 					<button type="submit" class="btn-secondary">Resend OTP</button>
 				</form>
 			</div>

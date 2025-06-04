@@ -31,15 +31,10 @@ public class UserRegistrationController {
 
     @PostMapping("/validation")
     public String registerUser(@ModelAttribute UserRequestDTO requestDto, HttpSession session, Model model, RedirectAttributes redirectAttributes) {
-        session.setAttribute("requestDto", requestDto);
-        String result = userService.validation(requestDto, model);
-
-        if (!"success".equals(result)) {
-            redirectAttributes.addFlashAttribute("error", result);
-            redirectAttributes.addFlashAttribute("user", requestDto);
-            return "forward:/arise/registration";
-        }
-        return "forward:/arise/verification"; 
+        
+    	log.info("validation.....................................");
+    	session.setAttribute("requestDto", requestDto);
+        return userService.validation(requestDto, model);
     }
 
     @PostMapping("/verification")
