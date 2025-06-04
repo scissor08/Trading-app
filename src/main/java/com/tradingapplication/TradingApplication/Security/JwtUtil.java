@@ -1,13 +1,13 @@
 package com.tradingapplication.TradingApplication.Security;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-import java.util.Base64;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
 public class JwtUtil {
@@ -21,11 +21,22 @@ public class JwtUtil {
     @Value("${jwt.issuer}")
     private String issuer;
 
-    // Generate JWT Token
     public String generateToken(String username, String role) {
         return Jwts.builder()
                 .setSubject(username)
-                .claim("role", role)  // Store role-based access
+                .claim("role", role) 
+                .setIssuer(issuer)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
+                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .compact();
+    }
+    
+    public String generateToken(String username, String role, String email) {
+        return Jwts.builder()
+                .setSubject(username)
+                .claim("role", role)
+                .claim("email", email)  
                 .setIssuer(issuer)
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
@@ -33,32 +44,40 @@ public class JwtUtil {
                 .compact();
     }
 
-    // Extract Username from JWT
+
     public String extractUsername(String token) {
         return getClaims(token).getSubject();
     }
 
-    // Extract Role from JWT
     public String extractRole(String token) {
         return getClaims(token).get("role", String.class);
     }
+    
+    public String extractEmail(String token) {
+    	return getClaims(token).get("email",String.class);
+    }
 
-    // Validate JWT Token
     public boolean validateToken(String token, String username) {
         try {
             Claims claims = getClaims(token);
             return username.equals(claims.getSubject()) && !isTokenExpired(token);
         } catch (Exception e) {
-            return false; // Invalid token
+            return false; 
+        }
+    }
+    
+    public boolean validateToken(String token) {
+        try {
+            return  !isTokenExpired(token);
+        } catch (Exception e) {
+            return false; 
         }
     }
 
-    // Check Token Expiration
     private boolean isTokenExpired(String token) {
         return getClaims(token).getExpiration().before(new Date());
     }
 
-    // Decode JWT Token and Retrieve Claims
     private Claims getClaims(String token) {
         return Jwts.parser()
                 .setSigningKey(secretKey)

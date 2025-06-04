@@ -43,18 +43,15 @@ public class UserService implements UserServiceInterface {
 	private UserLogRepository userlogrepo;
 	private UserDetailsRepository userDetailsRepository;
 	private JavaMailSender javaMailSender;
-	private AuthenticationManager authenticationManager;
 
 	@Autowired
 	public UserService(PasswordEncoder passwordEncoder, UserLogRepository userlogrepo,
-			UserDetailsRepository userDetailsRepository, JavaMailSender javaMailSender,
-			AuthenticationManager authenticationManager) {
+			UserDetailsRepository userDetailsRepository, JavaMailSender javaMailSender) {
 		super();
 		this.passwordEncoder = passwordEncoder;
 		this.userlogrepo = userlogrepo;
 		this.userDetailsRepository = userDetailsRepository;
 		this.javaMailSender = javaMailSender;
-		this.authenticationManager = authenticationManager;
 	}
 
 	@Override
@@ -95,90 +92,62 @@ public class UserService implements UserServiceInterface {
 		return response.getUsername();
 	}
 
-	@Override
-	public String userLogin(UserLogDTO userlog, Model model, HttpSession session) {
-	    String username = userlog.getUsername();
-	    String password = userlog.getPassword();
-	    
-	    log.info("=== LOGIN ATTEMPT START ===");
-	    log.info("Username: {}", username);
-	    log.info("Password length: {}", password != null ? password.length() : 0);
-	    log.info("AuthenticationManager: {}", authenticationManager != null ? authenticationManager.getClass().getSimpleName() : "NULL");
-	    
-	    try {
-	        // Step 1: Check if user exists in database first
-	        log.info("Step 1: Checking if user exists in database...");
-	        UserLog userEntity = userlogrepo.findById(username).orElse(null);
-	        if (userEntity == null) {
-	            log.warn("User not found in database: {}", username);
-	            model.addAttribute("loginError", "USER_NOT_FOUND");
-	            return "auth/Arise";
-	        }
-	        log.info("User found in database: {}", userEntity.getUsername());
-	        
-	        // Step 2: Create authentication token
-	        log.info("Step 2: Creating authentication token...");
-	        UsernamePasswordAuthenticationToken authToken = 
-	            new UsernamePasswordAuthenticationToken(username, password);
-	        log.info("Authentication token created: {}", authToken.getClass().getSimpleName());
-	        
-	        // Step 3: Attempt authentication
-	        log.info("Step 3: Attempting authentication...");
-	        Authentication authentication = authenticationManager.authenticate(authToken);
-	        log.info("Authentication result: {}", authentication != null ? "SUCCESS" : "NULL");
-	        
-	        if (authentication != null && authentication.isAuthenticated()) {
-	            log.info("Authentication successful for user: {}", authentication.getName());
-	            SecurityContext context = SecurityContextHolder.createEmptyContext();
-	            context.setAuthentication(authentication);
-	            SecurityContextHolder.setContext(context);
-
-	            // Set security context
-	            SecurityContextHolder.getContext().setAuthentication(authentication);
-	            
-	            // Set session attributes for compatibility
-	            session.setAttribute("userlog", userEntity);
-	            session.setAttribute("ATTEMPTS", 0);
-	            
-	            log.info("User successfully logged in: {}", username);
-	            return "redirect:/dashboard";
-	        } else {
-	            log.warn("Authentication failed - authentication object is null or not authenticated");
-	            model.addAttribute("loginError", "AUTHENTICATION_FAILED");
-	        }
-	        
-	    } catch (UsernameNotFoundException e) {
-	        log.error("UsernameNotFoundException for user: {} - {}", username, e.getMessage());
-	        model.addAttribute("loginError", "USER_NOT_FOUND");
-	    } catch (BadCredentialsException e) {
-	        log.error("BadCredentialsException for user: {} - {}", username, e.getMessage());
-	        model.addAttribute("loginError", "PASSWORD_MISMATCH");
-	    } catch (LockedException e) {
-	        log.error("LockedException for user: {} - {}", username, e.getMessage());
-	        model.addAttribute("loginError", "ACCOUNT_LOCKED");
-	    } catch (DisabledException e) {
-	        log.error("DisabledException for user: {} - {}", username, e.getMessage());
-	        model.addAttribute("loginError", "ACCOUNT_DISABLED");
-	    } catch (Exception e) {
-	        log.error("Unexpected authentication error for user: {} - Error: {}", username, e.getMessage());
-	        log.error("Full stack trace:", e);
-	        model.addAttribute("loginError", "LOGIN_FAILED");
-	    }
-	    
-	    // Handle failed login attempts
-	    Integer attempts = (Integer) session.getAttribute("ATTEMPTS");
-	    attempts = (attempts == null) ? 1 : attempts + 1;
-	    session.setAttribute("ATTEMPTS", attempts);
-	    log.info("Failed login attempts for {}: {}", username, attempts);
-	    
-	    if (attempts >= 3 && !verifyCaptcha(userlog.getCaptcha())) {
-	        log.warn("CAPTCHA verification failed for user: {}", username);
-	        model.addAttribute("loginError", "CAPTCHA_FAILED");
-	    }
-	    
-	    log.info("=== LOGIN ATTEMPT END (FAILED) ===");
-	    return "auth/Arise";
-	}
+//	@Override
+//	public String userLogin(UserLogDTO userlog, Model model, HttpSession session) {
+//	    String username = userlog.getUsername();
+//	    String password = userlog.getPassword();
+//	     
+//	    try {
+//	        UserLog userEntity = userlogrepo.findById(username).orElse(null);
+//	        if (userEntity == null) {
+//	            log.warn("User not found in database: {}", username);
+//	            model.addAttribute("loginError", "USER_NOT_FOUND");
+//	            return "auth/Arise";
+//	        }
+//	        
+//	        UsernamePasswordAuthenticationToken authToken = 
+//	            new UsernamePasswordAuthenticationToken(username, password);
+//	        
+//	        Authentication authentication = authenticationManager.authenticate(authToken);
+//	        
+//	        if (authentication != null && authentication.isAuthenticated()) {
+//	            log.info("Authentication successful for user: {}", authentication.getName());
+//	            SecurityContext context = SecurityContextHolder.createEmptyContext();
+//	            context.setAuthentication(authentication);
+//	            SecurityContextHolder.setContext(context);
+//
+//	            SecurityContextHolder.getContext().setAuthentication(authentication);
+//	            
+//	            session.setAttribute("userlog", userEntity);
+//	            session.setAttribute("ATTEMPTS", 0);
+//	            
+//	            return "redirect:/dashboard";
+//	        } else {
+//	            model.addAttribute("loginError", "AUTHENTICATION_FAILED");
+//	        }
+//	        
+//	    } catch (UsernameNotFoundException e) {
+//	        model.addAttribute("loginError", "USER_NOT_FOUND");
+//	    } catch (BadCredentialsException e) {
+//	        model.addAttribute("loginError", "PASSWORD_MISMATCH");
+//	    } catch (LockedException e) {
+//	        model.addAttribute("loginError", "ACCOUNT_LOCKED");
+//	    } catch (DisabledException e) {
+//	        model.addAttribute("loginError", "ACCOUNT_DISABLED");
+//	    } catch (Exception e) {
+//	        model.addAttribute("loginError", "LOGIN_FAILED");
+//	    }
+//	    
+//	    Integer attempts = (Integer) session.getAttribute("ATTEMPTS");
+//	    attempts = (attempts == null) ? 1 : attempts + 1;
+//	    session.setAttribute("ATTEMPTS", attempts);
+//	    
+//	    if (attempts >= 3 && !verifyCaptcha(userlog.getCaptcha())) {
+//	        model.addAttribute("loginError", "CAPTCHA_FAILED");
+//	    }
+//	    
+//	    return "auth/Arise";
+//	}
 
 	@Override
 	public boolean sendOtp(UserRequestDTO requestDto, HttpSession session) {
