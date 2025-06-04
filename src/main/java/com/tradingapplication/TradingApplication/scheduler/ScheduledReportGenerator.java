@@ -1,6 +1,8 @@
 package com.tradingapplication.TradingApplication.scheduler;
 
 import java.io.File; 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
@@ -33,8 +35,16 @@ public class ScheduledReportGenerator {
 	@Autowired
 	private JavaMailSender mailSender;
 
-	@Scheduled(cron = "0 20 15 * * ?") // 9:00
+	@Scheduled(cron = "0 32 23 * * ?") // 9:00
 	public void sendScheduledReport() throws Exception {
+		
+		Logger logger = LoggerFactory.getLogger(ScheduledReportGenerator.class);
+
+		for (int i = 0; i < 1000; i++) {
+		    logger.info("Log message number: " + i);
+		    logger.error("Error number: " + i);
+		}
+
 
 		List<UserTable> getAllUserName = userDetailsRepository.findAll();
 

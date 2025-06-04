@@ -347,34 +347,38 @@
                     <span>or create account with email</span>
                 </div>
 
-                <form action="/arise/validation" method="post" novalidate onsubmit="return validateForm();">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required/>
+    <form action="/arise/validation" method="post" novalidate onsubmit="return validateForm();">
+    <div class="error-message">
+        <span th:if="${error}" th:text="${error}" style="color: red;"></span>
+    </div>
 
-                    <label for="username">User Name</label>
-                    <input type="text" id="username" name="username" required/>
+    <label for="name">Name</label>
+    <input type="text" id="name" name="name" required/>
 
-                    <label for="email">E-mail</label>
-                    <input type="email" id="email" name="email" required/>
+    <label for="username">User Name</label>
+    <input type="text" id="username" name="username" required/>
 
-                    <label for="password">Create Password</label>
-                    <div class="password-wrapper">
-                        <input type="password" id="password" name="password" required/>
-                        <i class="fas fa-eye password-toggle" onclick="togglePassword('password', this)"></i>
-                    </div>
+    <label for="email">E-mail</label>
+    <input type="email" id="email" name="email" required/>
 
-                    <label for="cpass">Confirm Password</label>
-                    <div class="password-wrapper">
-                        <input type="password" id="cpass" name="cpass" required/>
-                        <i class="fas fa-eye password-toggle" onclick="togglePassword('cpass', this)"></i>
-                    </div>
+    <label for="password">Create Password</label>
+    <div class="password-wrapper">
+        <input type="password" id="password" name="password" required/>
+        <i class="fas fa-eye password-toggle" onclick="togglePassword('password', this)"></i>
+    </div>
 
-                    <button type="submit">Register</button>
+    <label for="cpass">Confirm Password</label>
+    <div class="password-wrapper">
+        <input type="password" id="cpass" name="cpass" required/>
+        <i class="fas fa-eye password-toggle" onclick="togglePassword('cpass', this)"></i>
+    </div>
 
-                    <div class="switch-text">
-                        Already have an account? <span class="switch-link" onclick="switchTab('login')">Sign in here</span>
-                    </div>
-                </form>
+    <button type="submit">Register</button>
+
+    <div class="switch-text">
+        Already have an account? <span class="switch-link" onclick="switchTab('login')">Sign in here</span>
+    </div>
+</form>
             </div>
         </div>
     </div>
@@ -390,7 +394,6 @@
             });
         <% } %>
 
-        // Tab switching functionality
         function switchTab(tab) {
             const loginTab = document.querySelector('.tab-btn:first-child');
             const registerTab = document.querySelector('.tab-btn:last-child');

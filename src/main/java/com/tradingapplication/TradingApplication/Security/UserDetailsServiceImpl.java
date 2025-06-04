@@ -23,15 +23,17 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserLog user = userrepo.findById(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User Not Found")); // Ensure Spring Security expected exception
-        log.info("User {} assigned role: {}", user.getUsername(), user.getRole());
+        
+    	UserLog user = userrepo.findById(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found")); 
+      
+    	log.info("User {} assigned role: {}", user.getUsername(), user.getRole());
 
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
-                .password(user.getPassword()) // Ensure this is BCrypt hashed
-                .authorities(Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole())))                .build();
-        		
+                .password(user.getPassword()) 
+                .authorities(Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole())))
+                .build();   		
     }  
 }
 

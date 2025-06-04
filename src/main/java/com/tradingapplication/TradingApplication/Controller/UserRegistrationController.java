@@ -39,7 +39,7 @@ public class UserRegistrationController {
             redirectAttributes.addFlashAttribute("user", requestDto);
             return "forward:/arise/registration";
         }
-        return "forward:/arise/verification"; // Use redirect instead of forward
+        return "forward:/arise/verification"; 
     }
 
     @PostMapping("/verification")
@@ -66,7 +66,7 @@ public class UserRegistrationController {
         String message = userService.addNewUser(requestDto);
         model.addAttribute("message", message);
 
-        session.removeAttribute("otp"); // Remove OTP to prevent reuse
+        session.removeAttribute("otp"); 
         return "auth/Success";
     }
 

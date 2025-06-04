@@ -49,7 +49,6 @@ public class UserDashboardController {
 	public String userDashboard(HttpServletRequest request, Model model) {
 	    String token = null;
 
-	    // ✅ Extract JWT token from cookies
 	    Cookie[] cookies = request.getCookies();
 	    if (cookies != null) {
 	        for (Cookie cookie : cookies) {
@@ -69,10 +68,10 @@ public class UserDashboardController {
 	        model.addAttribute("balance", userdetails.getUserAccountDetails().getBalance());
 	        model.addAttribute("stocks", dashboardService.getAllStockData());
 
-	        return "UserDashboard"; // Renders UserDashboard.jsp
+	        return "UserDashboard"; 
 	    }
 
-	    return "LoginPage"; // Redirect to login if no valid token
+	    return "LoginPage"; 
 	}
 
 
