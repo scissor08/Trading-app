@@ -4,18 +4,12 @@ package com.tradingapplication.TradingApplication.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tradingapplication.TradingApplication.Entity.Wallet;
-
 import com.tradingapplication.TradingApplication.Repository.WalletReportRep;
 
-import com.tradingapplication.TradingApplication.dto.WalResponseDTO;
-
-import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 
 @Service

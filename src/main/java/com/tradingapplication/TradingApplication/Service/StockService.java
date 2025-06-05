@@ -119,7 +119,7 @@ public class StockService implements StockServiceInterface {
     }
   public  List<StockRequestDTO> findAllStocks(){
 	  List<Stock> stockLists=  stockRepository.findAll();
-	  List<StockRequestDTO> stockReqList=new ArrayList();
+	  List<StockRequestDTO> stockReqList=new ArrayList<>();
 	  for(Stock stock:stockLists) {
 		  StockRequestDTO sr=new StockRequestDTO();
 		  sr.setChangePercent(stock.getChangePercent());
