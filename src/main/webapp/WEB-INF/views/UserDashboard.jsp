@@ -44,7 +44,7 @@
 <jsp:include page="ticker.jsp" />
   <main>
     <h2>Stock Overview Table</h2>
-    <canvas id="stockChart" height="100"></canvas>
+
     <div class="table-container mt-4">
       <table id="stockTable">
         <thead>

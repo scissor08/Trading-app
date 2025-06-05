@@ -58,6 +58,7 @@
     </style>
 </head>
 <body>
+ <jsp:include page="header.jsp" />
     <!-- Page Header -->
     <div class="page-header">
         <div class="container">
@@ -284,7 +285,7 @@
             </div>
         </div>
     </div>
-
+<jsp:include page="footer.jsp" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Main PDF download function (existing endpoint)
@@ -432,5 +433,6 @@
             document.getElementById('startDate').value = thirtyDaysAgo.toISOString().split('T')[0];
         });
     </script>
+    
 </body>
 </html>

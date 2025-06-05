@@ -5,8 +5,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Holdings</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
   <style>
     body, html {
       margin: 0;
@@ -113,17 +115,8 @@
   </style>
 </head>
 <body>
+ <jsp:include page="header.jsp" />
 
-<header>
-  <div class="nav-left">
-    <i class="fas fa-arrow-left back-icon" onclick="goBack()"></i>
-  </div>
-  <div class="nav-links">
-    <a href="${pageContext.request.contextPath}/home" class="icon-btn"><i class="fas fa-home"></i></a>
-    <a href="${pageContext.request.contextPath}/profile" class="icon-btn"><i class="fas fa-user-circle"></i></a>
-    <a href="${pageContext.request.contextPath}/logout" class="icon-btn"><i class="fas fa-sign-out-alt"></i></a>
-  </div>
-</header>
 
 <main>
   <h2>Your Holdings</h2>
@@ -166,11 +159,7 @@
   </div>
 </main>
 
-<script>
-  function goBack() {
-    history.back();
-  }
-</script>
+ <jsp:include page="footer.jsp" />
 
 </body>
 </html>
