@@ -2,6 +2,10 @@
 <html>
 <head>
     <title>KYC Already Verified</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <style>
         body { font-family: Arial, sans-serif; background-color: #f5f5f5; text-align: center; padding: 50px; }
         .info-box {
@@ -12,6 +16,7 @@
     </style>
 </head>
 <body>
+<jsp:include page="header.jsp" />
     <div class="info-box">
         <h2>ℹ️ You Are Already KYC Verified</h2>
         <p>No need to submit your documents again.</p>
