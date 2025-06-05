@@ -1,6 +1,7 @@
 package com.tradingapplication.TradingApplication.Controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Entity.Wallet;
 import com.tradingapplication.TradingApplication.Security.AuthUtil;
 import com.tradingapplication.TradingApplication.Security.JwtUtil;
@@ -70,11 +70,9 @@ public class UserDashboardController {
 
 	@PostMapping("/withdraw")
 	public String withdrawBalance(HttpSession session, Model model, @RequestParam Double amount) {
-		UserLog user = (UserLog) session.getAttribute("userlog");
-		if (user != null) {
-			return dashboardService.withdrawAccountBalance(user, model, amount);
-		}
-		return "LoginPage";
+		 String username = authUtil.getCurrentUsername();
+			return dashboardService.withdrawAccountBalance(username, model, amount);
+		
 	}
 
 	@PostMapping("/add")

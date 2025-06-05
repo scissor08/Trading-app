@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import com.tradingapplication.TradingApplication.Entity.KycEntity;
 import com.tradingapplication.TradingApplication.Entity.Stock;
 import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
-import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Entity.UserTable;
 import com.tradingapplication.TradingApplication.Entity.Wallet;
 import com.tradingapplication.TradingApplication.Repository.KycRepository;
@@ -112,8 +111,8 @@ public class UserDashboardService implements UserDashboardServiceInterface {
 	}
 
 @Override
-public String withdrawAccountBalance(UserLog user, Model model, double amount) {
-    UserTable userDetails =userDetailsRepository.findByUsername(user.getUsername()).orElseThrow(()->new DataNotFoundException("user not found"));
+public String withdrawAccountBalance(String username, Model model, double amount) {
+    UserTable userDetails =userDetailsRepository.findByUsername(username).orElseThrow(()->new DataNotFoundException("user not found"));
     UserAccountDetails account = userDetails.getUserAccountDetails();
 
     double currentBalance = account.getBalance();

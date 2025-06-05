@@ -1,6 +1,7 @@
 package com.tradingapplication.TradingApplication.Controller;
 
 import com.tradingapplication.TradingApplication.Entity.UserLog;
+import com.tradingapplication.TradingApplication.Security.AuthUtil;
 import com.tradingapplication.TradingApplication.Service.PdfService; 
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class PdfController {
 
     @Autowired
     private PdfService pdfService;
+    @Autowired
+    AuthUtil authUtil;
 
     @GetMapping("/download")
     public ResponseEntity<byte[]> downloadPdf(HttpSession session) {
@@ -37,17 +40,8 @@ public class PdfController {
     
     @GetMapping("/report")
     public String reportJsp(HttpSession session, Model model) {
-    	
-    	UserLog user = (UserLog) session.getAttribute("userlog");
-		if(user!=null) {
-			return "reportPdf";
-		}
-		return "LoginPage";
-    	
-    	
-    	
-    	
-    	
+    	authUtil.getCurrentUsername();
+			return "reportPdf"; 	
     }
     
     

@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.ui.Model;
 
 import com.tradingapplication.TradingApplication.Entity.Stock;
-import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Entity.UserTable;
 
 import jakarta.servlet.http.HttpSession;
@@ -22,9 +21,9 @@ public interface UserDashboardServiceInterface {
 
     String addAccountBalance(String user, Model model, double cash);
     
-    String withdrawAccountBalance(UserLog user, Model model, double amount);
-
 	double getMainBalance(HttpSession session);
+
+	String withdrawAccountBalance(String username, Model model, double amount);
 
 
 }
