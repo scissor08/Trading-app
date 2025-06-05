@@ -15,24 +15,24 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #ffffff;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             color: #333;
         }
 
         .header {
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             padding: 1rem 2rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
             z-index: 1000;
-            border-bottom: 1px solid #e5e7eb;
         }
 
         .nav-container {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
             max-width: 1200px;
             margin: 0 auto;
@@ -47,7 +47,7 @@
         .logo {
             width: 50px;
             height: 50px;
-            background: linear-gradient(45deg, #1f2937, #374151);
+            background: linear-gradient(45deg, #667eea, #764ba2);
             border-radius: 12px;
             display: flex;
             align-items: center;
@@ -55,173 +55,301 @@
             color: white;
             font-size: 24px;
             font-weight: bold;
-            box-shadow: 0 4px 15px rgba(31, 41, 55, 0.2);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
 
         .logo-text {
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 700;
-            color: #1f2937;
-            letter-spacing: -0.5px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-login {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-login:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-signup {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-signup:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
         }
 
         .main-content {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 6rem 2rem;
+            padding: 4rem 2rem;
             text-align: center;
         }
 
         .hero-section {
-            margin-bottom: 6rem;
+            margin-bottom: 4rem;
         }
 
         .hero-title {
-            font-size: 4rem;
+            font-size: 3.5rem;
             font-weight: 800;
-            color: #1f2937;
-            margin-bottom: 2rem;
-            line-height: 1.1;
-            letter-spacing: -2px;
+            color: white;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .hero-subtitle {
-            font-size: 1.4rem;
-            color: #6b7280;
-            margin-bottom: 3rem;
-            max-width: 700px;
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            max-width: 600px;
             margin-left: auto;
             margin-right: auto;
             line-height: 1.6;
-            font-weight: 400;
         }
 
-        .cta-container {
-            margin-bottom: 6rem;
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 4rem;
         }
 
         .btn-primary {
-            background: linear-gradient(45deg, #1f2937, #374151);
-            color: white;
-            padding: 20px 40px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #667eea;
+            padding: 16px 32px;
             font-size: 18px;
-            font-weight: 600;
+            font-weight: 700;
             border-radius: 12px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(31, 41, 55, 0.2);
-            text-decoration: none;
-            display: inline-block;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
 
         .btn-primary:hover {
+            background: white;
             transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(31, 41, 55, 0.3);
-            background: linear-gradient(45deg, #374151, #4b5563);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 16px 32px;
+            font-size: 18px;
+            font-weight: 700;
+            border-radius: 12px;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: #667eea;
+            transform: translateY(-3px);
         }
 
         .features-section {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 3rem;
-            margin-bottom: 6rem;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
         }
 
         .feature-card {
-            background: #ffffff;
-            padding: 3rem 2rem;
-            border-radius: 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-            border: 1px solid #f3f4f6;
-            transition: all 0.3s ease;
-            text-align: left;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
         }
 
         .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+            transform: translateY(-10px);
         }
 
         .feature-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(45deg, #1f2937, #374151);
-            border-radius: 16px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1.5rem;
+            margin: 0 auto 1rem;
             color: white;
-            font-size: 28px;
+            font-size: 24px;
         }
 
         .feature-title {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 700;
-            color: #1f2937;
+            color: #333;
             margin-bottom: 1rem;
-            letter-spacing: -0.5px;
         }
 
         .feature-description {
-            color: #6b7280;
-            line-height: 1.7;
-            font-size: 1rem;
+            color: #666;
+            line-height: 1.6;
         }
 
-        .stats-section {
-            background: #f9fafb;
-            padding: 4rem 0;
-            margin: 6rem 0;
-            border-radius: 24px;
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
         }
 
-        .stats-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-            max-width: 800px;
-            margin: 0 auto;
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
-        .stat-item {
+        .modal-header {
             text-align: center;
+            margin-bottom: 2rem;
         }
 
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 800;
-            color: #1f2937;
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
             margin-bottom: 0.5rem;
         }
 
-        .stat-label {
-            font-size: 1rem;
-            color: #6b7280;
-            font-weight: 500;
+        .modal-subtitle {
+            color: #666;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .close-btn:hover {
+            color: #333;
+        }
+
+        .form-link {
+            text-align: center;
+            margin-top: 1rem;
+            color: #666;
+        }
+
+        .form-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .form-link a:hover {
+            text-decoration: underline;
         }
 
         @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
             .hero-title {
-                font-size: 2.8rem;
+                font-size: 2.5rem;
             }
             
-            .hero-subtitle {
-                font-size: 1.2rem;
-            }
-            
-            .main-content {
-                padding: 4rem 1rem;
-            }
-            
-            .features-section {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            
-            .feature-card {
-                padding: 2rem 1.5rem;
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
             }
         }
     </style>
@@ -234,71 +362,147 @@
                 <div class="logo">A</div>
                 <div class="logo-text">Arize</div>
             </div>
+            <div class="nav-buttons">
+                <button class="btn btn-login" onclick="window.location.href='/arise/login'">Login</button>
+                <button class="btn btn-signup" onclick="window.location.href='/arise/registration'">Sign Up</button>
+            </div>
         </div>
     </header>
 
     <!-- Main Content -->
     <main class="main-content">
         <section class="hero-section">
-            <h1 class="hero-title">Professional Trading Platform</h1>
+            <h1 class="hero-title">Trade Smarter with Arize</h1>
             <p class="hero-subtitle">
-                Experience institutional-grade trading with advanced analytics, real-time market data, 
-                and sophisticated trading tools designed for serious traders and investment professionals.
+                Experience next-generation trading with advanced analytics, real-time market data, 
+                and intelligent trading tools designed for both beginners and professionals.
             </p>
-            <div class="cta-container">
-            <form action="/arise/login" >
-                <button class="btn-primary">Start Trading</button>
-            </form>
-            </div>
-        </section>
-
-        <section class="stats-section">
-            <div class="stats-container">
-                <div class="stat-item">
-                    <div class="stat-number">$2.4B</div>
-                    <div class="stat-label">Daily Volume</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">150K+</div>
-                    <div class="stat-label">Active Traders</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">99.9%</div>
-                    <div class="stat-label">Uptime</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number">24/7</div>
-                    <div class="stat-label">Support</div>
-                </div>
+            <div class="cta-buttons">
+                <button class="btn btn-primary" onclick="window.location.href='/arise/registration'">Start Trading Now</button>
+                <button class="btn btn-secondary" onclick="window.location.href='/arise/login'">Access Your Account</button>
             </div>
         </section>
 
         <section class="features-section">
             <div class="feature-card">
-                <div class="feature-icon">ð</div>
-                <h3 class="feature-title">Advanced Analytics</h3>
+                <div class="feature-icon">📈</div>
+                <h3 class="feature-title">Real-Time Analytics</h3>
                 <p class="feature-description">
-                    Professional-grade charting tools with technical indicators, algorithmic trading signals, 
-                    and comprehensive market analysis to support sophisticated trading strategies.
+                    Get instant market insights with advanced charting tools and real-time data analysis 
+                    to make informed trading decisions.
                 </p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">ð</div>
-                <h3 class="feature-title">Institutional Security</h3>
+                <div class="feature-icon">🔒</div>
+                <h3 class="feature-title">Secure Trading</h3>
                 <p class="feature-description">
-                    Bank-level security infrastructure with multi-layer encryption, cold storage solutions, 
-                    and compliance with international financial regulations and standards.
+                    Your investments are protected with bank-level security, multi-factor authentication, 
+                    and encrypted transactions.
                 </p>
             </div>
             <div class="feature-card">
-                <div class="feature-icon">â¡</div>
-                <h3 class="feature-title">Ultra-Low Latency</h3>
+                <div class="feature-icon">⚡</div>
+                <h3 class="feature-title">Lightning Fast</h3>
                 <p class="feature-description">
-                    Sub-millisecond order execution with direct market access, co-location services, 
-                    and optimized trading infrastructure for maximum performance.
+                    Execute trades in milliseconds with our high-performance trading engine and 
+                    optimized order execution.
                 </p>
             </div>
         </section>
     </main>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('loginModal')">&times;</button>
+            <div class="modal-header">
+                <h2 class="modal-title">Welcome Back</h2>
+                <p class="modal-subtitle">Sign in to your Arize account</p>
+            </div>
+            <form action="login" method="post">
+                <div class="form-group">
+                    <label class="form-label" for="loginEmail">Email Address</label>
+                    <input type="email" id="loginEmail" name="email" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" name="password" class="form-input" required>
+                </div>
+                <button type="submit" class="btn-submit">Sign In</button>
+            </form>
+            <div class="form-link">
+                Don't have an account? <a href="#" onclick="switchModal('loginModal', 'signupModal')">Sign up here</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal('signupModal')">&times;</button>
+            <div class="modal-header">
+                <h2 class="modal-title">Join Arize</h2>
+                <p class="modal-subtitle">Create your trading account</p>
+            </div>
+            <form action="signup" method="post">
+                <div class="form-group">
+                    <label class="form-label" for="signupName">Full Name</label>
+                    <input type="text" id="signupName" name="fullName" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="signupEmail">Email Address</label>
+                    <input type="email" id="signupEmail" name="email" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="signupPassword">Password</label>
+                    <input type="password" id="signupPassword" name="password" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-input" required>
+                </div>
+                <button type="submit" class="btn-submit">Create Account</button>
+            </form>
+            <div class="form-link">
+                Already have an account? <a href="#" onclick="switchModal('signupModal', 'loginModal')">Sign in here</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function switchModal(currentModal, targetModal) {
+            closeModal(currentModal);
+            openModal(targetModal);
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Form validation
+        document.getElementById('signupModal').querySelector('form').addEventListener('submit', function(e) {
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                alert('Passwords do not match!');
+            }
+        });
+    </script>
 </body>
 </html>

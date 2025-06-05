@@ -26,22 +26,7 @@ body {
 	color: #333;
 }
 
-header {
-	background: #ffffff;
-	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-	padding: 1rem 2rem;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	border-bottom: 1px solid #e0e0e0;
-}
 
-#header-title {
-	color: #2c3e50;
-	font-size: 1.8rem;
-	font-weight: 700;
-	letter-spacing: -0.5px;
-}
 
 .home-btn {
 	color: #2c3e50;
@@ -279,13 +264,449 @@ button[type="submit"]:hover {
 	display: flex;
 	justify-content: center;
 }
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin-top: 70px;
+    background-color: #f5f5f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Main Header */
+.main-header {
+    background-color: #f8f9fa;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 70px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 0 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Logo Section */
+.header-logo {
+    flex-shrink: 0;
+}
+
+.logo-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    font-weight: 700;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.logo-link:hover {
+    color: #007bff;
+}
+
+.logo-icon {
+    font-size: 1.8rem;
+    margin-right: 0.5rem;
+    color: #007bff;
+}
+
+.logo-text {
+    font-weight: 700;
+    letter-spacing: -0.5px;
+}
+
+/* Navigation */
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    font-size: 0.95rem;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.nav-link:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+.nav-link i {
+    font-size: 1rem;
+}
+
+/* Right Section */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-shrink: 0;
+}
+
+/* Search Container */
+.search-container {
+    position: relative;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #ced4da;
+    border-radius: 25px;
+    padding: 0.4rem 0.8rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.search-box:focus-within {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.search-icon {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-right: 0.5rem;
+}
+
+.search-input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 0.9rem;
+    width: 200px;
+    color: #333;
+}
+
+.search-input::placeholder {
+    color: #6c757d;
+}
+
+.search-btn {
+    background: #007bff;
+    border: none;
+    color: white;
+    padding: 0.3rem 0.6rem;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-left: 0.5rem;
+    transition: background-color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-btn:hover {
+    background: #0056b3;
+}
+
+.search-btn i {
+    font-size: 0.8rem;
+}
+
+/* Profile Dropdown */
+.profile-dropdown {
+    position: relative;
+}
+
+.profile-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+    color: #333;
+}
+
+.profile-btn:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+.profile-icon {
+    font-size: 1.8rem;
+    color: #007bff;
+}
+
+.dropdown-arrow {
+    font-size: 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+.profile-btn.active .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    min-width: 200px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1001;
+}
+
+.dropdown-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    color: #333;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+    border-radius: 0;
+}
+
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+}
+
+.dropdown-item i {
+    font-size: 1rem;
+    width: 16px;
+    text-align: center;
+}
+
+.dropdown-divider {
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 0.5rem 0;
+}
+
+.logout-item {
+    color: #dc3545;
+}
+
+.logout-item:hover {
+    background-color: rgba(220, 53, 69, 0.1);
+}
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #333;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.mobile-menu-btn:hover {
+    background-color: rgba(0, 123, 255, 0.1);
+}
+
+/* Mobile Navigation */
+.mobile-nav {
+    display: none;
+    background: white;
+    border-top: 1px solid #e0e0e0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.mobile-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2rem;
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    border-bottom: 1px solid #f0f0f0;
+    transition: background-color 0.3s ease;
+}
+
+.mobile-nav-item:hover {
+    background-color: #f8f9fa;
+}
+
+.mobile-nav-item:last-child {
+    border-bottom: none;
+}
+
+.mobile-search {
+    padding: 1rem 2rem;
+    border-top: 1px solid #e0e0e0;
+}
+
+/* Dropdown Overlay */
+.dropdown-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    z-index: 999;
+    display: none;
+}
+
+.dropdown-overlay.show {
+    display: block;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .header-container {
+        padding: 0 1.5rem;
+    }
+    
+    .search-input {
+        width: 150px;
+    }
+    
+    .header-nav {
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-nav {
+        display: none;
+    }
+    
+    .search-container {
+        display: none;
+    }
+    
+    .mobile-menu-btn {
+        display: block;
+    }
+    
+    .mobile-nav.show {
+        display: block;
+    }
+    
+    .header-container {
+        padding: 0 1rem;
+    }
+    
+    .logo-text {
+        display: none;
+    }
+    
+    body {
+        margin-top: 70px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-container {
+        padding: 0 0.75rem;
+    }
+    
+    .header-right {
+        gap: 1rem;
+    }
+    
+    .search-box {
+        padding: 0.3rem 0.6rem;
+    }
+    
+    .mobile-nav-item,
+    .mobile-search {
+        padding: 0.75rem 1rem;
+    }
+}
+
+/* Animation for smooth transitions */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdown-menu.show {
+    animation: fadeInUp 0.3s ease;
+}
+
+.logos {
+    height: 180px; /* Adjust the height as per your requirement */
+    width: auto; /* Keeps aspect ratio intact */
+    max-width: 200px; /* Optional: to prevent it from growing too large */
+    transition: all 0.3s ease;
+      padding: 1rem;
+       margin-top: 10px; 
+}
+
+.logos:hover {
+    transform: scale(1.05); /* Optional: slight zoom effect on hover */
+}
 </style>
 </head>
 <body>
-	<header>
-		<h1 id="header-title">Arise - SignIn</h1>
-		<a href="/arise" class="home-btn">Home</a>
-	</header>
+<header class="main-header">
+    <div class="header-container">
+        <!-- Logo Section -->
+        <div class="header-logo">
+             <img src="${pageContext.request.contextPath}/images/logo.png" alt="StackTrader Logo" class="logos">
+        </div>
+
+        <!-- Navigation Links -->
+        <nav class="header-nav">
+            
+        </nav>
+
+
+              <a href="/arise" class="home-btn">Home</a>        
+        </div>
+ 
+</header>
+
+
 
 	<main>
 		<div class="auth-container">
