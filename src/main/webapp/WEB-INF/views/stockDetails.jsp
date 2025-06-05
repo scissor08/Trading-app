@@ -7,6 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Stock Details - ${stock.symbol}</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <style>
     /* KYC Modal Styles */
 #kycModal {
@@ -837,7 +841,7 @@
     </style>
 </head>
 <body>
-
+<jsp:include page="header.jsp" />
 <div class="container">
     <div class="header">
         <h2>${stock.symbol}</h2>
@@ -1467,4 +1471,5 @@
 </script>
 
 </body>
+
 </html>
