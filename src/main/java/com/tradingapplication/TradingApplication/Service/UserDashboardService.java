@@ -15,18 +15,30 @@ import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Entity.UserTable;
 import com.tradingapplication.TradingApplication.Repository.KycRepository;
 import com.tradingapplication.TradingApplication.Repository.StockRepository;
+
+import com.tradingapplication.TradingApplication.Repository.UserAccountDetailsRepository;
+
 import com.tradingapplication.TradingApplication.Entity.Wallet;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
 import com.tradingapplication.TradingApplication.Repository.WalletReportRep;
 import com.tradingapplication.TradingApplication.globalException.DataNotFoundException;
 
+import jakarta.mail.Session;
+import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class UserDashboardService implements UserDashboardServiceInterface {
 
 	@Autowired
 	UserDetailsRepository userDetailsRepository;
 	@Autowired
+
+	UserAccountDetailsRepository userAccountDetailsRepository;
+	@Autowired
 	KycRepository kycrepo;
+
 
     @Autowired
     private WalletReportRep transactionRepository;
@@ -82,6 +94,15 @@ public class UserDashboardService implements UserDashboardServiceInterface {
         transactionRepository.save(tx);
 
 		return "WalletPage";
+	}
+	public double getMainBalance(HttpSession session) {
+		UserLog getuser= (UserLog) session.getAttribute("userlog");
+		UserTable getid = userDetailsRepository.findByUsername(getuser.getUsername()).orElseThrow(()-> new DataNotFoundException("User not Found...."));	
+		    	int id = getid.getUserId();
+		        UserAccountDetails user = userAccountDetailsRepository.findById(id)
+		                .orElseThrow(() -> new DataNotFoundException("User not found"));
+		        double balance=user.getBalance();
+		        return balance;
 	}
 
 	// Utility method to fetch user details or redirect

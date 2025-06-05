@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Entity.UserTable;
 import com.tradingapplication.TradingApplication.Repository.KycRepository;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
@@ -24,7 +25,10 @@ import com.tradingapplication.TradingApplication.Service.KycService;
 import com.tradingapplication.TradingApplication.Service.PdfGeneratorService;
 import com.tradingapplication.TradingApplication.dto.KycRequestDTO;
 import com.tradingapplication.TradingApplication.dto.KycResponseDTO;
+import com.tradingapplication.TradingApplication.dto.KycStatus;
+import com.tradingapplication.TradingApplication.globalException.DataNotFoundException;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -40,14 +44,34 @@ public class KycController {
 
     // Show KYC form; check if user already submitted KYC
     @GetMapping("/form")
-    public String showKycForm(@RequestParam("username") String username, Model model) {
-        UserTable user = userDetailsRepository.findByUsername(username).orElse(null);
+    public String showKycForm( Model model,HttpSession session) {
+    	UserLog getuser= (UserLog) session.getAttribute("userlog");
+    	String userName=getuser.getUsername();
+        UserTable user = userDetailsRepository.findByUsername(userName).orElse(null);
         if (user != null && user.getKycEntity() != null) {
             return "kyc_already_submitted";  // Show message if already submitted
         }
-        model.addAttribute("username", username);  // Pass username to form
+        model.addAttribute("username", userName);  // Pass username to form
         return "kyc-form";
     }
+  
+    	
+    @GetMapping("/checkStatus")
+    public  ResponseEntity<?> checkKycStatus(HttpSession session) {
+    	UserLog getuser= (UserLog) session.getAttribute("userlog");
+    	String userName=getuser.getUsername();
+    	UserTable user = userDetailsRepository.findByUsername(userName).orElse(null);
+        if (user != null && user.getKycEntity() != null) {
+        	KycStatus kycStatus=new KycStatus();
+        	kycStatus.setVerified(true);
+            return  ResponseEntity.ok(kycStatus); // Show message if already submitted
+        }
+        else {
+        	KycStatus kycStatus=new KycStatus();
+        	kycStatus.setVerified(false);
+        	 return   ResponseEntity.badRequest().body("Invalid request")
+        			 ;
+        }}
 
     // Handle form submission
     @PostMapping("/submit")
