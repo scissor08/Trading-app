@@ -1,24 +1,56 @@
-2025-06-04 00:32:14 [INFO] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
-2025-06-04 00:32:14 [INFO] c.t.T.TradingApplication - Starting TradingApplication using Java 21.0.6 with PID 20712 (D:\MavenProject\Trading-app\target\classes started by SASIT in D:\MavenProject\Trading-app)
-2025-06-04 00:32:14 [INFO] c.t.T.TradingApplication - No active profile set, falling back to 1 default profile: "default"
-2025-06-04 00:32:15 [INFO] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2025-06-04 00:32:15 [INFO] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-2025-06-04 00:32:18 [INFO] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-06-04 00:32:18 [INFO] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 277 ms. Found 8 JPA repository interfaces.
-2025-06-04 00:32:21 [INFO] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2025-06-04 00:32:21 [INFO] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2025-06-04 00:32:21 [INFO] o.a.catalina.core.StandardService - Starting service [Tomcat]
-2025-06-04 00:32:21 [INFO] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.40]
-2025-06-04 00:32:22 [INFO] o.apache.jasper.servlet.TldScanner - At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
-2025-06-04 00:32:22 [INFO] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2025-06-04 00:32:22 [INFO] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 7741 ms
-2025-06-04 00:32:23 [INFO] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.13.Final
-2025-06-04 00:32:23 [INFO] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2025-06-04 00:32:24 [INFO] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-06-04 00:32:24 [INFO] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2025-06-04 00:32:25 [INFO] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=ROOT
-2025-06-04 00:32:25 [INFO] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2025-06-04 00:32:25 [INFO] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+2025-06-05 00:21:04 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:21:04 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:21:09 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:21:09 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:23:34 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:23:34 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:24:16 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:24:16 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:24:33 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:24:33 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:24:58 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:24:58 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:26:39 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:26:39 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:26:50 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:26:50 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:33:47 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:33:47 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:34:17 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:34:17 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:37:38 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:37:38 [INFO] c.t.T.S.CustomAuthenticationSuccessHandler - Authentication successful for user: test
+2025-06-05 00:37:38 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:37:38 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:37:38 [INFO] c.t.T.C.UserDashboardController - Authenticated User: test
+2025-06-05 00:37:39 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:37:39 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:37:39 [INFO] c.t.T.C.UserDashboardController - Authenticated User: test
+2025-06-05 00:37:50 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:37:50 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:37:54 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:37:54 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:38:36 [INFO] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
+2025-06-05 00:38:36 [INFO] c.t.T.TradingApplication - Starting TradingApplication using Java 21.0.7 with PID 18264 (D:\Git Working Project\Trading-app\target\classes started by user in D:\Git Working Project\Trading-app)
+2025-06-05 00:38:36 [INFO] c.t.T.TradingApplication - No active profile set, falling back to 1 default profile: "default"
+2025-06-05 00:38:36 [INFO] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-06-05 00:38:36 [INFO] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-06-05 00:38:38 [INFO] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-05 00:38:38 [INFO] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 128 ms. Found 8 JPA repository interfaces.
+2025-06-05 00:38:40 [INFO] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-06-05 00:38:40 [INFO] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-06-05 00:38:40 [INFO] o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-06-05 00:38:40 [INFO] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.40]
+2025-06-05 00:38:40 [INFO] o.apache.jasper.servlet.TldScanner - At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2025-06-05 00:38:40 [INFO] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-06-05 00:38:40 [INFO] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3956 ms
+2025-06-05 00:38:40 [INFO] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.13.Final
+2025-06-05 00:38:40 [INFO] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-06-05 00:38:41 [INFO] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-05 00:38:41 [INFO] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-06-05 00:38:41 [INFO] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=ROOT
+2025-06-05 00:38:41 [INFO] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-06-05 00:38:41 [INFO] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
 	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
 	Database driver: undefined/unknown
 	Database version: 2.3.232
@@ -26,170 +58,435 @@
 	Isolation level: undefined/unknown
 	Minimum pool size: undefined/unknown
 	Maximum pool size: undefined/unknown
-2025-06-04 00:32:29 [INFO] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-06-04 00:32:30 [INFO] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-06-04 00:32:32 [INFO] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2025-06-04 00:32:50 [INFO] o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2025-06-04 00:32:51 [INFO] o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
-2025-06-04 00:32:51 [INFO] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
-2025-06-04 00:32:51 [INFO] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2025-06-04 00:32:51 [INFO] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-2025-06-04 00:32:51 [INFO] c.t.T.TradingApplication - Started TradingApplication in 37.871 seconds (process running for 38.562)
-2025-06-04 00:37:28 [INFO] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-06-04 00:37:28 [INFO] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2025-06-04 00:37:28 [INFO] o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
-2025-06-04 00:37:45 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
-2025-06-04 00:37:45 [INFO] c.t.T.S.CustomAuthenticationSuccessHandler - Authentication successful for user: test
-2025-06-04 00:37:45 [INFO] c.t.T.S.CustomAuthenticationSuccessHandler - User successfully logged in: test
-2025-06-04 00:37:45 [INFO] c.t.T.C.UserDashboardController - Principal class: User
-2025-06-04 00:37:45 [INFO] c.t.T.C.UserDashboardController - Principal: org.springframework.security.core.userdetails.User [Username=test, Password=[PROTECTED], Enabled=true, AccountNonExpired=true, CredentialsNonExpired=true, AccountNonLocked=true, Granted Authorities=[ROLE_ROLE_USER]]
-2025-06-04 00:37:45 [INFO] c.t.T.C.UserDashboardController - test
-2025-06-04 00:40:20 [INFO] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
-2025-06-04 00:40:20 [INFO] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
-2025-06-04 00:40:20 [INFO] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
-2025-06-04 00:40:20 [INFO] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
-2025-06-04 00:40:20 [INFO] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
-2025-06-04 00:40:20 [INFO] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2025-06-04 00:40:20 [INFO] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2025-06-04 00:40:20 [INFO] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-2025-06-04 00:40:21 [INFO] c.t.T.TradingApplication - Starting TradingApplication using Java 21.0.6 with PID 20712 (D:\MavenProject\Trading-app\target\classes started by SASIT in D:\MavenProject\Trading-app)
-2025-06-04 00:40:21 [INFO] c.t.T.TradingApplication - No active profile set, falling back to 1 default profile: "default"
-2025-06-04 00:40:21 [INFO] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-06-04 00:40:22 [INFO] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 181 ms. Found 8 JPA repository interfaces.
-2025-06-04 00:40:22 [INFO] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2025-06-04 00:40:22 [INFO] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2025-06-04 00:40:22 [INFO] o.a.catalina.core.StandardService - Starting service [Tomcat]
-2025-06-04 00:40:22 [INFO] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.40]
-2025-06-04 00:40:22 [INFO] o.apache.jasper.servlet.TldScanner - At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
-2025-06-04 00:40:22 [INFO] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2025-06-04 00:40:22 [INFO] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1682 ms
-2025-06-04 00:40:23 [INFO] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2025-06-04 00:40:23 [INFO] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-06-04 00:40:23 [INFO] com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Starting...
-2025-06-04 00:40:23 [INFO] com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Added connection conn10: url=jdbc:h2:mem:testdb user=ROOT
-2025-06-04 00:40:23 [INFO] com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Start completed.
-2025-06-04 00:40:23 [INFO] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
-	Database driver: undefined/unknown
-	Database version: 2.3.232
-	Autocommit mode: undefined/unknown
-	Isolation level: undefined/unknown
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-2025-06-04 00:40:24 [INFO] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-06-04 00:40:25 [INFO] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-06-04 00:40:42 [INFO] o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2025-06-04 00:40:42 [INFO] o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
-2025-06-04 00:40:42 [INFO] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
-2025-06-04 00:40:42 [INFO] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2025-06-04 00:40:42 [INFO] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-2025-06-04 00:40:42 [INFO] c.t.T.TradingApplication - Started TradingApplication in 21.645 seconds (process running for 509.296)
-2025-06-04 00:40:42 [INFO] o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
-2025-06-04 00:45:11 [INFO] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-06-04 00:45:11 [INFO] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
-2025-06-04 00:45:11 [INFO] o.s.web.servlet.DispatcherServlet - Completed initialization in 0 ms
-2025-06-04 00:46:21 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=2203.215,price={}
-2025-06-04 00:46:28 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=2203.215,price={}
-2025-06-04 00:47:08 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.215,price={}
-2025-06-04 00:47:11 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=2203.215,price={}
-2025-06-04 14:55:06 [INFO] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
-2025-06-04 14:55:06 [INFO] c.t.T.TradingApplicationTests - Starting TradingApplicationTests using Java 21.0.6 with PID 20892 (started by SASIT in D:\MavenProject\Trading-app)
-2025-06-04 14:55:06 [INFO] c.t.T.TradingApplicationTests - No active profile set, falling back to 1 default profile: "default"
-2025-06-04 14:55:08 [INFO] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-06-04 14:55:08 [INFO] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 96 ms. Found 8 JPA repository interfaces.
-2025-06-04 14:55:10 [INFO] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.13.Final
-2025-06-04 14:55:10 [INFO] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2025-06-04 14:55:10 [INFO] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-06-04 14:55:10 [INFO] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2025-06-04 14:55:11 [INFO] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=ROOT
-2025-06-04 14:55:11 [INFO] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2025-06-04 14:55:11 [INFO] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
-	Database driver: undefined/unknown
-	Database version: 2.3.232
-	Autocommit mode: undefined/unknown
-	Isolation level: undefined/unknown
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-2025-06-04 14:55:12 [INFO] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-06-04 14:55:13 [INFO] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-06-04 14:55:13 [INFO] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2025-06-04 14:55:15 [INFO] o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2025-06-04 14:55:17 [INFO] o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
-2025-06-04 14:55:17 [INFO] c.t.T.TradingApplicationTests - Started TradingApplicationTests in 12.104 seconds (process running for 14.18)
-2025-06-04 14:55:18 [INFO] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2025-06-04 14:55:18 [INFO] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2025-06-04 14:55:18 [INFO] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-2025-06-04 14:56:50 [INFO] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
-2025-06-04 14:56:50 [INFO] c.t.T.TradingApplication - Starting TradingApplication using Java 21.0.6 with PID 18312 (D:\MavenProject\Trading-app\target\classes started by SASIT in D:\MavenProject\Trading-app)
-2025-06-04 14:56:50 [INFO] c.t.T.TradingApplication - No active profile set, falling back to 1 default profile: "default"
-2025-06-04 14:56:51 [INFO] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
-2025-06-04 14:56:51 [INFO] o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
-2025-06-04 14:56:54 [INFO] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-06-04 14:56:54 [INFO] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 186 ms. Found 8 JPA repository interfaces.
-2025-06-04 14:56:56 [INFO] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
-2025-06-04 14:56:56 [INFO] o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
-2025-06-04 14:56:56 [INFO] o.a.catalina.core.StandardService - Starting service [Tomcat]
-2025-06-04 14:56:56 [INFO] o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.40]
-2025-06-04 14:56:56 [INFO] o.apache.jasper.servlet.TldScanner - At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
-2025-06-04 14:56:56 [INFO] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
-2025-06-04 14:56:56 [INFO] o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 5785 ms
-2025-06-04 14:56:57 [INFO] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.13.Final
-2025-06-04 14:56:57 [INFO] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2025-06-04 14:56:57 [INFO] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-06-04 14:56:58 [INFO] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2025-06-04 14:56:58 [INFO] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=ROOT
-2025-06-04 14:56:58 [INFO] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2025-06-04 14:56:58 [INFO] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
-	Database driver: undefined/unknown
-	Database version: 2.3.232
-	Autocommit mode: undefined/unknown
-	Isolation level: undefined/unknown
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-2025-06-04 14:56:59 [INFO] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-06-04 14:56:59 [INFO] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-06-04 14:57:00 [INFO] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2025-06-04 14:57:19 [INFO] o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2025-06-04 14:57:20 [INFO] o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
-2025-06-04 14:57:20 [INFO] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
-2025-06-04 14:57:20 [INFO] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
-2025-06-04 14:57:20 [INFO] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
-2025-06-04 14:57:20 [INFO] c.t.T.TradingApplication - Started TradingApplication in 31.368 seconds (process running for 32.169)
-2025-06-04 15:04:16 [INFO] o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (1 addition, 0 deletions, 0 modifications)
-2025-06-04 15:04:16 [INFO] o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
-2025-06-04 15:04:16 [INFO] o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
-2025-06-04 15:04:16 [INFO] o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
-2025-06-04 15:04:16 [INFO] o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
-2025-06-04 15:04:16 [INFO] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2025-06-04 15:04:16 [INFO] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2025-06-04 15:04:16 [INFO] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
-2025-06-04 16:25:06 [INFO] o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.2.Final
-2025-06-04 16:25:06 [INFO] c.t.T.TradingApplicationTests - Starting TradingApplicationTests using Java 21.0.7 with PID 7336 (started by user in D:\Git Working Project\Trading-app)
-2025-06-04 16:25:06 [INFO] c.t.T.TradingApplicationTests - No active profile set, falling back to 1 default profile: "default"
-2025-06-04 16:25:09 [INFO] o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-06-04 16:25:09 [INFO] o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 112 ms. Found 8 JPA repository interfaces.
-2025-06-04 16:25:10 [INFO] org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.13.Final
-2025-06-04 16:25:11 [INFO] o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
-2025-06-04 16:25:11 [INFO] o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-06-04 16:25:11 [INFO] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
-2025-06-04 16:25:11 [INFO] com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:testdb user=ROOT
-2025-06-04 16:25:11 [INFO] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
-2025-06-04 16:25:12 [INFO] o.hibernate.orm.connections.pooling - HHH10001005: Database info:
-	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
-	Database driver: undefined/unknown
-	Database version: 2.3.232
-	Autocommit mode: undefined/unknown
-	Isolation level: undefined/unknown
-	Minimum pool size: undefined/unknown
-	Maximum pool size: undefined/unknown
-2025-06-04 16:25:13 [INFO] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
-2025-06-04 16:25:13 [INFO] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-06-04 16:25:14 [INFO] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
-2025-06-04 16:25:34 [INFO] o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
-2025-06-04 16:25:36 [INFO] o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
-2025-06-04 16:25:36 [INFO] c.t.T.TradingApplicationTests - Started TradingApplicationTests in 30.598 seconds (process running for 32.978)
-2025-06-04 16:25:40 [INFO] o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
-2025-06-04 16:25:40 [INFO] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
-2025-06-04 16:25:40 [INFO] com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-06-05 00:38:43 [INFO] o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-05 00:38:43 [INFO] o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-05 00:38:44 [INFO] o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-06-05 00:39:04 [INFO] o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2025-06-05 00:39:05 [INFO] o.s.b.a.h.H2ConsoleAutoConfiguration - H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:testdb'
+2025-06-05 00:39:05 [INFO] o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-06-05 00:39:05 [INFO] o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-06-05 00:39:05 [INFO] o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-06-05 00:39:05 [INFO] c.t.T.TradingApplication - Started TradingApplication in 30.488 seconds (process running for 31.253)
+2025-06-05 00:39:40 [INFO] o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-06-05 00:39:40 [INFO] o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-06-05 00:39:40 [INFO] o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2025-06-05 00:39:54 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:39:54 [INFO] c.t.T.S.CustomAuthenticationSuccessHandler - Authentication successful for user: test
+2025-06-05 00:39:54 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:39:54 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:39:54 [INFO] c.t.T.C.UserDashboardController - Authenticated User: test
+2025-06-05 00:39:55 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:39:55 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:39:55 [INFO] c.t.T.C.UserDashboardController - Authenticated User: test
+2025-06-05 00:40:01 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:40:01 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:40:06 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:40:06 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:40:18 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:40:18 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:41:40 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:41:40 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:41:59 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:41:59 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:42:08 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:42:08 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:46:23 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:46:23 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:46:26 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:46:26 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:46:29 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:46:29 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:46:30 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:46:30 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:46:32 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:46:32 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:46:34 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:46:34 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:46:34 [INFO] c.t.T.Service.SellService - SellStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1
+2025-06-05 00:46:37 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:46:37 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:46:41 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:46:41 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:46:53 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:46:53 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:48:48 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:48:48 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:48:51 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:48:51 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:48:51 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.08,price={}
+2025-06-05 00:48:51 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.08
+2025-06-05 00:48:51 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 00:48:51 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 9796.92
+2025-06-05 00:48:51 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 00:48:51 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:4d9c8c47-7c4c-4e1b-8ac6-92a4cf98aa98  Amount:203.08
+2025-06-05 00:48:51 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 00:49:02 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:49:02 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:49:04 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:49:04 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:49:04 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=4203.08,price={}
+2025-06-05 00:49:04 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 4,price 203.08
+2025-06-05 00:49:04 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 00:49:04 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 8984.6
+2025-06-05 00:49:04 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 00:49:04 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 00:49:04 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:0203f4bf-b969-4440-bd96-84b693979476  Amount:812.32
+2025-06-05 00:49:04 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 00:49:07 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:49:07 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:49:24 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:49:24 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:49:26 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:49:26 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:53:48 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:53:48 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:54:24 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:54:24 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:54:27 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:54:27 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 00:54:27 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=2202.915,price={}
+2025-06-05 00:54:27 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 2,price 202.915
+2025-06-05 00:54:27 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 00:54:27 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 8578.77
+2025-06-05 00:54:27 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 00:54:27 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 00:54:27 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:77d8ed28-f438-4263-b6eb-19ba29645f86  Amount:405.83
+2025-06-05 00:54:27 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:00:55 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:00:55 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:00:58 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:00:58 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:01:00 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:01:00 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:01:00 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.195,price={}
+2025-06-05 01:01:00 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.195
+2025-06-05 01:01:00 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:01:00 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 8375.575
+2025-06-05 01:01:00 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:01:00 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:01:00 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:6c0d0d7d-aec0-4192-9503-560b6ba8468d  Amount:203.195
+2025-06-05 01:01:00 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:01:37 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:01:37 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:01:39 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:01:39 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:01:39 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.195,price={}
+2025-06-05 01:01:39 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.195
+2025-06-05 01:01:39 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:01:39 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 8172.380000000001
+2025-06-05 01:01:39 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:01:39 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:01:39 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:10784df9-e0a4-48a6-aee0-0347e0246f24  Amount:203.195
+2025-06-05 01:01:39 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:02:21 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:02:21 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:02:22 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:02:22 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:02:22 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.195,price={}
+2025-06-05 01:02:22 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.195
+2025-06-05 01:02:22 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:02:22 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 7969.185
+2025-06-05 01:02:22 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:02:22 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:02:22 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:44a3728c-1bbe-4827-9bf5-3f6ab42bbc57  Amount:203.195
+2025-06-05 01:02:22 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:02:51 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:02:51 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:02:52 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:02:52 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:02:57 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:02:57 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:02:57 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.195,price={}
+2025-06-05 01:02:57 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.195
+2025-06-05 01:02:57 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:02:57 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 7765.990000000001
+2025-06-05 01:02:57 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:02:57 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:02:57 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:aafa2bbb-d51d-43e6-ac78-f1df40c7ed72  Amount:203.195
+2025-06-05 01:02:57 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:03:52 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:03:52 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:03:58 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:03:58 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:03:58 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.195,price={}
+2025-06-05 01:03:58 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.195
+2025-06-05 01:03:58 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:03:58 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 7562.795
+2025-06-05 01:03:58 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:03:58 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:03:58 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:37852b76-1851-4f37-b1ae-b353aa6913a7  Amount:203.195
+2025-06-05 01:03:58 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:04:01 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:04:01 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:06:23 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:06:23 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:06:25 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:06:25 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:06:25 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.195,price={}
+2025-06-05 01:06:25 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.195
+2025-06-05 01:06:25 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:06:25 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 7359.6
+2025-06-05 01:06:25 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:06:25 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:06:25 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:11e992bd-df0f-4c36-be46-67f54b4d6e52  Amount:203.195
+2025-06-05 01:06:25 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:06:35 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:06:35 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:06:37 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:06:37 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:06:37 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.195,price={}
+2025-06-05 01:06:37 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.195
+2025-06-05 01:06:37 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:06:37 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 7156.405000000001
+2025-06-05 01:06:37 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:06:37 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:06:37 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:91f0a4c2-1a8c-4dff-9794-ffb5d826bcf1  Amount:203.195
+2025-06-05 01:06:37 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:06:41 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:06:41 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:06:41 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.195,price={}
+2025-06-05 01:06:41 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.195
+2025-06-05 01:06:41 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:06:41 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 6953.21
+2025-06-05 01:06:41 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:06:41 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:06:41 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:46eed51e-471a-4c62-88af-59d8483c95cc  Amount:203.195
+2025-06-05 01:06:41 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:06:42 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:06:42 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:06:42 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.195,price={}
+2025-06-05 01:06:42 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.195
+2025-06-05 01:06:42 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:06:42 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 6750.015
+2025-06-05 01:06:42 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:06:42 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:06:42 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:8d956531-7dde-4e5e-bcc1-f8265d1b4a7b  Amount:203.195
+2025-06-05 01:06:42 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:06:44 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:06:44 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:07:31 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:07:31 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:07:33 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:07:33 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:07:33 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.195,price={}
+2025-06-05 01:07:33 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.195
+2025-06-05 01:07:33 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:07:33 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 6546.820000000001
+2025-06-05 01:07:33 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:07:33 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:07:33 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:abfac529-040f-4223-9c3c-baa12897a4b6  Amount:203.195
+2025-06-05 01:07:33 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:07:39 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:07:39 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:07:41 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:07:41 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:07:41 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.195,price={}
+2025-06-05 01:07:41 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.195
+2025-06-05 01:07:41 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:07:41 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 6343.625
+2025-06-05 01:07:41 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:07:41 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:07:41 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:b242541b-c3ed-41d4-919a-dc5dd2a9d7e8  Amount:203.195
+2025-06-05 01:07:41 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:07:51 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:07:51 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:08:36 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:08:36 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:08:36 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.195,price={}
+2025-06-05 01:08:36 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.195
+2025-06-05 01:08:36 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:08:36 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 6140.43
+2025-06-05 01:08:36 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:08:36 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:08:36 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:91fc2a78-3d9b-489b-936d-7182dab49a5c  Amount:203.195
+2025-06-05 01:08:36 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:08:39 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:08:39 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:10:08 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:10:08 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:10:10 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:10:10 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:10:10 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.195,price={}
+2025-06-05 01:10:10 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.195
+2025-06-05 01:10:10 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:10:10 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 5937.235000000001
+2025-06-05 01:10:10 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:10:10 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:10:10 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:1a2819ef-4cc6-46b2-a018-3df77b903e37  Amount:203.195
+2025-06-05 01:10:10 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:10:23 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:10:23 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:11:03 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:11:03 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:11:05 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:11:05 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:11:05 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.23,price={}
+2025-06-05 01:11:05 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.23
+2025-06-05 01:11:05 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:11:05 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 5734.005
+2025-06-05 01:11:05 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:11:05 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:11:05 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:7fe005cd-7297-4cd3-827e-cb3eb2137efb  Amount:203.23
+2025-06-05 01:11:05 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:11:25 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:11:25 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:11:27 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:11:27 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:11:27 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.23,price={}
+2025-06-05 01:11:27 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.23
+2025-06-05 01:11:27 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:11:27 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 5530.775000000001
+2025-06-05 01:11:27 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:11:27 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:11:27 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:4fcb5ac9-79a3-4d50-845d-57cd8208d7de  Amount:203.23
+2025-06-05 01:11:27 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:11:47 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:11:47 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:11:48 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:11:48 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:11:48 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.23,price={}
+2025-06-05 01:11:48 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.23
+2025-06-05 01:11:48 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:11:48 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 5327.545
+2025-06-05 01:11:48 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:11:48 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:11:49 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:03a655b9-0e97-4c05-bc79-a0de861448c2  Amount:203.23
+2025-06-05 01:11:49 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:12:25 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:12:25 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:12:31 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:12:31 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:12:33 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:12:33 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:12:33 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.23,price={}
+2025-06-05 01:12:33 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.23
+2025-06-05 01:12:33 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:12:33 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 5124.3150000000005
+2025-06-05 01:12:33 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:12:33 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:12:33 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:97ada754-fd45-4823-ab96-d02839539c01  Amount:203.23
+2025-06-05 01:12:33 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:13:00 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:13:00 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:13:02 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:13:02 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:13:02 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=2203.23,price={}
+2025-06-05 01:13:02 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 2,price 203.23
+2025-06-05 01:13:02 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:13:02 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 4717.855
+2025-06-05 01:13:02 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:13:02 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:13:02 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:8b2afb9c-c2f7-4813-81c1-00efd42a3e97  Amount:406.46
+2025-06-05 01:13:02 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:13:07 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:13:07 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:13:20 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:13:20 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:13:21 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:13:21 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:13:21 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.23,price={}
+2025-06-05 01:13:21 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.23
+2025-06-05 01:13:21 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:13:21 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 4514.625
+2025-06-05 01:13:21 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:13:21 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:13:21 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:3653b2ba-0455-4d52-93c0-f91b659e5c72  Amount:203.23
+2025-06-05 01:13:21 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:13:24 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:13:24 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:13:33 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:13:33 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:13:35 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:13:35 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:13:35 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.23,price={}
+2025-06-05 01:13:35 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.23
+2025-06-05 01:13:35 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:13:35 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 4311.395
+2025-06-05 01:13:35 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:13:35 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:13:35 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:d0e9d04c-7147-40bb-8d10-05a84cdbb66f  Amount:203.23
+2025-06-05 01:13:35 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:13:42 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:13:42 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:14:08 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:14:08 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:14:11 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:14:11 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:14:11 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.23,price={}
+2025-06-05 01:14:11 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.23
+2025-06-05 01:14:11 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:14:11 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 4108.165000000001
+2025-06-05 01:14:11 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:14:11 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:14:11 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:709f01dc-c233-4030-9166-3cbd9aa0a592  Amount:203.23
+2025-06-05 01:14:11 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:14:18 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:14:18 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:14:35 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:14:35 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:14:37 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:14:37 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:14:37 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.23,price={}
+2025-06-05 01:14:37 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.23
+2025-06-05 01:14:37 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:14:37 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 3904.935
+2025-06-05 01:14:37 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:14:37 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:14:37 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:c3c11893-27ce-40da-821f-f5062b7484cb  Amount:203.23
+2025-06-05 01:14:37 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:14:52 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:14:52 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:14:53 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:14:53 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:14:55 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:14:55 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:14:55 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.23,price={}
+2025-06-05 01:14:55 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.23
+2025-06-05 01:14:55 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:14:55 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 3701.705
+2025-06-05 01:14:55 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:14:55 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:14:55 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:48a9f060-bc25-4f66-bf51-57cea378dd83  Amount:203.23
+2025-06-05 01:14:55 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:14:57 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:14:57 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:15:07 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:15:07 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:15:10 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:15:10 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:15:10 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.23,price={}
+2025-06-05 01:15:10 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.23
+2025-06-05 01:15:10 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:15:10 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 3498.475
+2025-06-05 01:15:10 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:15:10 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:15:10 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:43d5010b-dd16-4926-9812-705b8687ebf1  Amount:203.23
+2025-06-05 01:15:10 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:15:25 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:15:25 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:15:28 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:15:28 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:15:28 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.23,price={}
+2025-06-05 01:15:28 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.23
+2025-06-05 01:15:28 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:15:28 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 3295.245
+2025-06-05 01:15:28 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:15:28 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:15:28 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:89c8a88b-daa3-4f4c-a135-aca49b86d70f  Amount:203.23
+2025-06-05 01:15:28 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:16:07 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:16:07 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:16:09 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:16:09 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:16:10 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:16:10 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:16:10 [INFO] c.t.T.C.BuyRequestController - Received buy request: stockSymbol=AAPL, quantity=1203.23,price={}
+2025-06-05 01:16:10 [INFO] c.t.T.Service.BuyService - BuyStock Method Invoked for userId: 1, symbol: AAPL, quantity: 1,price 203.23
+2025-06-05 01:16:10 [INFO] c.t.T.Service.BuyService - validation sucessfull
+2025-06-05 01:16:10 [INFO] c.t.T.Service.BuyService - User 1 wallet updated. New balance: 3092.015
+2025-06-05 01:16:10 [INFO] c.t.T.Service.BuyService - Portfolio Updated
+2025-06-05 01:16:10 [INFO] c.t.T.Service.BuyService - new Portfolio Created
+2025-06-05 01:16:10 [INFO] c.t.T.Service.BuyService - Transaction completed. Order ID:fe91016a-7a88-4151-a97b-ac4774e1852b  Amount:203.23
+2025-06-05 01:16:10 [INFO] c.t.T.Service.BuyService - response Generated
+2025-06-05 01:16:22 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
+2025-06-05 01:16:22 [INFO] c.t.T.S.UserDetailsServiceImpl - User test assigned role: ROLE_USER
