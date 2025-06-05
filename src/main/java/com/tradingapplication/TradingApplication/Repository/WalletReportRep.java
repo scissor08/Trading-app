@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.tradingapplication.TradingApplication.Entity.WalletReport;
+import com.tradingapplication.TradingApplication.Entity.Wallet;
 
-public interface WalletReportRep extends JpaRepository<WalletReport, Long>  {
-	  List<WalletReport> findAllByOrderByTimestampDesc();
+public interface WalletReportRep extends JpaRepository<Wallet, Long>  {
+	  List<Wallet> findAll();
 }

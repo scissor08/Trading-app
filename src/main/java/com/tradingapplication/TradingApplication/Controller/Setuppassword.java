@@ -64,6 +64,6 @@ public class Setuppassword {
 	        userdetails.save(users);
 //	        entityManager.flush(); 
 //	    	entityManager.clear();  
-	        return "forward:/dashboard";
+	        return "redirect:/arise/login";
 	    }
 }

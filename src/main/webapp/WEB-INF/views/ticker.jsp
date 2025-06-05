@@ -84,21 +84,29 @@
 
 /* Animation Control - Only Speed Control */
 :root {
-    --ticker-animation-speed: 60s;    /* Change this to control speed only */
+  --ticker-animation-speed: 50s; /* Total animation time */
 }
 
 @keyframes tickerScroll {
-    0% {
-        transform: translateX(100%);
-    }
-    100% {
-        transform: translateX(-100%);
-    }
+  0% {
+    transform: translateX(100%); /* off screen */
+  }
+  5% {
+    transform: translateX(0%);   /* quickly enters to start position */
+  }
+  100% {
+    transform: translateX(-100%); /* scrolls out to left slowly */
+  }
 }
 
 /* Pause animation on hover */
 #ticker:hover .ticker-content {
     animation-play-state: paused;
+}
+.ticker {
+  display: inline-block;
+  white-space: nowrap;
+  animation: tickerScroll var(--ticker-animation-speed) linear infinite;
 }
 </style>
 

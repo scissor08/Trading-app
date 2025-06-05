@@ -71,7 +71,7 @@ public class UserRegistrationController {
     }
 
     @GetMapping("/success")
-    public String showSuccessPage() {
+    public String showSuccessPage(Model model) {
         return "auth/Success";
     }
 }

@@ -6,10 +6,7 @@
     <div class="header-container">
         <!-- Logo Section -->
         <div class="header-logo">
-            <a href="${pageContext.request.contextPath}/dashboard" class="logo-link">
-                <i class="fas fa-chart-line logo-icon"></i>
-                <span class="logo-text">StockTrader</span>
-            </a>
+             <img src="${pageContext.request.contextPath}/images/logo.png" alt="StackTrader Logo" class="logos">
         </div>
 
         <!-- Navigation Links -->
@@ -19,13 +16,19 @@
                 <span>Dashboard</span>
             </a>
 
-            <a href="${pageContext.request.contextPath}/wallet" class="nav-link">
+            <a href="${pageContext.request.contextPath}/watchlist" class="nav-link">
                 <i class="fas fa-wallet"></i>
-                <span>Wallet</span>
+                <span>WatchList</span>
         
             <a href="${pageContext.request.contextPath}/stocks" class="nav-link">
                 <i class="fas fa-chart-bar"></i>
                 <span>Stocks</span>
+            </a>
+            
+              <a href="${pageContext.request.contextPath}/holdings" class="nav-link">
+              <i class="fas fa-briefcase"></i>
+
+                <span>Holdings</span>
             </a>
         </nav>
 
@@ -49,13 +52,13 @@
                     <i class="fas fa-chevron-down dropdown-arrow"></i>
                 </button>
                 <div class="dropdown-menu" id="profileDropdown">
-                    <a href="${pageContext.request.contextPath}/watchlist" class="dropdown-item">
+                    <a href="${pageContext.request.contextPath}/wallet" class="dropdown-item">
                         <i class="fas fa-eye"></i>
-                        <span>Watchlist</span>
+                        <span>Wallet</span>
                     </a>
-                    <a href="${pageContext.request.contextPath}/stocks" class="dropdown-item">
+                    <a href="${pageContext.request.contextPath}/pdf/report" class="dropdown-item">
                         <i class="fas fa-chart-line"></i>
-                        <span>My Stocks</span>
+                        <span>Reports</span>
                     </a>
                     <a href="${pageContext.request.contextPath}/profile" class="dropdown-item">
                         <i class="fas fa-user-cog"></i>
@@ -513,6 +516,18 @@ body {
 
 .dropdown-menu.show {
     animation: fadeInUp 0.3s ease;
+}
+
+.logos {
+    height: 180px; /* Adjust the height as per your requirement */
+    width: auto; /* Keeps aspect ratio intact */
+    max-width: 200px; /* Optional: to prevent it from growing too large */
+    transition: all 0.3s ease;
+      padding: 1rem;
+}
+
+.logos:hover {
+    transform: scale(1.05); /* Optional: slight zoom effect on hover */
 }
 </style>
 

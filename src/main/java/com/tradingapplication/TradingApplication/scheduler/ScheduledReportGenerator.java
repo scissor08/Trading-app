@@ -35,17 +35,9 @@ public class ScheduledReportGenerator {
 	@Autowired
 	private JavaMailSender mailSender;
 
-	@Scheduled(cron = "0 32 22 * * ?") // 9:00
+	@Scheduled(cron = "0 32 22 * * ?") // Time : 
 	public void sendScheduledReport() throws Exception {
-		/*
-		Logger logger = LoggerFactory.getLogger(ScheduledReportGenerator.class);
-
-		for (int i = 0; i < 1000; i++) {
-		    logger.info("Log message number: " + i);  //for testing purpose
-		    logger.error("Error number: " + i);
-		}
-
-*/
+	
 		List<UserTable> getAllUserName = userDetailsRepository.findAll();
 
 		Map<String, File> reportMap = new HashMap<>();
