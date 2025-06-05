@@ -88,8 +88,10 @@
             color: #e66900;
         }
     </style>
+
 </head>
 <body>
+
 <main>
     <form action="${pageContext.request.contextPath}/getStock" method="post">
         <h2>Search for a Stock Symbol</h2>

@@ -511,10 +511,10 @@ main {
                     
                     <!-- Add Money Form -->
                     <div id="addForm" class="action-form active">
-                        <form action="${pageContext.request.contextPath}/wallet/add" method="post">
+                        <form action="${pageContext.request.contextPath}/add" method="post">
                             <div class="form-group">
                                 <label class="form-label">Enter Amount</label>
-                                <input type="number" class="form-input" name="amount" id="addAmount" placeholder="₹ 0" min="1" required>
+                                <input type="number" class="form-input" name="cash" id="addAmount" placeholder="₹ 0" min="1" required>
                                 <div class="amount-shortcuts">
                                     <button type="button" class="amount-btn" onclick="setAmount('add', 500)">₹ 500</button>
                                     <button type="button" class="amount-btn" onclick="setAmount('add', 1000)">₹ 1000</button>
@@ -528,7 +528,7 @@ main {
                     
                     <!-- Withdraw Form -->
                     <div id="withdrawForm" class="action-form">
-                        <form action="wallet/withdraw" method="post">
+                        <form action="/withdraw" method="post">
                             <div class="form-group">
                                 <label class="form-label">Enter Amount</label>
                                 <input type="number" class="form-input"  name="amount" id="withdrawAmount" placeholder="₹ 0" min="1" required>
@@ -554,41 +554,46 @@ main {
 
     <div id="transactionsContainer">
         <table class="transactions-table">
-            <thead>
-                <tr>
-                    <th>Type</th>
-                    <th>Amount</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody id="transactionsList">
-                <c:choose>
-                    <c:when test="${not empty transactions}">
-                        <c:forEach items="${transactions}" var="txn">
-                            <tr>
-                                <td>${txn.type}</td>
-                                <td>₹${txn.amount}</td>
-                                <td><fmt:formatDate value="${txn.dateTime}" pattern="dd-MM-yyyy HH:mm:ss" /></td>
-                                <td>
-                                    <span style="color: ${txn.status == 'SUCCESS' ? 'green' : 'red'};">
-                                        ${txn.status}
-                                    </span>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </c:when>
-                    <c:otherwise>
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody id="transactionsList">
+            <!-- Check if transactions are available -->
+            <c:choose>
+                <c:when test="${not empty transactions}">
+                    <!-- Iterate over the transactions -->
+                    <c:forEach items="${transactions}" var="txn">
                         <tr>
-                            <td colspan="4" class="no-transactions">
-                                <i class="fas fa-history" style="font-size: 2rem; color: #ccc; margin-bottom: 0.5rem;"></i>
-                                <div>No transactions yet</div>
+                            <!-- Access WalletReport entity properties directly -->
+                            <td>${txn.type}</td>
+                            <td>₹${txn.amount}</td>
+                            <td><fmt:formatDate value="${txn.timestamp}" pattern="dd-MM-yyyy HH:mm:ss" /></td>
+                            <td>
+                                <span style="color: ${txn.status == 'SUCCESS' ? 'green' : 'red'};">
+                                    ${txn.status}
+                                </span>
                             </td>
                         </tr>
-                    </c:otherwise>
-                </c:choose>
-            </tbody>
-        </table>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <!-- Display message when no transactions are found -->
+                    <tr>
+                        <td colspan="4" class="no-transactions">
+                            <i class="fas fa-history" style="font-size: 2rem; color: #ccc; margin-bottom: 0.5rem;"></i>
+                            <div>No transactions yet</div>
+                        </td>
+                    </tr>
+                </c:otherwise>
+            </c:choose>
+        </tbody>
+    </table>
+
     </div>
 </div>
 
@@ -818,4 +823,6 @@ function submitToBackend(type, amount) {
 }
 </script>
 </body>
+
+    
 </html>
