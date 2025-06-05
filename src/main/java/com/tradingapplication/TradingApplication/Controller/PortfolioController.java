@@ -28,7 +28,7 @@ public class PortfolioController {
 	private PortfolioServiceInterface portfolioServiceInterface;
 	
 
-	  @GetMapping("holdings")
+	  @GetMapping("/holdings")
 	    public String showHoldingsById(HttpSession session, Model model) {
 		  
 		// UserLog name=  (UserLog) session.getAttribute("userlog");

@@ -327,12 +327,6 @@ button[type="submit"]:hover {
 						<c:if test="${param.error == 'USER_NOT_FOUND'}">
 							<div class="error-msg">User not found.</div>
 						</c:if>
-						<c:if test="${param.error == 'ACCOUNT_LOCKED'}">
-							<div class="error-msg">Your account is locked. Please contact support.</div>
-						</c:if>
-						<c:if test="${param.error == 'ACCOUNT_DISABLED'}">
-							<div class="error-msg">Your account has been disabled. Please contact support.</div>
-						</c:if>
 						<c:if test="${param.error == 'CAPTCHA_REQUIRED'}">
 							<div class="error-msg">Please complete the CAPTCHA verification.</div>
 						</c:if>
@@ -393,9 +387,6 @@ button[type="submit"]:hover {
 						</c:if>
 						<c:if test="${param.error == 'email'}">
 							<div class="error-msg">Email already exists! Please use a different email address.</div>
-						</c:if>
-						<c:if test="${param.error == 'validation_failed'}">
-							<div class="error-msg">Registration failed. Please check your information and try again.</div>
 						</c:if>
 						<c:if test="${param.error == 'password_mismatch'}">
 							<div class="error-msg">Passwords do not match. Please try again.</div>
@@ -466,6 +457,17 @@ button[type="submit"]:hover {
                 headerTitle.textContent = 'Arise - Sign Up';
             }
         }
+        
+        document.addEventListener("DOMContentLoaded", function () {
+            const path = window.location.pathname;
+            
+            if (path.includes("/arise/login")) {
+                switchTab("login");
+            } else if (path.includes("/arise/registration") || path.includes("/arise/validation")) {
+                switchTab("register");
+            }
+        });
+
 
         document.querySelector("form").addEventListener("submit", function(event) {
             var captchaResponse = grecaptcha.getResponse();
@@ -548,6 +550,17 @@ button[type="submit"]:hover {
             if (urlParams.has('error') || urlParams.has('success')) {
                 const cleanUrl = window.location.pathname;
                 window.history.replaceState({}, document.title, cleanUrl);
+            }
+        });
+        
+        function saveToken(token) {
+            localStorage.setItem("jwtToken", token);
+        }
+
+        document.cookie.split("; ").forEach(cookie => {
+            let [name, value] = cookie.split("=");
+            if (name === "jwt") {
+                saveToken(value);
             }
         });
         

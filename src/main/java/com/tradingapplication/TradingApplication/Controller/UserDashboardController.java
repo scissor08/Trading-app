@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Entity.UserTable;
+import com.tradingapplication.TradingApplication.Entity.Wallet;
 import com.tradingapplication.TradingApplication.Security.JwtUtil;
 import com.tradingapplication.TradingApplication.Service.UserDashboardServiceInterface;
 import com.tradingapplication.TradingApplication.Service.UserService;
@@ -155,23 +156,13 @@ public class UserDashboardController {
 
 	  @GetMapping("/walletRep")
 	    public String showWallet(Model model) {
-	        List<WalResponseDTO> transactions = Wal.getAllTransactions();
+	        System.out.println("Transactions fetched:");
+
+	        List<Wallet> transactions = Wal.getAllTransactions();
 	        model.addAttribute("transactions", transactions);
 	        return "WalletPage"; // wallet.jsp
 	    }
 
-	    @PostMapping("/wallet/add")
-	    public String addMoney(@RequestParam double amount) {
-	    	log.warn("******************"+amount);
-	        Wal.addMoney(amount);
-	        return "redirect:/WalletPage";
-	    }
-
-	    @PostMapping("/wallet/withdraw")
-	    public String withdrawMoney(@RequestParam double amount) {
-	        Wal.withdrawMoney(amount);
-	        return "WalletPage";
-	    }
 
 
 }

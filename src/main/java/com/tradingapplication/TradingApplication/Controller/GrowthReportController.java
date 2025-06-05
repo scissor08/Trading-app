@@ -27,47 +27,13 @@ public class GrowthReportController {
 	JwtUtil jwtUtil;
 	
 	@GetMapping("/growthreport")
-	public String getGrowth(HttpServletRequest request, Model model) {
-	    String token = null;
-
-	    Cookie[] cookies = request.getCookies();
-	    if (cookies != null) {
-	        for (Cookie cookie : cookies) {
-	            if (cookie.getName().equals("jwt")) {
-	                token = cookie.getValue();
-	            }
-	        }
-	    }
-
-	    if (token == null) {
-	        String authHeader = request.getHeader("Authorization");
-	        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-	            token = authHeader.substring(7);
-	        }
-	    }
-
-	    String username = null;
-	    if (token != null && jwtUtil.validateToken(token)) { 
-	        username = jwtUtil.extractUsername(token); 
-	    }
-
-	    if (username != null) {
-	        List<GrowthReportEntity> growth = growthReport.getGrowthReport(username);
-	        model.addAttribute("report", growth);
-	        return "GrowthReportPage";
-	    } else {
-	        return "redirect:/arise/login"; 
-	    }
+	public String getGrowth(HttpSession session,Model model) {
+		UserLog userlog=(UserLog) session.getAttribute("userlog");
+		String username=userlog.getUsername();
+		List<GrowthReportEntity> growth=growthReport.getGrowthReport(username);
+		model.addAttribute("report", growth);
+		return "GrowthReportPage";
 	}
-	
-//	@GetMapping("/growthreport")
-//	public String getGrowth(HttpSession session,Model model) {
-//		UserLog userlog=(UserLog) session.getAttribute("userlog");
-//		String username=userlog.getUsername();
-//		List<GrowthReportEntity> growth=growthReport.getGrowthReport(username);
-//		model.addAttribute("report", growth);
-//		return "GrowthReportPage";
-//	}
 
     @GetMapping("/download/csv")
     public void downloadCsv(HttpServletResponse response) throws IOException {

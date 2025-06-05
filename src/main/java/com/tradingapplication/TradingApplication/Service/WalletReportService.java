@@ -9,8 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-import com.tradingapplication.TradingApplication.Entity.WalletReport;
+import com.tradingapplication.TradingApplication.Entity.Wallet;
 
 import com.tradingapplication.TradingApplication.Repository.WalletReportRep;
 
@@ -30,7 +29,7 @@ public class WalletReportService implements WalletReportInterface {
     @Override
     public void addMoney(double amount) {
     	
-        WalletReport tx = new WalletReport();
+        Wallet tx = new Wallet();
         tx.setAmount(amount);
         tx.setType("ADD");
         tx.setStatus("SUCCESS");
@@ -40,7 +39,7 @@ public class WalletReportService implements WalletReportInterface {
 
     @Override
     public void withdrawMoney(double amount) {
-        WalletReport tx = new WalletReport();
+        Wallet tx = new Wallet();
         tx.setAmount(amount);
         tx.setType("WITHDRAW");
         if (amount > 0) {
@@ -53,17 +52,10 @@ public class WalletReportService implements WalletReportInterface {
     }
 
     @Override
-    public List<WalResponseDTO> getAllTransactions() {
-    	
-        return transactionRepository.findAllByOrderByTimestampDesc()
-                .stream()
-                .map(tx -> {
-                    WalResponseDTO dto = new WalResponseDTO();
-                    dto.setAmount(tx.getAmount());
-                    dto.setType(tx.getType());
-                    dto.setStatus(tx.getStatus());
-                    log.info(""+tx.getAmount());
-                    return dto;
-                }).collect(Collectors.toList());
+    public  List<Wallet> getAllTransactions() {
+ 	   System.out.println("varava" );
+
+    	   return transactionRepository.findAll();
+    	  
     }
 }

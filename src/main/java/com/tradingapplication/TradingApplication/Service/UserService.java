@@ -47,12 +47,10 @@ public class UserService implements UserServiceInterface {
 		log.info("validation service...");
 
 		if (userDetailsRepository.existsByUsername(requestDto.getUsername()) || requestDto.getUsername().isBlank()) {
-			 model.addAttribute("error", "username");
-			 return "auth/Arise";
+			 return "redirect:/arise/registration?error=username";
 		}
 		else if (userDetailsRepository.existsByEmail(requestDto.getEmail()) || requestDto.getEmail().isBlank()) {
-			model.addAttribute("error", "email");
-			return "auth/Arise";
+			return "redirect:/arise/registration?error=email";
 		}
 		else {
 			return "forward:/arise/verification";	
@@ -152,8 +150,7 @@ public class UserService implements UserServiceInterface {
 		userdetails.getUserLog().setPassword(encodedPassword);
 		System.out.println(userdetails.getUserLog().getPassword());
 		userDetailsRepository.save(userdetails);
-
-		return "auth/Arise";
+		return "redirect:/arise/login?success=password_reset";
 	}
 
 	@Override

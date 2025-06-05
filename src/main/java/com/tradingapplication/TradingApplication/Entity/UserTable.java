@@ -83,6 +83,8 @@ public class UserTable {
     @OneToMany
     private List<Portfolio> portfolio;
 
+    @OneToMany(mappedBy = "userTable",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<GrowthReportEntity> growthReport;
 
 	@Override
 	public String toString() {
