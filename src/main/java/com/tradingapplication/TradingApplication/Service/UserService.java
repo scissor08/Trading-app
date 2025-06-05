@@ -150,7 +150,7 @@ public class UserService implements UserServiceInterface {
 		userdetails.getUserLog().setPassword(encodedPassword);
 		System.out.println(userdetails.getUserLog().getPassword());
 		userDetailsRepository.save(userdetails);
-		return "auth/Arise?success=password_reset";
+		return "redirect:/arise/login?success=password_reset";
 	}
 
 	@Override
