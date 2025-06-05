@@ -13,8 +13,12 @@ import java.util.Arrays;
 public class LoggingAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
+    
+    public LoggingAspect() {
+    	logger.info(" ✅ LoggingAspect Intilaized ");
+    }
 
-    @Around("execution(* com.tradingapplication.TradingApplication.*(..))")
+    @Around("execution(* com.tradingapplication.TradingApplication.Service.UserDashboardService.addAccountBalance(..))")
     public Object logBuyServiceMethods(ProceedingJoinPoint joinPoint) throws Throwable {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
 
