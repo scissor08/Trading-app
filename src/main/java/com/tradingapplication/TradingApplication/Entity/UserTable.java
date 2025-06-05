@@ -30,7 +30,6 @@ import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Entity
 @Data
@@ -70,6 +69,12 @@ public class UserTable {
     
     @OneToOne(cascade=CascadeType.ALL)
     UserAccountDetails userAccountDetails;
+    
+    @OneToOne(mappedBy = "userTable", cascade = CascadeType.ALL)
+    private KycEntity kycEntity;
+
+
+
     
     @OneToMany(mappedBy = "userDetails", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<TransactionBuySell> transaction;

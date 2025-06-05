@@ -23,7 +23,12 @@ public class UserLoginController {
 
 	@Autowired
 	private UserServiceInterface service;
-
+	
+	@GetMapping()
+	public String showHomePage() {
+		return "auth/index";
+	}
+	
 	@GetMapping("/login")
 	public String showLoginPage() {
 		return "auth/Arise";

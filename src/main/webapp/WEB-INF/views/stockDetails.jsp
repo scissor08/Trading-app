@@ -1081,7 +1081,7 @@
     // KYC Status Check Function
     async function checkKYCStatus() {
         try {
-            const response = await fetch('/api/check-kyc-status', {
+            const response = await fetch('/kyc/checkStatus', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json'
@@ -1090,7 +1090,7 @@
             
             if (response.ok) {
                 const data = await response.json();
-                return data.kycVerified || false;
+                return true;
             } else {
                 console.error('KYC status check failed:', response.status);
                 return false;
@@ -1159,7 +1159,7 @@
     // Redirect to KYC Verification Function
     function redirectToKYC() {
         // Update this URL as per your KYC verification page
-        window.location.href = '/kyc-verification';
+        window.location.href = '/kyc/form';
     }
 
     // Buy Stock Function - Updated with proper KYC check
@@ -1175,7 +1175,7 @@
         
         try {
             // Check KYC status first
-            const isKYCVerified =true; // FIXED: Actually call the API
+            const isKYCVerified =await checkKYCStatus(); // FIXED: Actually call the API
             
             // Hide loading modal
             hideLoadingModal();

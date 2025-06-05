@@ -15,7 +15,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.tradingapplication.TradingApplication.Security.CustomAuthenticationFailureHandler;
 import com.tradingapplication.TradingApplication.Security.CustomAuthenticationSuccessHandler;
+import com.tradingapplication.TradingApplication.Security.JwtAuthenticationEntryPoint;
 import com.tradingapplication.TradingApplication.Security.JwtAuthenticationFilter;
 import com.tradingapplication.TradingApplication.Security.JwtUtil;
 import com.tradingapplication.TradingApplication.Security.OAuth2LoginSuccessHandler;
@@ -31,6 +33,11 @@ public class SecurityConfig {
 	private JwtUtil jwtUtil;
 	@Autowired
 	CustomAuthenticationSuccessHandler successHandler;
+	@Autowired
+	CustomAuthenticationFailureHandler failureHandler;
+	@Autowired
+	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+	
 
 	@Bean
 	public UserDetailsService userDetailsService() {
@@ -64,18 +71,22 @@ public class SecurityConfig {
 								"/arise/validation", "/arise/verification", "/arise/register", "/arise/forget",
 								"/arise/uservalidate", "/arise/otpvalidate", "/arise/updatePassword", "/arise/OTPPage",
 								"/arise/success", "/WEB-INF/views/**", "/static/**", "/css/**", "/js/**", "/images/**",
-								"/error", "/favicon.ico", "/h2-console/**", "/oauth2/**")
+								"/error", "/favicon.ico", "/h2-console/**", "/oauth2/**","/arise/login?error=*","/arise/**")
 						.permitAll()
 						.anyRequest().authenticated())
 				.headers(headers -> headers.frameOptions().sameOrigin())
 				.formLogin(form -> form
-						.loginPage("/arise/login") 
-						.loginProcessingUrl("/arise/login") 
-						.successHandler(successHandler) 
-						.failureUrl("/arise/login?error=true").permitAll())
+					    .loginPage("/arise/login") 
+					    .loginProcessingUrl("/arise/login") 
+					    .successHandler(successHandler)
+					    .failureHandler(failureHandler) // Keep this
+					    .permitAll()) // Remove failureUrl()
 				.oauth2Login(oauth2 -> oauth2
 						.loginPage("/arise/login")
 						.successHandler(oAuth2LoginSuccessHandler))
+				 .exceptionHandling(ex -> ex
+					        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+					    )
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.authenticationProvider(authenticationProvider())
 				.addFilterBefore(new JwtAuthenticationFilter(jwtUtil, userDetailsService()),
