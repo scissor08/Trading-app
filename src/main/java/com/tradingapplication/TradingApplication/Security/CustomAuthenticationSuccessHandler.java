@@ -45,13 +45,11 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                 .httpOnly(true)
                 .secure(true)
                 .sameSite("Strict")
-                .maxAge(Duration.ofDays(7))
+                .maxAge(Duration.ofDays(1))
                 .path("/")
                 .build();
 
-        response.addHeader(HttpHeaders.SET_COOKIE, jwtCookie.toString());
-        session.setAttribute("userlog", userEntity);
-        
+        response.addHeader(HttpHeaders.SET_COOKIE, jwtCookie.toString());        
         response.sendRedirect("/dashboard");
     }
 }

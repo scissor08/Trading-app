@@ -1,17 +1,17 @@
 package com.tradingapplication.TradingApplication.Service;
 
-import java.util.List;  
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tradingapplication.TradingApplication.Entity.Portfolio;
-import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Entity.UserTable;
 import com.tradingapplication.TradingApplication.Repository.PortfolioRepository;
 import com.tradingapplication.TradingApplication.Repository.UserAccountDetailsRepository;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
+import com.tradingapplication.TradingApplication.Security.AuthUtil;
 import com.tradingapplication.TradingApplication.dto.PortfolioResponseDTO;
 import com.tradingapplication.TradingApplication.globalException.DataNotFoundException;
 
@@ -29,13 +29,12 @@ public class PortfolioService implements PortfolioServiceInterface {
 	UserDetailsRepository userDetailsRepository;
 	@Autowired
 	UserAccountDetailsRepository userAccountDetailsRepository;
-	
+	@Autowired
+	AuthUtil authUtil;
 	
 	public List<PortfolioResponseDTO> getPortfolio(HttpSession session) {
-		
-		UserLog getname = (UserLog) session.getAttribute("userlog");
 
-		UserTable getusername = userDetailsRepository.findByUsername(getname.getUsername()).orElseThrow(()-> new DataNotFoundException("user not found"));
+		UserTable getusername = userDetailsRepository.findByUsername(authUtil.getCurrentUsername()).orElseThrow(()-> new DataNotFoundException("user not found"));
 		int id = getusername.getUserId();
 //		UserAccountDetails user = userAccountDetailsRepository.findById(id)
 //				.orElseThrow(()->new DataNotFoundException("User Not Found"));
@@ -48,11 +47,7 @@ public class PortfolioService implements PortfolioServiceInterface {
 		return portfolios.stream().map(Portfolio-> new PortfolioResponseDTO(Portfolio.getQuantity()
 				,Portfolio.getSymbol(),Portfolio.getPrice(),
 				Portfolio.getTrancationAmount())).collect(Collectors.toList());
-		
 			
-			
-		
-		
 	}
 	
 

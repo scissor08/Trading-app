@@ -2,8 +2,7 @@
 package com.tradingapplication.TradingApplication.Service;
 
 
-import java.text.SimpleDateFormat;
-import java.util.Date;  
+import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import com.tradingapplication.TradingApplication.Entity.Portfolio;
 import com.tradingapplication.TradingApplication.Entity.Stock;
 import com.tradingapplication.TradingApplication.Entity.TransactionBuySell;
 import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
-import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Entity.UserTable;
 import com.tradingapplication.TradingApplication.Exception.DataNotFoundException;
 import com.tradingapplication.TradingApplication.Repository.PortfolioRepository;
@@ -21,6 +19,7 @@ import com.tradingapplication.TradingApplication.Repository.StockRepository;
 import com.tradingapplication.TradingApplication.Repository.TransactionRepository;
 import com.tradingapplication.TradingApplication.Repository.UserAccountDetailsRepository;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
+import com.tradingapplication.TradingApplication.Security.AuthUtil;
 import com.tradingapplication.TradingApplication.dto.BuyRequestDTO;
 import com.tradingapplication.TradingApplication.dto.BuyResponseDTO;
 
@@ -51,16 +50,15 @@ private UserDetailsRepository userDetailsRepository;
     TransactionRepository transcationRepository;
     @Autowired
     private GrowthReportServiceInterface growthReportServiceInterface;
-
+    @Autowired
+    AuthUtil authUtil;
    
     public BuyResponseDTO buyStock(HttpSession session, BuyRequestDTO request) {
     	
-    	
-    	UserLog getuser= (UserLog) session.getAttribute("userlog");
     	System.out.println("BuyStock Method Invoked for userId: {}, symbol: {}, quantity: {},price {}"+
-   	         getuser.getUsername()+ request.getSymbol()+ request.getQuantity()+request.getPrice());
+   	    request.getSymbol()+ request.getQuantity()+request.getPrice());
     	
-    	UserTable getid = userDetailsRepository.findByUsername(getuser.getUsername()).orElseThrow(()-> new DataNotFoundException("User not Found...."));	
+    	UserTable getid = userDetailsRepository.findByUsername(authUtil.getCurrentUsername()).orElseThrow(()-> new DataNotFoundException("User not Found...."));	
     	int id = getid.getUserId();
     	log.info("BuyStock Method Invoked for userId: {}, symbol: {}, quantity: {},price {}",
     	         id, request.getSymbol(), request.getQuantity(),request.getPrice());
@@ -83,8 +81,8 @@ private UserDetailsRepository userDetailsRepository;
             throw new IllegalArgumentException("Low Wallet Balance! Please add funds.");
         }
 
-        String orderId = UUID.randomUUID().toString();
-        String transactionTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+//        String orderId = UUID.randomUUID().toString();
+//        String transactionTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
         double updatedBalance = user.getBalance() - transactionAmount;
         log.info("User {} wallet updated. New balance: {}", user.getUserdetails().getUserId(), updatedBalance);
@@ -124,7 +122,7 @@ private UserDetailsRepository userDetailsRepository;
         transaction.setUserDetails(user.getUserdetails());
         transaction.setTransactionType(TRANSACTION_TYPE_BUY);
         transcationRepository.save(transaction);
-        growthReportServiceInterface.  getGrowthReport(getuser.getUsername());
+        growthReportServiceInterface.  getGrowthReport(authUtil.getCurrentUsername());
         log.info("Transaction completed. Order ID:"+ transaction.getOrderId() + "  Amount:"  +transactionAmount);
 
 

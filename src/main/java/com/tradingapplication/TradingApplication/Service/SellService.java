@@ -1,7 +1,7 @@
 package com.tradingapplication.TradingApplication.Service;
 
 
-import java.util.Date; 
+import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import com.tradingapplication.TradingApplication.Entity.Portfolio;
 import com.tradingapplication.TradingApplication.Entity.Stock;
 import com.tradingapplication.TradingApplication.Entity.TransactionBuySell;
 import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
-import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Entity.UserTable;
 import com.tradingapplication.TradingApplication.Exception.DataNotFoundException;
 import com.tradingapplication.TradingApplication.Repository.PortfolioRepository;
@@ -19,6 +18,7 @@ import com.tradingapplication.TradingApplication.Repository.StockRepository;
 import com.tradingapplication.TradingApplication.Repository.TransactionRepository;
 import com.tradingapplication.TradingApplication.Repository.UserAccountDetailsRepository;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
+import com.tradingapplication.TradingApplication.Security.AuthUtil;
 import com.tradingapplication.TradingApplication.dto.SellRequestDTO;
 import com.tradingapplication.TradingApplication.dto.SellResponseDTO;
 
@@ -43,19 +43,20 @@ public class SellService implements SellServiceInterface {
 
     @Autowired
     private UserAccountDetailsRepository userAccountDetailsRepository;
-
+    @Autowired
+    private GrowthReportServiceInterface growthReportServiceInterface;
     @Autowired
    private  TransactionRepository transcationRepository;
     @Autowired
     private UserDetailsRepository userDetailsRepository;
+    @Autowired
+    AuthUtil  authUtil;
 
     @Override
     public SellResponseDTO sellStock( SellRequestDTO request,HttpSession session) {
 
-
         validateSellRequest(request);
-UserLog getuser= (UserLog) session.getAttribute("userlog");
-UserTable getid = userDetailsRepository.findByUsername(getuser.getUsername()).orElseThrow(()-> new DataNotFoundException("User not Found...."));	
+        UserTable getid = userDetailsRepository.findByUsername(authUtil.getCurrentUsername()).orElseThrow(()-> new DataNotFoundException("User not Found...."));	
     	int id = getid.getUserId();
 
         log.info("SellStock Method Invoked for userId: {}, symbol: {}, quantity: {}",
@@ -98,6 +99,8 @@ UserTable getid = userDetailsRepository.findByUsername(getuser.getUsername()).or
         transaction.setUserDetails(user.getUserdetails());
         transaction.setTransactionType(TRANSACTION_TYPE_SELL);
         transcationRepository.save(transaction);
+        growthReportServiceInterface.  getGrowthReport(authUtil.getCurrentUsername());
+
 
         SellResponseDTO response = new SellResponseDTO();
         response.setStatus(TRANSACTION_STATUS_SUCCESS);

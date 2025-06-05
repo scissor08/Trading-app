@@ -13,18 +13,16 @@ import com.tradingapplication.TradingApplication.Entity.Stock;
 import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
 import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Entity.UserTable;
+import com.tradingapplication.TradingApplication.Entity.Wallet;
 import com.tradingapplication.TradingApplication.Repository.KycRepository;
 import com.tradingapplication.TradingApplication.Repository.StockRepository;
-
 import com.tradingapplication.TradingApplication.Repository.UserAccountDetailsRepository;
-
-import com.tradingapplication.TradingApplication.Entity.Wallet;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
 import com.tradingapplication.TradingApplication.Repository.WalletReportRep;
+import com.tradingapplication.TradingApplication.Security.AuthUtil;
 import com.tradingapplication.TradingApplication.globalException.DataNotFoundException;
 import com.tradingapplication.TradingApplication.globalException.KycNotUpdate;
 
-import jakarta.mail.Session;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,17 +33,17 @@ public class UserDashboardService implements UserDashboardServiceInterface {
 	@Autowired
 	UserDetailsRepository userDetailsRepository;
 	@Autowired
-
 	UserAccountDetailsRepository userAccountDetailsRepository;
 	@Autowired
 	KycRepository kycrepo;
-
-
+	@Autowired
+	AuthUtil authUtil;
     @Autowired
     private WalletReportRep transactionRepository;
 	// Fetches user profile and account details
 	@Override
 	public String getUserDetail(String username, Model model) {
+		
 		UserTable userDetails = getUserDetailsByUsername(username);
 		UserAccountDetails userAccount = userDetails.getUserAccountDetails();
 		
@@ -64,8 +62,6 @@ public class UserDashboardService implements UserDashboardServiceInterface {
 		return "UserProfile";
 	}
 
-
-
 	@Override
 	public UserTable getDashboard(String user, Model model) {
 		return getUserDetailsByUsername(user);
@@ -82,8 +78,7 @@ public class UserDashboardService implements UserDashboardServiceInterface {
 
 		model.addAttribute("balance", account.getBalance());
 		model.addAttribute("username", userDetails.getUsername());
-		
-		
+				
 	    Wallet tx = new Wallet();
         tx.setAmount(cash);
         tx.setType("ADD");
@@ -95,8 +90,7 @@ public class UserDashboardService implements UserDashboardServiceInterface {
 		return "WalletPage";
 	}
 	public double getMainBalance(HttpSession session) {
-		UserLog getuser= (UserLog) session.getAttribute("userlog");
-		UserTable getid = userDetailsRepository.findByUsername(getuser.getUsername()).orElseThrow(()-> new DataNotFoundException("User not Found...."));	
+		UserTable getid = userDetailsRepository.findByUsername(authUtil.getCurrentUsername()).orElseThrow(()-> new DataNotFoundException("User not Found...."));	
 		    	int id = getid.getUserId();
 		        UserAccountDetails user = userAccountDetailsRepository.findById(id)
 		                .orElseThrow(() -> new DataNotFoundException("User not found"));
@@ -116,7 +110,6 @@ public class UserDashboardService implements UserDashboardServiceInterface {
 	public List<Stock> getAllStockData() {
 		return stockRepository.findAll();
 	}
-
 
 @Override
 public String withdrawAccountBalance(UserLog user, Model model, double amount) {
@@ -153,8 +146,6 @@ public String withdrawAccountBalance(UserLog user, Model model, double amount) {
     return "WalletPage";
 }
 
-
-
 @Override
 public String getAccountBalance(String user, Model model) {
 	UserTable userDetails = getUserDetailsByUsername(user);
@@ -164,10 +155,5 @@ public String getAccountBalance(String user, Model model) {
 
 	return "WalletPage";
 }
-
-
-
-
-
 	
 }

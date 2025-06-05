@@ -3,6 +3,7 @@ package com.tradingapplication.TradingApplication.Controller;
 import java.io.IOException;
 import java.util.Base64;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,12 +22,12 @@ import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Entity.UserTable;
 import com.tradingapplication.TradingApplication.Repository.KycRepository;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
+import com.tradingapplication.TradingApplication.Security.AuthUtil;
 import com.tradingapplication.TradingApplication.Service.KycService;
 import com.tradingapplication.TradingApplication.Service.PdfGeneratorService;
 import com.tradingapplication.TradingApplication.dto.KycRequestDTO;
 import com.tradingapplication.TradingApplication.dto.KycResponseDTO;
 import com.tradingapplication.TradingApplication.dto.KycStatus;
-import com.tradingapplication.TradingApplication.globalException.DataNotFoundException;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +37,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class KycController {
 
+	@Autowired
+	AuthUtil authUtil;
+	
     // Spring will inject these via constructor
     private final KycService kycService;
     private final KycRepository kycRepository;
@@ -45,17 +49,16 @@ public class KycController {
     // Show KYC form; check if user already submitted KYC
     @GetMapping("/form")
     public String showKycForm( Model model,HttpSession session) {
-    	UserLog getuser= (UserLog) session.getAttribute("userlog");
-    	String userName=getuser.getUsername();
-        UserTable user = userDetailsRepository.findByUsername(userName).orElse(null);
+    	
+    	String username = authUtil.getCurrentUsername();
+        UserTable user = userDetailsRepository.findByUsername(username).orElse(null);
         if (user != null && user.getKycEntity() != null) {
             return "kyc_already_submitted";  // Show message if already submitted
         }
-        model.addAttribute("username", userName);  // Pass username to form
+        model.addAttribute("username", username);  // Pass username to form
         return "kyc-form";
     }
   
-    	
     @GetMapping("/checkStatus")
     public  ResponseEntity<?> checkKycStatus(HttpSession session) {
     	UserLog getuser= (UserLog) session.getAttribute("userlog");
@@ -69,8 +72,7 @@ public class KycController {
         else {
         	KycStatus kycStatus=new KycStatus();
         	kycStatus.setVerified(false);
-        	 return   ResponseEntity.badRequest().body("Invalid request")
-        			 ;
+        	 return   ResponseEntity.badRequest().body("Invalid request");
         }}
 
     // Handle form submission

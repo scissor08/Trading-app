@@ -116,7 +116,7 @@ public class GrowthReportService implements GrowthReportServiceInterface {
 	
 	@Override
 	public void exportCsv(PrintWriter writer) {
-	    List<GrowthReportEntity> reports = growthRepo.findAll(); // or however you fetch
+	    List<GrowthReportEntity> reports = growthRepo.findAll(); 
 	    writer.println("\n\n\n\n");
 	    writer.printf("%s","YOUR GROWTH REPORT");
 	    writer.println("\n\n");

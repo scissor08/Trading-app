@@ -1,6 +1,6 @@
 package com.tradingapplication.TradingApplication.Service;
 
-import java.io.ByteArrayInputStream; 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -21,23 +21,19 @@ import com.itextpdf.kernel.pdf.PdfPage;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.kernel.pdf.extgstate.PdfExtGState;
-import com.itextpdf.layout.Canvas;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
-import com.itextpdf.layout.properties.VerticalAlignment;
-
 import com.tradingapplication.TradingApplication.Entity.TransactionBuySell;
-import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Entity.UserTable;
 import com.tradingapplication.TradingApplication.Exception.DataNotFoundException;
 import com.tradingapplication.TradingApplication.Repository.TransactionRepository;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
+import com.tradingapplication.TradingApplication.Security.AuthUtil;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -50,6 +46,9 @@ public class PdfService {
     @Autowired
     private UserDetailsRepository userDetailsRepository;
     
+    @Autowired
+    AuthUtil authUtil;
+    
     // Color scheme
     private static final DeviceRgb HEADER_COLOR = new DeviceRgb(41, 128, 185);
     private static final DeviceRgb ACCENT_COLOR = new DeviceRgb(52, 152, 219);
@@ -57,12 +56,8 @@ public class PdfService {
     
     
     public ByteArrayInputStream callPdfGenerator(HttpSession session) {
-    	 UserLog getuser = (UserLog) session.getAttribute("userlog");
-    	 UserTable getuserName = userDetailsRepository.findByUsername(getuser.getUsername())
+    	 UserTable getuserName = userDetailsRepository.findByUsername(authUtil.getCurrentUsername())
                  .orElseThrow(() -> new DataNotFoundException("No such user found"));
-         
-         
-    	
 		return generatePdf(getuserName);
     	
     }
