@@ -6,6 +6,10 @@ import com.tradingapplication.TradingApplication.dto.StockRequestDTO;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +21,8 @@ import java.util.List;
 public class StockWebController {
 	
     private final StockServiceInterface stockService;
+    @Autowired
+    private final  UserDashboardServiceInterface userDashboardServiceInterface;
 
     @GetMapping("/viewstock")
     public String viewStockForm() {
@@ -34,18 +40,26 @@ public class StockWebController {
             return "stock";
         }
     }
-
     @GetMapping("/stock/{symbol}")
     public String getStockDetails(@PathVariable String symbol, Model model,HttpSession session) {
         try {
         	
             StockRequestDTO stock = stockService.fetchStock(symbol.toUpperCase());
+            
+           Double mainBalance=getAccountBalance(session);
             model.addAttribute("stock", stock);
+            model.addAttribute("balance",mainBalance );
             return "stockDetails";  // stockDetails.jsp
         } catch (Exception e) {
             model.addAttribute("error", "Stock not found: " + symbol);
             return "error";  // Optional error.jsp
         }
+    }
+    @GetMapping("/getAccountBalance")
+    public Double getAccountBalance(HttpSession session) {
+       
+            double balance = userDashboardServiceInterface.getMainBalance(session);
+        return balance;
     }
 
     @GetMapping("/stocks")

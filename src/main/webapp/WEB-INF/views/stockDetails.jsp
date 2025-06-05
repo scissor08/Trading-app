@@ -8,6 +8,182 @@
     <title>Stock Details - ${stock.symbol}</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
+    /* KYC Modal Styles */
+#kycModal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+}
+
+#kycModal .modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 0;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-30px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+.success-modal {
+    position: fixed;
+    top: 20%; /* Instead of center (50%) */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+}
+#kycModal .modal-header {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    color: white;
+    padding: 20px;
+    border-radius: 10px 10px 0 0;
+    text-align: center;
+}
+
+#kycModal .modal-header h2 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+#kycModal .modal-body {
+    padding: 30px 20px;
+}
+
+.kyc-message {
+    text-align: center;
+}
+
+.warning-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.kyc-message p {
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.kyc-message p:first-of-type {
+    font-weight: 600;
+    color: #e74c3c;
+}
+
+#kycModal .modal-footer {
+    padding: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    border-top: 1px solid #eee;
+}
+
+#kycModal .btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 120px;
+}
+
+#kycModal .btn-primary {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+}
+
+#kycModal .btn-primary:hover {
+    background: linear-gradient(135deg, #45a049, #3d8b40);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+#kycModal .btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+#kycModal .btn-secondary:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(108, 117, 125, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    #kycModal .modal-content {
+        width: 95%;
+        margin: 20% auto;
+    }
+    
+    #kycModal .modal-footer {
+        flex-direction: column;
+    }
+    
+    #kycModal .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    #kycModal .btn:last-child {
+        margin-bottom: 0;
+    }
+}
+
+/* Loading state for buy button */
+.btn-loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.btn-loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    margin: auto;
+    border: 2px solid transparent;
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
         /* Reset and Base Styles */
         * {
             margin: 0;
@@ -357,7 +533,8 @@
 
         .success-message {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 15px;
+             margin-bottom: 10px;
             padding: 15px;
             background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
             border-radius: 8px;
@@ -428,6 +605,30 @@
 
         /* Desktop Styles */
         @media (min-width: 1024px) {
+        #resultModal {
+    width: 500px !important; /* Reduce from default width */
+    max-width: 90vw; /* Responsive on mobile */
+    padding: 15px !important; /* Reduce padding */
+    box-sizing: border-box;
+}
+
+#resultModal .modal-content {
+    padding: 10px; /* Reduce internal padding */
+}
+
+#resultModal .purchase-summary {
+    font-size: 14px; /* Smaller text */
+    line-height: 1.4;
+}
+
+#resultModal .purchase-summary div {
+    margin: 5px 0; /* Reduce spacing between items */
+}
+
+#modalTitle {
+    font-size: 18px !important; /* Smaller title */
+    margin-bottom: 10px;
+}
             .container {
                 padding: 50px;
             }
@@ -460,7 +661,30 @@
             .content-grid {
                 grid-template-columns: 1.5fr 1fr;
             }
+#resultModal {
+    width: 1500px !important; /* Reduce from default width */
+    max-width: 150vw; /* Responsive on mobile */
+    padding: 10px !important; /* Reduce padding */
+    box-sizing: border-box;
+}
 
+#resultModal .modal-content {
+    padding: 10px; /* Reduce internal padding */
+}
+
+#resultModal .purchase-summary {
+    font-size: 14px; /* Smaller text */
+    line-height: 1.4;
+}
+
+#resultModal .purchase-summary div {
+    margin: 5px 0; /* Reduce spacing between items */
+}
+
+#modalTitle {
+    font-size: 18px !important; /* Smaller title */
+    margin-bottom: 10px;
+}
             #priceChart {
                 height: 450px !important;
             }
@@ -668,34 +892,54 @@
             </div>
         </div>
 
-        <div>
-            <c:if test="${stock.domain != null && !stock.domain.isEmpty()}">
-                <div class="company-section">
-                    <img src="https://logo.clearbit.com/${stock.domain}"
-                         alt="${stock.symbol} logo"
-                         class="company-logo"
-                         onerror="this.style.display='none'" />
-                </div>
-            </c:if>
+      <div>
+<!-- Wallet Section -->
 
-            <div class="trading-section">
-                <h3 style="margin-bottom: 20px; color: #0e1c36;">Trade ${stock.symbol}</h3>
-
-                <div class="quantity-container">
-                    <span class="quantity-label">Quantity:</span>
-                    <div class="quantity-controls">
-                        <button class="quantity-btn" onclick="decrementQuantity()" type="button">-</button>
-                        <input type="number" id="quantityInput" class="quantity-input" value="1" min="1" max="1000">
-                        <button class="quantity-btn" onclick="incrementQuantity()" type="button">+</button>
-                    </div>
-                </div>
-
-                <div class="action-buttons">
-                    <button type="button" class="btn btn-buy" onclick="handleBuyStock()">Buy Stock</button>
-                    <button type="button" class="btn btn-sell" onclick="handleSellStock()">Sell Stock</button>
-                </div>
-            </div>
+<div class="wallet-section" style="margin-bottom: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 8px; border-left: 4px solid #ff8c00;">
+    <h2 style="margin: 0; color: #0e1c36; display: flex; align-items: center; justify-content: space-between; font-size: 1.5rem;">
+        <div style="display: flex; align-items: center;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ff8c00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 10px;">
+                <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path>
+                <path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path>
+                <circle cx="18" cy="12" r="2"></circle>
+            </svg>
+            Wallet Balance :
         </div>
+        <div style="font-size: 1.4rem; font-weight: bold; color: #28a745;">
+            $  <c:out value="${balance}" />
+        </div>
+    </h2>
+</div>
+
+<c:if test="${stock.domain != null && !stock.domain.isEmpty()}">
+    <div class="company-section">
+        <img src="https://logo.clearbit.com/${stock.domain}"
+             alt="${stock.symbol} logo"
+             class="company-logo"
+             onerror="this.style.display='none'" />
+    </div>
+</c:if>
+
+<div class="trading-section">
+    <h3 style="margin-bottom: 20px; color: #0e1c36;">Trade ${stock.symbol}</h3>
+
+    <div class="quantity-container">
+        <span class="quantity-label">Quantity:</span>
+        <div class="quantity-controls">
+            <button class="quantity-btn" onclick="decrementQuantity()" type="button">-</button>
+            <input type="number" id="quantityInput" class="quantity-input" value="1" min="1" max="1000">
+            <button class="quantity-btn" onclick="incrementQuantity()" type="button">+</button>
+        </div>
+    </div>
+
+    <div class="action-buttons">
+        <button type="button" class="btn btn-buy" onclick="handleBuyStock()">Buy Stock</button>
+        <button type="button" class="btn btn-sell" onclick="handleSellStock()">Sell Stock</button>
+    </div>
+</div>
+
+<!-- Wallet Section -->
+
     </div>
 
     <div class="chart-section">
@@ -834,6 +1078,151 @@
         }
     });
 
+    // KYC Status Check Function
+    async function checkKYCStatus() {
+        try {
+            const response = await fetch('/kyc/checkStatus', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                return true;
+            } else {
+                console.error('KYC status check failed:', response.status);
+                return false;
+            }
+        } catch (error) {
+            console.error('Error checking KYC status:', error);
+            return false; // Default to not verified if error
+        }
+    }
+
+    // Show KYC Modal Function
+    function showKYCModal() {
+        let modal = document.getElementById('kycModal');
+        if (!modal) {
+            createKYCModal();
+            modal = document.getElementById('kycModal'); // Get the newly created modal
+        }
+        modal.style.display = 'block';
+    }
+
+    // Create KYC Modal Function
+    function createKYCModal() {
+        const modalHTML = `
+            <div id="kycModal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 class="modal-title">KYC Verification Required</h2>
+                    </div>
+                    <div class="modal-body">
+                        <div class="kyc-message">
+                            <div class="warning-icon">⚠️</div>
+                            <p>Please complete your KYC verification first to continue with the transaction.</p>
+                            <p>KYC verification is required for all trading activities as per regulatory compliance.</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="kycVerificationBtn" class="btn btn-primary">Complete KYC Verification</button>
+                        <button id="kycCloseBtn" class="btn btn-secondary">Close</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+        
+        // Add event listeners
+        document.getElementById('kycVerificationBtn').addEventListener('click', redirectToKYC);
+        document.getElementById('kycCloseBtn').addEventListener('click', closeKYCModal);
+        
+        // Close on outside click
+        document.getElementById('kycModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeKYCModal();
+            }
+        });
+    }
+
+    // Close KYC Modal Function
+    function closeKYCModal() {
+        const modal = document.getElementById('kycModal');
+        if (modal) {
+            modal.style.display = 'none';
+        }
+    }
+
+    // Redirect to KYC Verification Function
+    function redirectToKYC() {
+        // Update this URL as per your KYC verification page
+        window.location.href = '/kyc/form';
+    }
+
+    // Buy Stock Function - Updated with proper KYC check
+    async function handleBuyStock() {
+        const quantity = parseInt(document.getElementById('quantityInput').value);
+
+        if (!quantity || quantity < 1) {
+            alert('Please enter a valid quantity');
+            return;
+        }
+
+        showLoadingModal();
+        
+        try {
+            // Check KYC status first
+            const isKYCVerified =await checkKYCStatus(); // FIXED: Actually call the API
+            
+            // Hide loading modal
+            hideLoadingModal();
+            
+            if (isKYCVerified) {
+                // KYC verified, proceed with buy transaction
+                const requestData = {
+                    symbol: stockData.symbol,
+                    quantity: quantity,
+                    price: stockData.price
+                };
+
+                showLoadingModal();
+
+                try {
+                    const response = await fetch('/api/buy', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(requestData)
+                    });
+
+                    hideLoadingModal();
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        showSuccessModal('Buy', result, quantity);
+                    } else {
+                        const errorMessage = await response.text();
+                        showErrorModal('Buy', errorMessage);
+                    }
+                } catch (error) {
+                    hideLoadingModal();
+                    showErrorModal('Buy', 'Network error: ' + error.message);
+                }
+            } else {
+                // KYC not verified, show KYC modal
+                showKYCModal();
+            }
+        } catch (error) {
+            console.error('Error in buy process:', error);
+            hideLoadingModal();
+            showErrorModal('Buy', 'Something went wrong. Please try again.');
+        }
+    }
+
     // Quantity control functions
     function incrementQuantity() {
         const input = document.getElementById('quantityInput');
@@ -866,50 +1255,6 @@
         }
     });
 
-    // Buy stock function - Updated to use session-based authentication
-    async function handleBuyStock() {
-        const quantity = parseInt(document.getElementById('quantityInput').value);
-
-        if (quantity < 1) {
-            alert('Please enter a valid quantity');
-            return;
-        }
-
-        const requestData = {
-            symbol: stockData.symbol,
-            quantity: quantity,
-            price: stockData.price
-        };
-
-        showLoadingModal();
-
-        try {
-            // Removed user ID parameter since controller uses HttpSession
-            const response = await fetch('/api/buy', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(requestData)
-            });
-
-            hideLoadingModal();
-
-            if (response.ok) {
-                const result = await response.json();
-                showSuccessModal('Buy', result, quantity);
-                
-                
-            } else {
-                const errorMessage = await response.text();
-                showErrorModal('Buy', errorMessage);
-            }
-        } catch (error) {
-            hideLoadingModal();
-            showErrorModal('Buy', 'Network error: ' + error.message);
-        }
-    }
-
     // Sell stock function - Updated to use session-based authentication
     async function handleSellStock() {
         const quantity = parseInt(document.getElementById('quantityInput').value);
@@ -928,7 +1273,6 @@
         showLoadingModal();
 
         try {
-            // Removed user ID parameter since controller uses HttpSession
             const response = await fetch('/api/sell', {
                 method: 'POST',
                 headers: {
@@ -956,48 +1300,18 @@
     function showLoadingModal() {
         document.getElementById('loadingModal').style.display = 'block';
         // Ensure loading spinner is visible
-        document.querySelector('#loadingModal .loading').style.display = 'block';
+        const loadingElement = document.querySelector('#loadingModal .loading');
+        if (loadingElement) {
+            loadingElement.style.display = 'block';
+        }
     }
 
     function hideLoadingModal() {
         document.getElementById('loadingModal').style.display = 'none';
-        document.querySelector('#loadingModal .loading').style.display = 'none';
-    }
-
-    function showSuccessModal(operation, result, quantity) {
-        const modal = document.getElementById('resultModal');
-        const title = document.getElementById('modalTitle');
-        const successMessageEl = document.getElementById('successMessage');
-        const errorMessageEl = document.getElementById('errorMessage');
-        const quantity1 = parseFloat(document.getElementById('quantityInput').value);
-        // Clear previous messages and ensure error message is hidden
-        successMessageEl.style.display = 'none';
-        errorMessageEl.style.display = 'none';
-        successMessageEl.textContent = '';
-        errorMessageEl.textContent = '';
-
-        // Ensure summary section is visible for success
-        document.querySelector('.purchase-summary').style.display = 'block';
-
-        title.textContent = operation + ' Transaction Successful';
-        title.className = 'success'; // Apply success color
-
-        const amount = quantity1 * stockData.price;
-        const price =stockData.price.toFixed(2);
-        const totalAmount = amount.toFixed(2);
-
-        // Populate the pre-existing elements with formatted values
-        document.getElementById('summaryStockSymbol').textContent = stockData.symbol || 'N/A';
-        document.getElementById('summaryQuantity').textContent = quantity;
-        document.getElementById('summaryPricePerShare').textContent ="$"+price;
-        document.getElementById('summaryTotalAmount').textContent ="$"+totalAmount ;
-        document.getElementById('summaryOperation').textContent = operation;
-
-        successMessageEl.textContent = '✅ Transaction completed successfully!';
-        successMessageEl.style.display = 'block';
-        successMessageEl.className = 'success-message success'; // Ensure success styling
-
-        modal.style.display = 'block';
+        const loadingElement = document.querySelector('#loadingModal .loading');
+        if (loadingElement) {
+            loadingElement.style.display = 'none';
+        }
     }
 
     function showErrorModal(operation, errorMessage) {
@@ -1022,12 +1336,64 @@
         errorMessageEl.style.display = 'block';
         errorMessageEl.className = 'error-message error'; // Ensure error styling
 
+        // Don't set reload flag for errors
+        modal.dataset.shouldReload = 'false';
+
         modal.style.display = 'block';
     }
 
+    // Updated showSuccessModal function - adds reload flag
+  function showSuccessModal(operation, result, quantity) {
+    const modal = document.getElementById('resultModal');
+    const title = document.getElementById('modalTitle');
+    const successMessageEl = document.getElementById('successMessage');
+    const errorMessageEl = document.getElementById('errorMessage');
+    const quantity1 = parseFloat(document.getElementById('quantityInput').value);
+
+    // Clear previous messages and ensure error message is hidden
+    successMessageEl.style.display = 'none';
+    errorMessageEl.style.display = 'none';
+    successMessageEl.textContent = '';
+    errorMessageEl.textContent = '';
+
+    // Ensure summary section is visible for success
+    document.querySelector('.purchase-summary').style.display = 'block';
+
+    title.textContent = operation + ' Transaction Successful';
+    title.className = 'success';
+
+    const amount = quantity1 * stockData.price;
+    const price = stockData.price.toFixed(2);
+    const totalAmount = amount.toFixed(2);
+
+    // Populate the pre-existing elements with formatted values
+    document.getElementById('summaryStockSymbol').textContent = stockData.symbol || 'N/A';
+    document.getElementById('summaryQuantity').textContent = quantity;
+    document.getElementById('summaryPricePerShare').textContent = "$" + price;
+    document.getElementById('summaryTotalAmount').textContent = "$" + totalAmount;
+    document.getElementById('summaryOperation').textContent = operation;
+
+    successMessageEl.textContent = '✅ Transaction completed successfully!';
+    successMessageEl.style.display = 'block';
+    successMessageEl.className = 'success-message success';
+
+    // Position modal higher on the page
+  
+
+    modal.dataset.shouldReload = 'true';
+    modal.style.display = 'block';
+}
+    // Updated closeModal function - reloads page after successful transactions
     function closeModal() {
+        const modal = document.getElementById('resultModal');
+        
+        // Check if page should reload after closing (for successful transactions)
+        const shouldReload = modal.dataset.shouldReload === 'true';
+        
+        // Close modals
         document.getElementById('resultModal').style.display = 'none';
         document.getElementById('loadingModal').style.display = 'none';
+        
         // Clear content when closing the modal, especially for re-opening
         const successMessageEl = document.getElementById('successMessage');
         const errorMessageEl = document.getElementById('errorMessage');
@@ -1036,26 +1402,40 @@
         successMessageEl.style.display = 'none';
         errorMessageEl.style.display = 'none';
 
-        // Clear summary details and ensure summary is visible for next success
+        // Clear summary details and ensure summary is visible for next time
         document.getElementById('summaryStockSymbol').textContent = '';
         document.getElementById('summaryQuantity').textContent = '';
         document.getElementById('summaryPricePerShare').textContent = '';
         document.getElementById('summaryTotalAmount').textContent = '';
         document.getElementById('summaryOperation').textContent = '';
         document.querySelector('.purchase-summary').style.display = 'block'; // Reset display for next time
+        
+        // Reset the reload flag
+        modal.dataset.shouldReload = 'false';
+        
+        // Reload page if it was a successful transaction
+        if (shouldReload) {
+            // Small delay to ensure modal closes smoothly before reload
+            setTimeout(() => {
+                window.location.reload();
+            }, 200);
+        }
     }
 
     // Close modal when clicking outside
     window.onclick = function(event) {
         const resultModal = document.getElementById('resultModal');
         const loadingModal = document.getElementById('loadingModal');
+        const kycModal = document.getElementById('kycModal');
 
         if (event.target === resultModal) {
             closeModal(); // Use closeModal to ensure cleanup
         }
         if (event.target === loadingModal) {
-            loadingModal.style.display = 'none'; // Loading modal doesn't need full cleanup
-            document.querySelector('#loadingModal .loading').style.display = 'none';
+            hideLoadingModal();
+        }
+        if (event.target === kycModal) {
+            closeKYCModal();
         }
     }
 
@@ -1063,15 +1443,26 @@
     document.addEventListener('keydown', function(event) {
         if (event.key === 'Escape') {
             closeModal();
+            closeKYCModal();
         }
     });
 
-    // Initial display of loading spinner needs to be handled
-    // The .loading class has display: none; by default. When showLoadingModal() is called, it should set it to 'block'.
-    // The spinner inside it will then animate.
+    // DOM Content Loaded Event
     document.addEventListener('DOMContentLoaded', function() {
-        // You might want to pre-set any initial states here if needed.
-        // For modals, it's usually handled by display: none in CSS and JS toggling to 'block'.
+        // Initialize any required components here
+        console.log('Stock trading page loaded successfully');
+        
+        // Add event listeners for buy/sell buttons if they exist
+        const buyButton = document.getElementById('buyButton');
+        const sellButton = document.getElementById('sellButton');
+        
+        if (buyButton) {
+            buyButton.addEventListener('click', handleBuyStock);
+        }
+        
+        if (sellButton) {
+            sellButton.addEventListener('click', handleSellStock);
+        }
     });
 </script>
 
