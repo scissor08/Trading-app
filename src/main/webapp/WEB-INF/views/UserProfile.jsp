@@ -28,6 +28,7 @@ main {
     overflow-y: auto;
     text-align: left;
     max-width: 100%;
+    margin: 1rem 50px;
     box-shadow: 0 8px 32px rgba(0,0,0,0.08);
     border-radius: 20px;
     line-height: 2.2rem;
