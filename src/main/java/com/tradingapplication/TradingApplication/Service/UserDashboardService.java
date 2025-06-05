@@ -8,21 +8,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.tradingapplication.TradingApplication.Entity.KycEntity;
 import com.tradingapplication.TradingApplication.Entity.Stock;
 import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
 import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Entity.UserTable;
-import com.tradingapplication.TradingApplication.Entity.Wallet;
+import com.tradingapplication.TradingApplication.Repository.KycRepository;
 import com.tradingapplication.TradingApplication.Repository.StockRepository;
+
+import com.tradingapplication.TradingApplication.Repository.UserAccountDetailsRepository;
+
+import com.tradingapplication.TradingApplication.Entity.Wallet;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
 import com.tradingapplication.TradingApplication.Repository.WalletReportRep;
 import com.tradingapplication.TradingApplication.globalException.DataNotFoundException;
+import com.tradingapplication.TradingApplication.globalException.KycNotUpdate;
+
+import jakarta.mail.Session;
+import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class UserDashboardService implements UserDashboardServiceInterface {
 
 	@Autowired
 	UserDetailsRepository userDetailsRepository;
+	@Autowired
+
+	UserAccountDetailsRepository userAccountDetailsRepository;
+	@Autowired
+	KycRepository kycrepo;
+
 
     @Autowired
     private WalletReportRep transactionRepository;
@@ -31,6 +48,9 @@ public class UserDashboardService implements UserDashboardServiceInterface {
 	public String getUserDetail(String username, Model model) {
 		UserTable userDetails = getUserDetailsByUsername(username);
 		UserAccountDetails userAccount = userDetails.getUserAccountDetails();
+		
+		KycEntity kyc=kycrepo.findById((long) userDetails.getUserId()).orElseThrow(()->new KycNotUpdate("kyc not found"));
+		
 		if (userDetails.getProfileImage() != null) {
 			String base64Image = Base64.getEncoder().encodeToString(userDetails.getProfileImage());
 			model.addAttribute("profileImageBase64", base64Image);
@@ -38,9 +58,9 @@ public class UserDashboardService implements UserDashboardServiceInterface {
 			model.addAttribute("profileImageBase64", null);
 		}
 
+		model.addAttribute("kyc", kyc);
 		model.addAttribute("userDetails", userDetails);
 		model.addAttribute("userAccount", userAccount);
-
 		return "UserProfile";
 	}
 
@@ -73,6 +93,15 @@ public class UserDashboardService implements UserDashboardServiceInterface {
         transactionRepository.save(tx);
 
 		return "WalletPage";
+	}
+	public double getMainBalance(HttpSession session) {
+		UserLog getuser= (UserLog) session.getAttribute("userlog");
+		UserTable getid = userDetailsRepository.findByUsername(getuser.getUsername()).orElseThrow(()-> new DataNotFoundException("User not Found...."));	
+		    	int id = getid.getUserId();
+		        UserAccountDetails user = userAccountDetailsRepository.findById(id)
+		                .orElseThrow(() -> new DataNotFoundException("User not found"));
+		        double balance=user.getBalance();
+		        return balance;
 	}
 
 	// Utility method to fetch user details or redirect
