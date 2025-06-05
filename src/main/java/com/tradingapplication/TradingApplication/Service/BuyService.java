@@ -2,6 +2,7 @@
 package com.tradingapplication.TradingApplication.Service;
 
 
+import java.text.SimpleDateFormat;
 import java.util.Date;  
 import java.util.UUID;
 
@@ -56,7 +57,8 @@ private UserDetailsRepository userDetailsRepository;
     	
     	
     	UserLog getuser= (UserLog) session.getAttribute("userlog");
-    	
+    	System.out.println("BuyStock Method Invoked for userId: {}, symbol: {}, quantity: {},price {}"+
+   	         getuser.getUsername()+ request.getSymbol()+ request.getQuantity()+request.getPrice());
     	
     	UserTable getid = userDetailsRepository.findByUsername(getuser.getUsername()).orElseThrow(()-> new DataNotFoundException("User not Found...."));	
     	int id = getid.getUserId();
@@ -81,8 +83,8 @@ private UserDetailsRepository userDetailsRepository;
             throw new IllegalArgumentException("Low Wallet Balance! Please add funds.");
         }
 
-//        String orderId = UUID.randomUUID().toString();
-//        String transactionTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        String orderId = UUID.randomUUID().toString();
+        String transactionTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
         double updatedBalance = user.getBalance() - transactionAmount;
         log.info("User {} wallet updated. New balance: {}", user.getUserdetails().getUserId(), updatedBalance);
