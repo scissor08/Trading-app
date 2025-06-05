@@ -46,6 +46,7 @@ public class UserLoginController {
 
 		if (userExists) {
 			model.addAttribute("otpSent", true);
+			model.addAttribute("emailOrUsername", emailOrUsername);
 			return "auth/ForgetPassword";
 		} else {
 			model.addAttribute("error", "User not found.");

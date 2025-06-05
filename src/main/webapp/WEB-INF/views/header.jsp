@@ -62,7 +62,7 @@
                     </a>
                     <a href="${pageContext.request.contextPath}/profile" class="dropdown-item">
                         <i class="fas fa-user-cog"></i>
-                        <span>Profile Settings</span>
+                        <span onclick="handleBuyStock()">Profile Settings</span>
                     </a>
                     <div class="dropdown-divider"></div>
                     <a href="${pageContext.request.contextPath}/arise/logout" class="dropdown-item logout-item">
@@ -615,4 +615,9 @@ window.addEventListener('resize', function() {
         document.getElementById('mobileNav').classList.remove('show');
     }
 });
+
+
+
+
+
 </script>

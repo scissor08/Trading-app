@@ -319,6 +319,8 @@
     </style>
 </head>
 <body>
+
+
 <div class="container">
     <div class="arise-brand">ARISE</div>
     <h2>Forgot Password</h2>
