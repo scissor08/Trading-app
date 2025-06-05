@@ -3,6 +3,10 @@
 <html>
 <head>
     <title>KYC Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <style>
         table { border-collapse: collapse; width: 100%; margin-top: 20px; }
         th, td { padding: 12px; border: 1px solid #ccc; text-align: left; }
@@ -12,7 +16,7 @@
     </style>
 </head>
 <body>
-
+<jsp:include page="header.jsp" />
 <h2>KYC Verification Records</h2>
 
 <table>
