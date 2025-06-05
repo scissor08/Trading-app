@@ -49,7 +49,7 @@ public class UserDashboardService implements UserDashboardServiceInterface {
 		UserTable userDetails = getUserDetailsByUsername(username);
 		UserAccountDetails userAccount = userDetails.getUserAccountDetails();
 		
-		KycEntity kyc=kycrepo.findByUserEmail(userDetails.getEmail()).orElseThrow(()->new KycNotUpdate("kyc not found"));
+		KycEntity kyc=kycrepo.findById((long) userDetails.getUserId()).orElseThrow(()->new KycNotUpdate("kyc not found"));
 		
 		if (userDetails.getProfileImage() != null) {
 			String base64Image = Base64.getEncoder().encodeToString(userDetails.getProfileImage());

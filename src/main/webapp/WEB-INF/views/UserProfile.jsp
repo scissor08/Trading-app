@@ -80,13 +80,14 @@ main button {
 </div>
     
     <div class="profile-details">
-      <p><strong>Name:</strong> ${userDetails.name}</p>
+      <p><strong>Name:</strong> ${kyc.userFullName}</p>
       <p><strong>Username:</strong> ${userDetails.username}</p>
-      <p><strong>Email:</strong> ${userDetails.email}</p>
+      <p><strong>Email:</strong> ${kyc.userEmail}</p>
       <p><strong>Gender :</strong> ${kyc.userGender}</p>
       <p><strong>Mobile :</strong> ${kyc.userMobile}</p>
       <p><strong>DOB :</strong> ${kyc.userDob}</p>
       <p><strong>Adress:</strong> ${kyc.userAddress}</p> 
+       <p><strong>Nationality :</strong> ${kyc.userNationality}</p>
       
     </div>
 

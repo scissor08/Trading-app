@@ -58,7 +58,7 @@ public class KycEntity {
     
     @OneToOne
     @MapsId // This tells JPA to use the same ID as the UserTable
-    @JoinColumn(name = "id") // FK and PK are same
+    @JoinColumn(name = "user_id") // FK and PK are same
     private UserTable userTable;
 
     @PrePersist
