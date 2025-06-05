@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.ModelAndView;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,5 +27,10 @@ public class GlobalExceptionHandler {
 	        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 	        return "/arise/login";
 	    }
+	 @ExceptionHandler(KycNotUpdate.class)
+	 public ModelAndView handleKycException(KycNotUpdate ex) {
+	     return new ModelAndView("redirect:/kyc/form");
+	 }
+
 
 }

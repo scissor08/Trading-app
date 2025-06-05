@@ -19,6 +19,7 @@ import com.tradingapplication.TradingApplication.Entity.Wallet;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
 import com.tradingapplication.TradingApplication.Repository.WalletReportRep;
 import com.tradingapplication.TradingApplication.globalException.DataNotFoundException;
+import com.tradingapplication.TradingApplication.globalException.KycNotUpdate;
 
 @Service
 public class UserDashboardService implements UserDashboardServiceInterface {
@@ -36,7 +37,7 @@ public class UserDashboardService implements UserDashboardServiceInterface {
 		UserTable userDetails = getUserDetailsByUsername(username);
 		UserAccountDetails userAccount = userDetails.getUserAccountDetails();
 		
-		KycEntity kyc=kycrepo.findByUserEmail(userDetails.getEmail()).orElseThrow(()->new DataNotFoundException("User not found"));
+		KycEntity kyc=kycrepo.findByUserEmail(userDetails.getEmail()).orElseThrow(()->new KycNotUpdate("kyc not found"));
 		
 		if (userDetails.getProfileImage() != null) {
 			String base64Image = Base64.getEncoder().encodeToString(userDetails.getProfileImage());
@@ -48,8 +49,6 @@ public class UserDashboardService implements UserDashboardServiceInterface {
 		model.addAttribute("kyc", kyc);
 		model.addAttribute("userDetails", userDetails);
 		model.addAttribute("userAccount", userAccount);
-
-		
 		return "UserProfile";
 	}
 
