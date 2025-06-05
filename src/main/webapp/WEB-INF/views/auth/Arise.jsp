@@ -1,399 +1,441 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arize - SignIn</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arize - SignIn</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
 
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+body {
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	background: #ffffff;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	color: #333;
+}
 
-        header {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+header {
+	background: #ffffff;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+	padding: 1rem 2rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	border-bottom: 1px solid #e0e0e0;
+}
 
-        #header-title {
-            color: white;
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
+#header-title {
+	color: #2c3e50;
+	font-size: 1.8rem;
+	font-weight: 700;
+	letter-spacing: -0.5px;
+}
 
-        .home-btn {
-            color: white;
-            text-decoration: none;
-            padding: 0.5rem 1rem;
-            border: 2px solid white;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-        }
+.home-btn {
+	color: #2c3e50;
+	text-decoration: none;
+	padding: 0.6rem 1.2rem;
+	border: 2px solid #2c3e50;
+	border-radius: 8px;
+	transition: all 0.3s ease;
+	font-weight: 500;
+}
 
-        .home-btn:hover {
-            background: white;
-            color: #667eea;
-        }
+.home-btn:hover {
+	background: #2c3e50;
+	color: white;
+	transform: translateY(-1px);
+}
 
-        main {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-        }
+main {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 2rem;
+	background: #f8f9fa;
+}
 
-        .auth-container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            width: 100%;
-            max-width: 450px;
-        }
+.auth-container {
+	background: #ffffff;
+	border-radius: 12px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+	padding: 2.5rem;
+	width: 100%;
+	max-width: 450px;
+	border: 1px solid #e0e0e0;
+}
 
-        .tab-buttons {
-            display: flex;
-            margin-bottom: 2rem;
-            background: #f8f9fa;
-            border-radius: 10px;
-            padding: 0.25rem;
-        }
+.tab-buttons {
+	display: flex;
+	margin-bottom: 2rem;
+	background: #f8f9fa;
+	border-radius: 8px;
+	padding: 0.25rem;
+	border: 1px solid #e0e0e0;
+}
 
-        .tab-btn {
-            flex: 1;
-            padding: 0.75rem;
-            border: none;
-            background: transparent;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
+.tab-btn {
+	flex: 1;
+	padding: 0.75rem;
+	border: none;
+	background: transparent;
+	border-radius: 6px;
+	cursor: pointer;
+	font-weight: 500;
+	transition: all 0.3s ease;
+	color: #666;
+}
 
-        .tab-btn.active {
-            background: white;
-            color: #667eea;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        }
+.tab-btn.active {
+	background: white;
+	color: #2c3e50;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+	font-weight: 600;
+}
 
-        .form-section {
-            display: none;
-        }
+.form-section {
+	display: none;
+}
 
-        .form-section.active {
-            display: block;
-        }
+.form-section.active {
+	display: block;
+}
 
-        .form-section form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
+.form-section form {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
 
-        label {
-            font-weight: 500;
-            color: #333;
-            margin-bottom: 0.25rem;
-        }
+label {
+	font-weight: 500;
+	color: #2c3e50;
+	margin-bottom: 0.25rem;
+}
 
-        input {
-            padding: 0.75rem;
-            border: 2px solid #e1e5e9;
-            border-radius: 8px;
-            font-size: 1rem;
-            transition: border-color 0.3s ease;
-        }
+input {
+	padding: 0.875rem;
+	border: 2px solid #e0e0e0;
+	border-radius: 8px;
+	font-size: 1rem;
+	transition: all 0.3s ease;
+	background: #ffffff;
+}
 
-        input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
+input:focus {
+	outline: none;
+	border-color: #3498db;
+	box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+}
 
-        .password-wrapper {
-            position: relative;
-        }
+.password-wrapper {
+	position: relative;
+}
 
-        .password-toggle {
-            position: absolute;
-            right: 0.75rem;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            color: #666;
-        }
+.password-toggle {
+	position: absolute;
+	right: 0.75rem;
+	top: 50%;
+	transform: translateY(-50%);
+	cursor: pointer;
+	color: #666;
+}
 
-        button[type="submit"] {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 0.875rem;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s ease;
-        }
+button[type="submit"] {
+	background: #2c3e50;
+	color: white;
+	border: none;
+	padding: 1rem;
+	border-radius: 8px;
+	font-size: 1rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: all 0.3s ease;
+}
 
-        button[type="submit"]:hover {
-            transform: translateY(-2px);
-        }
+button[type="submit"]:hover {
+	background: #34495e;
+	transform: translateY(-1px);
+	box-shadow: 0 4px 12px rgba(44, 62, 80, 0.3);
+}
 
-        .oauth-divider {
-            display: flex;
-            align-items: center;
-            margin: 1.5rem 0;
-            color: #666;
-        }
+.oauth-divider {
+	display: flex;
+	align-items: center;
+	margin: 1.5rem 0;
+	color: #666;
+}
 
-        .oauth-divider::before,
-        .oauth-divider::after {
-            content: '';
-            height: 1px;
-            background: #e1e5e9;
-            flex: 1;
-        }
+.oauth-divider::before, .oauth-divider::after {
+	content: '';
+	height: 1px;
+	background: #e0e0e0;
+	flex: 1;
+}
 
-        .oauth-divider span {
-            padding: 0 1rem;
-            font-size: 0.875rem;
-        }
+.oauth-divider span {
+	padding: 0 1rem;
+	font-size: 0.875rem;
+}
 
-        .google-signin-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-            padding: 0.875rem;
-            border: 2px solid #e1e5e9;
-            border-radius: 8px;
-            background: white;
-            color: #333;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            margin-bottom: 1rem;
-        }
+.google-signin-btn {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.75rem;
+	padding: 0.875rem;
+	border: 2px solid #e0e0e0;
+	border-radius: 8px;
+	background: white;
+	color: #333;
+	text-decoration: none;
+	font-weight: 500;
+	transition: all 0.3s ease;
+	margin-bottom: 1rem;
+}
 
-        .google-signin-btn:hover {
-            border-color: #4285f4;
-            background: #f8f9ff;
-        }
+.google-signin-btn:hover {
+	border-color: #4285f4;
+	background: #f8f9ff;
+	transform: translateY(-1px);
+	box-shadow: 0 4px 12px rgba(66, 133, 244, 0.2);
+}
 
-        .google-icon {
-            width: 20px;
-            height: 20px;
-            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHZpZXdCb3g9IjAgMCAxOCAxOCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgPHBhdGggZD0iTTE3LjY0IDkuMjA0NzI3MjdjMC0uNjM5NjM2MzctLjA1NzI3MjczLTEuMjUyNzI3MjctLjE2MzYzNjM2LTEuODQwOTA5MDlIOXY0LjAwOTA5MDloNC44NDQwOTA5Yy0uMjEzNjM2MzYgMS4xMjk1NDU0NS0uODU2MzYzNjQgMi4wODYzNjM2NC0xLjgzNDU0NTQ1IDIuNzI5MDkwOVYxNC4wNGgzLjAwNTQ1NDU0Yy43NDkwOTA5MS0uNjg3MjcyNzMgMS4xMjE4MTgxOC0xLjY5ODYzNjM2Ljk4NDU0NTQ1LTIuNzE5NTQ1NDVsLTIuMzEtMy4xMTYzNjM2NFoiIGZpbGw9IiM0Mjg1RjQiLz4KICAgIDxwYXRoIGQ9Ik05IDE4Yy0yLjg3MjcyNzMgMC01LjIyNzI3MjczLTEuMTQzNjM2MzYtNi44OC0zLjE0NzI3MjczaDIuNjA0NTQ1NDVjMS4xMDQ1NDU0NS43MTI3MjcyNyAyLjQxODE4MTgyIDEuMTI5MDkwOTEgNC4yNzU0NTQ1NSAxLjEyOTA5MDkxIDEuNTU0NTQ1NDUgMCAyLjg5NTQ1NDU1LS41MTgxODE4MiAzLjg2NzI3MjczLTEuNDA1NDU0NTVsMi4zMSAzLjExNjM2MzY0QzE0LjIxNDU0NTQ1IDE2Ljg1NjM2MzY0IDExLjgxNjM2MzY0IDE4IDkgMTh6IiBmaWxsPSIjMzRBODUzIi8+CiAgICA8cGF0aCBkPSJNOS4wMTM2MzYzNiA3LjQyNzI3MjczYzEuMDIyNzI3MjcgMCAxLjkzNjM2MzY0LjM1MDkwOTA5IDIuNjU4MTgxODIgMS4wNDA5MDkwOWwyLjUyNy0yLjUyN0MxMi45NjM2MzY0IDQuNjQ1NDU0NTUgMTEuMjM2MzYzNiAzLjg5MDkwOTA5IDkgMy44OTA5MDkwOSA1LjY3MjcyNzI3IDMuODkwOTA5MDkgMi45NzI3MjcyNyA1LjY0MDkwOTA5IDEuODYzNjM2MzYgOC4xMDQ1NDU0NWgyLjYwNDU0NTQ1QzUuMTY4MTgxODIgNi44NjM2MzYzNiA2Ljg3MjcyNzI3IDUuNTMxODE4MTggOSA1LjUzMTgxODE4eiIgZmlsbD0iI0ZCQkMwNSIvPgogICAgPHBhdGggZD0iTTEuODYzNjM2MzYgOC4xMDQ1NDU0NWgtMi42MDQ1NDU0NUMwLjM0MDkwOTA5IDEwLjI0MDkwOTEgMCA5LjY0MDkwOTA5IDAgOXMuMzQwOTA5MDktMS4yNDA5MDkwOS44MjI3MjcyNy0zLjI3MjcyNzI3bDIuNjA0NTQ1NDUgMi4zNzE4MTgxOEMzLjMyMTgxODE4IDEwLjc5MDkwOTEgMy40MjE4MTgxOCAxMy41MjcyNzI3IDQuMjI3MjcyNzMgMTQuNzI3MjcyN0w2LjUxODE4MTgyIDEyLjUwOTA5MDljLS42ODM2MzYzNi0uNDE2MzYzNjQtMS4yMzI3MjcyNy0uOTIzNjM2MzYtMS42NTQ1NDU0NS0xLjQ5NDU0NTQ1eiIgZmlsbD0iI0VBNDMzNSIvPgogIDwvZz4KPC9zdmc+') no-repeat center;
-            background-size: contain;
-        }
+.google-icon {
+	width: 20px;
+	height: 20px;
+	background:
+		url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTgiIGhlaWdodD0iMTgiIHZpZXdCb3g9IjAgMCAxOCAxOCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPgogICAgPHBhdGggZD0iTTE3LjY0IDkuMjA0NzI3MjdjMC0uNjM5NjM2MzctLjA1NzI3MjczLTEuMjUyNzI3MjctLjE2MzYzNjM2LTEuODQwOTA5MDlIOXY0LjAwOTA5MDloNC44NDQwOTA5Yy0uMjEzNjM2MzYgMS4xMjk1NDU0NS0uODU2MzYzNjQgMi4wODYzNjM2NC0xLjgzNDU0NTQ1IDIuNzI5MDkwOVYxNC4wNGgzLjAwNTQ1NDU0Yy43NDkwOTA5MS0uNjg3MjcyNzMgMS4xMjE4MTgxOC0xLjY5ODYzNjM2Ljk4NDU0NTQ1LTIuNzE5NTQ1NDVsLTIuMzEtMy4xMTYzNjM2NFoiIGZpbGw9IiM0Mjg1RjQiLz4KICAgIDxwYXRoIGQ9Ik05IDE4Yy0yLjg3MjcyNzMgMC01LjIyNzI3MjczLTEuMTQzNjM2MzYtNi44OC0zLjE0NzI3MjczaDIuNjA0NTQ1NDVjMS4xMDQ1NDU0NS43MTI3MjcyNyAyLjQxODE4MTgyIDEuMTI5MDkwOTEgNC4yNzU0NTQ1NSAxLjEyOTA5MDkxIDEuNTU0NTQ1NDUgMCAyLjg5NTQ1NDU1LS41MTgxODE4MiAzLjg2NzI3MjczLTEuNDA1NDU0NTVsMi4zMSAzLjExNjM2MzY0QzE0LjIxNDU0NTQ1IDE2Ljg1NjM2MzY0IDExLjgxNjM2MzY0IDE4IDkgMTh6IiBmaWxsPSIjMzRBODUzIi8+CiAgICA8cGF0aCBkPSJNOS4wMTM2MzYzNiA3LjQyNzI3MjczYzEuMDIyNzI3MjcgMCAxLjkzNjM2MzY0LjM1MDkwOTA5IDIuNjU4MTgxODIgMS4wNDA5MDkwOWwyLjUyNy0yLjUyN0MxMi45NjM2MzY0IDQuNjQ1NDU0NTUgMTEuMjM2MzYzNiAzLjg5MDkwOTA5IDkgMy44OTA5MDkwOSA1LjY3MjcyNzI3IDMuODkwOTA5MDkgMi45NzI3MjcyNyA1LjY0MDkwOTA5IDEuODYzNjM2MzYgOC4xMDQ1NDU0NWgyLjYwNDU0NTQ1QzUuMTY4MTgxODIgNi44NjM2MzYzNiA2Ljg3MjcyNzI3IDUuNTMxODE4MTggOSA1LjUzMTgxODE4eiIgZmlsbD0iI0ZCQkMwNSIvPgogICAgPHBhdGggZD0iTTEuODYzNjM2MzYgOC4xMDQ1NDU0NWgtMi42MDQ1NDU0NUMwLjM0MDkwOTA5IDEwLjI0MDkwOTEgMCA5LjY0MDkwOTA5IDAgOXMuMzQwOTA5MDktMS4yNDA5MDkwOS44MjI3MjcyNy0zLjI3MjcyNzI3bDIuNjA0NTQ1NDUgMi4zNzE4MTgxOEMzLjMyMTgxODE4IDEwLjc5MDkwOTEgMy40MjE4MTgxOCAxMy41MjcyNzI3IDQuMjI3MjcyNzMgMTQuNzI3MjcyN0w2LjUxODE4MTgyIDEyLjUwOTA5MDljLS42ODM2MzYzNi0uNDE2MzYzNjQtMS4yMzI3MjcyNy0uOTIzNjM2MzYtMS42NTQ1NDU0NS0xLjQ5NDU0NTQ1eiIgZmlsbD0iI0VBNDMzNSIvPgogIDwvZz4KPC9zdmc+')
+		no-repeat center;
+	background-size: contain;
+}
 
-        .error-msg {
-            background: #fee;
-            color: #c33;
-            padding: 0.75rem;
-            border-radius: 8px;
-            border-left: 4px solid #c33;
-            font-size: 0.875rem;
-        }
+.error-msg {
+	background: #fee;
+	color: #c33;
+	padding: 0.75rem;
+	border-radius: 8px;
+	border-left: 4px solid #e74c3c;
+	font-size: 0.875rem;
+	margin-bottom: 1rem;
+}
 
-        .links {
-            text-align: center;
-            margin: 1rem 0;
-        }
+.success-msg {
+	background: #e8f5e8;
+	color: #27ae60;
+	padding: 0.75rem;
+	border-radius: 8px;
+	border-left: 4px solid #27ae60;
+	font-size: 0.875rem;
+	margin-bottom: 1rem;
+}
 
-        .links a {
-            color: #667eea;
-            text-decoration: none;
-            font-size: 0.875rem;
-        }
+.links {
+	text-align: center;
+	margin: 1rem 0;
+}
 
-        .links a:hover {
-            text-decoration: underline;
-        }
+.links a {
+	color: #3498db;
+	text-decoration: none;
+	font-size: 0.875rem;
+}
 
-        .switch-text {
-            text-align: center;
-            font-size: 0.875rem;
-            color: #666;
-        }
+.links a:hover {
+	text-decoration: underline;
+}
 
-        .switch-link {
-            color: #667eea;
-            cursor: pointer;
-            font-weight: 500;
-        }
+.switch-text {
+	text-align: center;
+	font-size: 0.875rem;
+	color: #666;
+}
 
-        .switch-link:hover {
-            text-decoration: underline;
-        }
+.switch-link {
+	color: #3498db;
+	cursor: pointer;
+	font-weight: 500;
+}
 
-        .recaptcha-container {
-            margin: 1rem 0;
-            display: flex;
-            justify-content: center;
-        }
-    </style>
+.switch-link:hover {
+	text-decoration: underline;
+}
+
+.recaptcha-container {
+	margin: 1rem 0;
+	display: flex;
+	justify-content: center;
+}
+</style>
 </head>
 <body>
-    <header>
-        <h1 id="header-title">Arize - SignIn</h1>
-        <a href="/" class="home-btn">Home</a>
-    </header>
+	<header>
+		<h1 id="header-title">Arise - SignIn</h1>
+		<a href="/arise" class="home-btn">Home</a>
+	</header>
 
-<main>
-    <div class="auth-container">
-        <div class="tab-buttons">
-            <button class="tab-btn active" onclick="switchTab('login')">Sign In</button>
-            <button class="tab-btn" onclick="switchTab('register')">Sign Up</button>
-        </div>
+	<main>
+		<div class="auth-container">
+			<div class="tab-buttons">
+				<button class="tab-btn active" onclick="switchTab('login')">Sign
+					In</button>
+				<button class="tab-btn" onclick="switchTab('register')">Sign
+					Up</button>
+			</div>
 
-        <div class="form-container">
-            <!-- Login Form -->
-            <div id="login-form" class="form-section active">
-                <!-- Google OAuth2 Sign In -->
-                <a href="/oauth2/authorization/google" class="google-signin-btn">
-                    <div class="google-icon"></div>
-                    Sign in with Google
-                </a>
+			<div class="form-container">
+				<!-- Login Form -->
+				<div id="login-form" class="form-section active">
+					<!-- Google OAuth2 Sign In -->
+					<a href="/oauth2/authorization/google" class="google-signin-btn">
+						<div class="google-icon"></div> Sign in with Google
+					</a>
 
-                <div class="oauth-divider">
-                    <span>or continue with email</span>
-                </div>
+					<div class="oauth-divider">
+						<span>or continue with email</span>
+					</div>
 
-                <form id="loginForm" action="/arise/login" method="post">
-                    <label for="login-username">User name</label> 
-                    <input type="text" id="login-username" name="username" required> 
+					<form action="/arise/login" method="post">
+						<!-- Success Messages -->
+						<c:if test="${param.success == 'registered'}">
+							<div class="success-msg">Registration successful! Please sign in.</div>
+						</c:if>
+						<c:if test="${param.success == 'logout'}">
+							<div class="success-msg">You have been logged out successfully.</div>
+						</c:if>
+						<c:if test="${param.success == 'password_reset'}">
+							<div class="success-msg">Password reset successful! Please sign in with your new password.</div>
+						</c:if>
 
-                    <label for="login-password">Password</label>
-                    <div class="password-wrapper">
-                        <input type="password" name="password" id="login-password" required>
-                        <i class="fas fa-eye password-toggle" onclick="togglePassword('login-password', this)"></i>
-                    </div>
+						<!-- Error Messages -->
+						<c:if test="${param.error == 'INVALID_CREDENTIALS'}">
+							<div class="error-msg">Invalid username or password.</div>
+						</c:if>
+						<c:if test="${param.error == 'USER_NOT_FOUND'}">
+							<div class="error-msg">User not found.</div>
+						</c:if>
+						<c:if test="${param.error == 'CAPTCHA_REQUIRED'}">
+							<div class="error-msg">Please complete the CAPTCHA verification.</div>
+						</c:if>
+						<c:if test="${param.error == 'CAPTCHA_INVALID'}">
+							<div class="error-msg">CAPTCHA verification failed. Please try again.</div>
+						</c:if>
 
-                    <!-- reCAPTCHA (shows after 2 failed attempts) -->
-                    <div id="recaptcha-container" class="recaptcha-container" style="display: none;">
-                        <div class="g-recaptcha" data-sitekey="6Ldl-VArAAAAAAlU_PMEXmBCzeF8Go5E3EvSpWHV"></div>
-                    </div>
+						<label for="login-username">Username</label> 
+						<input type="text" id="login-username" name="username" required 
+							   value="${param.username}" autocomplete="username"> 
+						
+						<label for="login-password">Password</label>
+						<div class="password-wrapper">
+							<input type="password" name="password" id="login-password"
+								required autocomplete="current-password"> 
+							<i class="fas fa-eye password-toggle"
+								onclick="togglePassword('login-password', this)"></i>
+						</div>
 
-                    <!-- Error Messages -->
-                    <div id="login-error" class="error-msg" style="display: none;"></div>
+						<!-- Show reCAPTCHA after 2 failed attempts -->
+						<c:if test="${param.error == 'CAPTCHA_REQUIRED'}">
+							<div class="recaptcha-container">
+								<div class="g-recaptcha"
+									data-sitekey="6Ldl-VArAAAAAAlU_PMEXmBCzeF8Go5E3EvSpWHV"></div>
+							</div>
+						</c:if>
 
-                    <% if (request.getAttribute("error") != null) { %>
-                        <div class="error-msg">
-                            <% if ("CAPTCHA_FAILED".equals(request.getAttribute("error"))) { %>
-                                CAPTCHA verification failed. Please try again.
-                            <% } else { %>
-                                Login failed. Please check your credentials.
-                            <% } %>
-                        </div>
-                    <% } %>
+						<button type="submit">Sign In</button>
 
-                    <c:if test="${not empty loginError}">
-                        <div style="color: red; margin-bottom: 10px;">
-                            <c:choose>
-                                <c:when test="${loginError == 'USER_NOT_FOUND'}">
-                                    User details not found.
-                                </c:when>
-                                <c:when test="${loginError == 'PASSWORD_MISMATCH'}">
-                                    Username and password mismatch.
-                                </c:when>
-                                <c:otherwise>
-                                    ${loginError}
-                                </c:otherwise>
-                            </c:choose>
-                        </div>
-                    </c:if>
+						<div class="links">
+							<a href="/arise/forget">Forgot Password?</a>
+						</div>
 
-                    <button type="submit">Login</button>
+						<div class="switch-text">
+							Don't have an account? <span class="switch-link"
+								onclick="switchTab('register')">Sign up here</span>
+						</div>
+					</form>
+				</div>
 
-                    <div class="links">
-                        <a href="/arise/forget">Forgot Password?</a>
-                    </div>
+				<!-- Registration Form -->
+				<div id="register-form" class="form-section">
+					<!-- Google OAuth2 Sign Up -->
+					<a href="/oauth2/authorization/google" class="google-signin-btn">
+						<div class="google-icon"></div> Sign up with Google
+					</a>
 
-                    <div class="switch-text">
-                        Don't have an account? <span class="switch-link" onclick="switchTab('register')">Sign up here</span>
-                    </div>
-                </form>
-            </div>
+					<div class="oauth-divider">
+						<span>or create account with email</span>
+					</div>
 
-            <!-- Registration Form -->
-            <div id="register-form" class="form-section">
-                <!-- Google OAuth2 Sign Up -->
-                <a href="/oauth2/authorization/google" class="google-signin-btn">
-                    <div class="google-icon"></div>
-                    Sign up with Google
-                </a>
+					<form action="/arise/validation" method="post" novalidate
+						onsubmit="return validateForm();">
+						
+						<!-- Error Messages for Registration -->
+						<c:if test="${param.error == 'username'}">
+							<div class="error-msg">Username already exists! Please choose a different username.</div>
+						</c:if>
+						<c:if test="${param.error == 'email'}">
+							<div class="error-msg">Email already exists! Please use a different email address.</div>
+						</c:if>
+						<c:if test="${param.error == 'password_mismatch'}">
+							<div class="error-msg">Passwords do not match. Please try again.</div>
+						</c:if>
+						<c:if test="${param.error == 'weak_password'}">
+							<div class="error-msg">Password does not meet requirements. Please use a stronger password.</div>
+						</c:if>
 
-                <div class="oauth-divider">
-                    <span>or create account with email</span>
-                </div>
+						<label for="name">Full Name</label> 
+						<input type="text" id="name" name="name" required 
+							   value="${param.name}" autocomplete="name" />
+						
+						<label for="username">Username</label>
+						<input type="text" id="username" name="username" required 
+							   value="${param.username}" autocomplete="username" />
 
-    <form action="/arise/validation" method="post" novalidate onsubmit="return validateForm();">
-    <div class="error-message">
-        <span th:if="${error}" th:text="${error}" style="color: red;"></span>
-    </div>
+						<label for="email">Email Address</label> 
+						<input type="email" id="email" name="email" required 
+							   value="${param.email}" autocomplete="email" />
 
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" required/>
+						<label for="password">Create Password</label>
+						<div class="password-wrapper">
+							<input type="password" id="password" name="password" required 
+								   autocomplete="new-password" />
+							<i class="fas fa-eye password-toggle"
+								onclick="togglePassword('password', this)"></i>
+						</div>
 
-    <label for="username">User Name</label>
-    <input type="text" id="username" name="username" required/>
+						<label for="cpass">Confirm Password</label>
+						<div class="password-wrapper">
+							<input type="password" id="cpass" name="cpass" required 
+								   autocomplete="new-password" /> 
+							<i class="fas fa-eye password-toggle"
+								onclick="togglePassword('cpass', this)"></i>
+						</div>
 
-    <label for="email">E-mail</label>
-    <input type="email" id="email" name="email" required/>
+						<button type="submit">Create Account</button>
 
-    <label for="password">Create Password</label>
-    <div class="password-wrapper">
-        <input type="password" id="password" name="password" required/>
-        <i class="fas fa-eye password-toggle" onclick="togglePassword('password', this)"></i>
-    </div>
+						<div class="switch-text">
+							Already have an account? <span class="switch-link"
+								onclick="switchTab('login')">Sign in here</span>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</main>
 
-    <label for="cpass">Confirm Password</label>
-    <div class="password-wrapper">
-        <input type="password" id="cpass" name="cpass" required/>
-        <i class="fas fa-eye password-toggle" onclick="togglePassword('cpass', this)"></i>
-    </div>
-
-    <button type="submit">Register</button>
-
-    <div class="switch-text">
-        Already have an account? <span class="switch-link" onclick="switchTab('login')">Sign in here</span>
-    </div>
-</form>
-            </div>
-        </div>
-    </div>
-</main>
-    <script>
-        // Check if reCAPTCHA should be shown (from server-side session)
-        <% 
-        Integer attempts = (Integer) session.getAttribute("ATTEMPTS");
-        if (attempts != null && attempts >= 2) {
-        %>
-            document.addEventListener('DOMContentLoaded', function() {
-                document.getElementById('recaptcha-container').style.display = 'block';
-            });
-        <% } %>
-
+	<script>
         function switchTab(tab) {
             const loginTab = document.querySelector('.tab-btn:first-child');
             const registerTab = document.querySelector('.tab-btn:last-child');
@@ -406,16 +448,35 @@
                 registerTab.classList.remove('active');
                 loginForm.classList.add('active');
                 registerForm.classList.remove('active');
-                headerTitle.textContent = 'Arize - Login';
+                headerTitle.textContent = 'Arise - Sign In';
             } else {
                 registerTab.classList.add('active');
                 loginTab.classList.remove('active');
                 registerForm.classList.add('active');
                 loginForm.classList.remove('active');
-                headerTitle.textContent = 'Arize - Sign Up';
+                headerTitle.textContent = 'Arise - Sign Up';
             }
         }
+        
+        document.addEventListener("DOMContentLoaded", function () {
+            const path = window.location.pathname;
+            
+            if (path.includes("/arise/login")) {
+                switchTab("login");
+            } else if (path.includes("/arise/registration") || path.includes("/arise/validation")) {
+                switchTab("register");
+            }
+        });
 
+
+        document.querySelector("form").addEventListener("submit", function(event) {
+            var captchaResponse = grecaptcha.getResponse();
+            if (!captchaResponse) {
+                event.preventDefault(); // Prevent form submission
+                alert("CAPTCHA verification is required!");
+            }
+        });
+        
         // Password toggle functionality
         function togglePassword(inputId, icon) {
             const input = document.getElementById(inputId);
@@ -430,47 +491,53 @@
             }
         }
 
-        // Registration form validation
         function validateForm() {
-            const name = document.getElementById("name").value.trim();
-            const email = document.getElementById("email").value.trim();
-            const mobile = document.getElementById("mobile").value.trim();
-            const password = document.getElementById("password").value;
-            const cpass = document.getElementById("cpass").value;
+            let name = document.getElementById("name").value.trim();
+            let username = document.getElementById("username").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let password = document.getElementById("password").value;
+            let cpass = document.getElementById("cpass").value;
 
-            const nameRegex = /^[A-Za-z\s]+$/;
-            if (!nameRegex.test(name)) {
-                alert("Name must contain only letters and spaces.");
+            // Name validation
+            if (name.length < 2) {
+                alert("Name must be at least 2 characters long.");
                 return false;
             }
 
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
+            // Username validation: No spaces allowed, minimum 3 characters
+            if (username.length < 3) {
+                alert("Username must be at least 3 characters long.");
+                return false;
+            }
+            if (/\s/.test(username)) {
+                alert("Username should not contain spaces.");
+                return false;
+            }
+
+            // Email validation
+            let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailPattern.test(email)) {
                 alert("Please enter a valid email address.");
                 return false;
             }
 
-            const mobileRegex = /^[6-9]\d{9}$/;
-            if (!mobileRegex.test(mobile)) {
-                alert("Mobile number must be 10 digits and start with 6, 7, 8, or 9.");
+            // Password validation
+            let passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            if (!passwordPattern.test(password)) {
+                alert("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.");
                 return false;
             }
 
-            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#\$%@&\*])[A-Za-z\d#\$%@&\*]{8,}$/;
-            if (!passwordRegex.test(password)) {
-                alert("Password must be at least 8 characters long and include uppercase, lowercase, number, and special character (#$%@&*).");
-                return false;
-            }
-
+            // Confirm Password validation
             if (password !== cpass) {
-                alert("Confirm password does not match the password.");
+                alert("Passwords do not match.");
                 return false;
             }
 
-            return true;
+            return true; // Proceed with form submission if validation passes
         }
 
-        // Handle URL parameters to show appropriate form
+        // Handle URL parameters to show appropriate form and preserve field values
         window.addEventListener('DOMContentLoaded', function() {
             const urlParams = new URLSearchParams(window.location.search);
             const tab = urlParams.get('tab');
@@ -479,43 +546,24 @@
                 switchTab('register');
             }
 
-            // Check for error messages in URL
-            const error = urlParams.get('error');
-            if (error) {
-                const errorDiv = document.getElementById('login-error');
-                if (error === 'otp-mismatch') {
-                    errorDiv.textContent = 'OTP verification failed. Please try again.';
-                } else {
-                    errorDiv.textContent = 'Login failed. Please check your credentials.';
-                }
-                errorDiv.style.display = 'block';
-            }
-
-            const logout = urlParams.get('logout');
-            if (logout) {
-                console.log('Successfully logged out');
+            // Clear URL parameters after displaying messages to prevent resubmission
+            if (urlParams.has('error') || urlParams.has('success')) {
+                const cleanUrl = window.location.pathname;
+                window.history.replaceState({}, document.title, cleanUrl);
             }
         });
         
-        document.getElementById("loginForm").addEventListener("submit", function(event) {
-            event.preventDefault(); // Prevent default form submission
+        function saveToken(token) {
+            localStorage.setItem("jwtToken", token);
+        }
 
-            let formData = new FormData(this);
-
-            fetch("/arise/login", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.token) {
-                    localStorage.setItem("jwtToken", data.token); // Store JWT
-                    window.location.href = data.redirect; // Redirect after storing token
-                }
-            })
-            .catch(error => console.error("Login error:", error));
+        document.cookie.split("; ").forEach(cookie => {
+            let [name, value] = cookie.split("=");
+            if (name === "jwt") {
+                saveToken(value);
+            }
         });
-    
+        
     </script>
 </body>
 </html>

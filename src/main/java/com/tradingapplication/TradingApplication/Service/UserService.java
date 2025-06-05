@@ -6,15 +6,6 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.LockedException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -27,7 +18,6 @@ import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Entity.UserTable;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
 import com.tradingapplication.TradingApplication.Repository.UserLogRepository;
-import com.tradingapplication.TradingApplication.dto.UserLogDTO;
 import com.tradingapplication.TradingApplication.dto.UserRequestDTO;
 import com.tradingapplication.TradingApplication.dto.UserResponseDTO;
 import com.tradingapplication.TradingApplication.globalException.DataNotFoundException;
@@ -40,7 +30,6 @@ import lombok.extern.slf4j.Slf4j;
 public class UserService implements UserServiceInterface {
 
 	private final PasswordEncoder passwordEncoder;
-	private UserLogRepository userlogrepo;
 	private UserDetailsRepository userDetailsRepository;
 	private JavaMailSender javaMailSender;
 
@@ -49,7 +38,6 @@ public class UserService implements UserServiceInterface {
 			UserDetailsRepository userDetailsRepository, JavaMailSender javaMailSender) {
 		super();
 		this.passwordEncoder = passwordEncoder;
-		this.userlogrepo = userlogrepo;
 		this.userDetailsRepository = userDetailsRepository;
 		this.javaMailSender = javaMailSender;
 	}
@@ -59,11 +47,15 @@ public class UserService implements UserServiceInterface {
 		log.info("validation service...");
 
 		if (userDetailsRepository.existsByUsername(requestDto.getUsername()) || requestDto.getUsername().isBlank()) {
-			return "username";
+			 return "redirect:/arise/registration?error=username";
 		}
-		return "success";
+		else if (userDetailsRepository.existsByEmail(requestDto.getEmail()) || requestDto.getEmail().isBlank()) {
+			return "redirect:/arise/registration?error=email";
+		}
+		else {
+			return "forward:/arise/verification";	
+		}
 	}
-
 	@Override
 	public String addNewUser(UserRequestDTO requestDto) {
 
@@ -91,63 +83,6 @@ public class UserService implements UserServiceInterface {
 		log.info("user added...");
 		return response.getUsername();
 	}
-
-//	@Override
-//	public String userLogin(UserLogDTO userlog, Model model, HttpSession session) {
-//	    String username = userlog.getUsername();
-//	    String password = userlog.getPassword();
-//	     
-//	    try {
-//	        UserLog userEntity = userlogrepo.findById(username).orElse(null);
-//	        if (userEntity == null) {
-//	            log.warn("User not found in database: {}", username);
-//	            model.addAttribute("loginError", "USER_NOT_FOUND");
-//	            return "auth/Arise";
-//	        }
-//	        
-//	        UsernamePasswordAuthenticationToken authToken = 
-//	            new UsernamePasswordAuthenticationToken(username, password);
-//	        
-//	        Authentication authentication = authenticationManager.authenticate(authToken);
-//	        
-//	        if (authentication != null && authentication.isAuthenticated()) {
-//	            log.info("Authentication successful for user: {}", authentication.getName());
-//	            SecurityContext context = SecurityContextHolder.createEmptyContext();
-//	            context.setAuthentication(authentication);
-//	            SecurityContextHolder.setContext(context);
-//
-//	            SecurityContextHolder.getContext().setAuthentication(authentication);
-//	            
-//	            session.setAttribute("userlog", userEntity);
-//	            session.setAttribute("ATTEMPTS", 0);
-//	            
-//	            return "redirect:/dashboard";
-//	        } else {
-//	            model.addAttribute("loginError", "AUTHENTICATION_FAILED");
-//	        }
-//	        
-//	    } catch (UsernameNotFoundException e) {
-//	        model.addAttribute("loginError", "USER_NOT_FOUND");
-//	    } catch (BadCredentialsException e) {
-//	        model.addAttribute("loginError", "PASSWORD_MISMATCH");
-//	    } catch (LockedException e) {
-//	        model.addAttribute("loginError", "ACCOUNT_LOCKED");
-//	    } catch (DisabledException e) {
-//	        model.addAttribute("loginError", "ACCOUNT_DISABLED");
-//	    } catch (Exception e) {
-//	        model.addAttribute("loginError", "LOGIN_FAILED");
-//	    }
-//	    
-//	    Integer attempts = (Integer) session.getAttribute("ATTEMPTS");
-//	    attempts = (attempts == null) ? 1 : attempts + 1;
-//	    session.setAttribute("ATTEMPTS", attempts);
-//	    
-//	    if (attempts >= 3 && !verifyCaptcha(userlog.getCaptcha())) {
-//	        model.addAttribute("loginError", "CAPTCHA_FAILED");
-//	    }
-//	    
-//	    return "auth/Arise";
-//	}
 
 	@Override
 	public boolean sendOtp(UserRequestDTO requestDto, HttpSession session) {
@@ -215,8 +150,7 @@ public class UserService implements UserServiceInterface {
 		userdetails.getUserLog().setPassword(encodedPassword);
 		System.out.println(userdetails.getUserLog().getPassword());
 		userDetailsRepository.save(userdetails);
-
-		return "auth/Arise";
+		return "auth/Arise?success=password_reset";
 	}
 
 	@Override

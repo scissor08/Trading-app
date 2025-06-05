@@ -35,17 +35,9 @@ public class ScheduledReportGenerator {
 	@Autowired
 	private JavaMailSender mailSender;
 
-	@Scheduled(cron = "0 32 23 * * ?") // 9:00
+	@Scheduled(cron = "0 32 22 * * ?") // Time : 
 	public void sendScheduledReport() throws Exception {
-		
-		Logger logger = LoggerFactory.getLogger(ScheduledReportGenerator.class);
-
-		for (int i = 0; i < 1000; i++) {
-		    logger.info("Log message number: " + i);
-		    logger.error("Error number: " + i);
-		}
-
-
+	
 		List<UserTable> getAllUserName = userDetailsRepository.findAll();
 
 		Map<String, File> reportMap = new HashMap<>();
@@ -58,12 +50,15 @@ public class ScheduledReportGenerator {
 			reportMap.put(obj.getEmail(), pdfFile);
 			
 			sendReports(reportMap);
+			
+			deletePdf(pdfFile);
 
 		}
 		
 		
-
-	}
+		
+		
+	}	
 	
 	 private void sendReports(Map<String, File> reportMap) throws MessagingException {
 	        for (Map.Entry<String, File> entry : reportMap.entrySet()) {
@@ -91,6 +86,14 @@ public class ScheduledReportGenerator {
 			fos.write(byteArray);
 		}
 		return file;
+	}
+	
+	public void deletePdf(File pdfFile) {
+		if (pdfFile != null || pdfFile.exists()) {
+			
+			pdfFile.delete();
+			
+		}
 	}
 
 }

@@ -46,13 +46,11 @@ public class UserDashboardService implements UserDashboardServiceInterface {
 
 
 
-	// Get full user dashboard details
 	@Override
 	public UserTable getDashboard(String user, Model model) {
 		return getUserDetailsByUsername(user);
 	}
 
-	// Add balance to user account and return updated wallet page
 	@Override
 	public String addAccountBalance(String user, Model model, double cash) {
 		UserTable userDetails = getUserDetailsByUsername(user);

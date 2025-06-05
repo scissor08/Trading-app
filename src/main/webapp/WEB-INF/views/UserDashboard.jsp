@@ -45,6 +45,11 @@
   <main>
     <h2>Stock Overview Table</h2>
 
+
+
+    
+ 
+
     <div class="table-container mt-4">
       <table id="stockTable">
         <thead>

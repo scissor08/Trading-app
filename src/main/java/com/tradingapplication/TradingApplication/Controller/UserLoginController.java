@@ -23,7 +23,12 @@ public class UserLoginController {
 
 	@Autowired
 	private UserServiceInterface service;
-
+	
+	@GetMapping()
+	public String showHomePage() {
+		return "auth/index";
+	}
+	
 	@GetMapping("/login")
 	public String showLoginPage() {
 		return "auth/Arise";
@@ -60,7 +65,7 @@ public class UserLoginController {
 	}
 
 	@PostMapping("/updatePassword")
-	public String updatePassword(@RequestParam String password, HttpSession session) {
+	public String updatePassword(@RequestParam String password, HttpSession session,Model model) {
 		return service.updatePassword(password, (String) session.getAttribute("name"));
 	}
 
@@ -75,6 +80,6 @@ public class UserLoginController {
 		            response.addCookie(cookie);
 		        }
 		    }
-		return "redirect:/arise/logout"; 
+		return "redirect:/arise/login?success=logout"; 
 	}
 }
