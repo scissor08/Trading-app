@@ -102,13 +102,14 @@ public class KycService {
                     extractedFullName, extractedDob, extractedDocNumber, extractedAge, extractedDocumentType);
 
             entity.setUserTable(user); // crucial to avoid null one-to-one id error
-
-            kycRepository.save(entity);
+            if(decision.equals("accept")) {
+            kycRepository.save(entity);}
 
             Map<String, Object> preview = new HashMap<>();
             preview.put("fullName", extractedFullName);
             preview.put("dob", extractedDob);
             preview.put("documentNumber", extractedDocNumber);
+            
 
             return new KycResponseDTO(true, decision, confidence,
                     decision.equals("accept") ? "Verification successful" : "Verification failed: mismatch",
