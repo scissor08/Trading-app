@@ -36,7 +36,7 @@
         <div class="header-right">
             <!-- Search Section -->
             <div class="search-container">
-                <div class="search-box">
+                <div class="search-box" style="padding: 0.4rem 0.8rem;">
                     <i class="fas fa-search search-icon"></i>
                     <input type="text" id="searchInput" placeholder="Search stocks..." class="search-input">
                     <button type="button" onclick="filterTable()" class="search-btn">
@@ -227,7 +227,7 @@ body {
     background: white;
     border: 1px solid #ced4da;
     border-radius: 25px;
-    padding: 0.4rem 0.8rem;
+    
     transition: all 0.3s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }

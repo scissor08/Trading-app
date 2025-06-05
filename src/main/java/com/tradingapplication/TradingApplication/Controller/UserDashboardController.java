@@ -1,12 +1,11 @@
 package com.tradingapplication.TradingApplication.Controller;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.beans.factory.annotation.Autowired; 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -44,14 +43,11 @@ public class UserDashboardController {
 	@Autowired
 	UserService service;
 
-	
 	@Autowired
-	WalletReportService  Wal;
-	
+	WalletReportService Wal;
 
 	@Autowired
 	JwtUtil jwtUtil;
-
 
 	@GetMapping("/profile")
 	public String getUserDetails(Model model) {
@@ -65,44 +61,50 @@ public class UserDashboardController {
 		return "LoginPage";
 	}
 
+	
 	@GetMapping("/dashboard")
 	public String userDashboard(HttpServletRequest request, Model model) {
-	    String token = null;
-
-	    Cookie[] cookies = request.getCookies();
-	    if (cookies != null) {
-	        for (Cookie cookie : cookies) {
-	            if ("jwt".equals(cookie.getName())) {
-	                token = cookie.getValue();
-	                break;
-	            }
-	        }
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    if (auth == null || !auth.isAuthenticated() || auth.getPrincipal().equals("anonymousUser")) {
+	        return "Arise"; // or throw an exception
 	    }
-
-	    if (token != null && jwtUtil.validateToken(token, jwtUtil.extractUsername(token))) {
-	        String username = jwtUtil.extractUsername(token);
-	        log.info("Authenticated User: {}", username);
-
-	        UserTable userdetails = dashboardService.getDashboard(username, model);
-	        model.addAttribute("username", userdetails.getUsername());
-	        model.addAttribute("balance", userdetails.getUserAccountDetails().getBalance());
-	        model.addAttribute("stocks", dashboardService.getAllStockData());
-
-	        return "UserDashboard"; 
-	    }
-
-	    return "LoginPage"; 
+	    String username = auth.getName();
+	    return "UserDashboard";
 	}
+		
+		
+		
+//		String token = null;
+//
+//		Cookie[] cookies = request.getCookies();
+//		if (cookies != null) {
+//			for (Cookie cookie : cookies) {
+//				if ("jwt".equals(cookie.getName())) {
+//					token = cookie.getValue();
+//					break;
+//				}
+//			}
+//		}
+//
+//		if (token != null && jwtUtil.validateToken(token, jwtUtil.extractUsername(token))) {
+//			String username = jwtUtil.extractUsername(token);
+//			log.info("Authenticated User: {}", username);
+//
+//			UserTable userdetails = dashboardService.getDashboard(username, model);
+//			model.addAttribute("username", userdetails.getUsername());
+//			model.addAttribute("balance", userdetails.getUserAccountDetails().getBalance());
+//			model.addAttribute("stocks", dashboardService.getAllStockData());
+//
+//			return "UserDashboard";
+//		}
+//
+//		return "LoginPage";
+//	}
 
-
-
-	
-	 @GetMapping("/watchlist")
-	    public String showWatchlistPage() {
-	        return "watchlist"; // maps to /WEB-INF/views/watchlist.jsp
-	    }
-	
-	
+	@GetMapping("/watchlist")
+	public String showWatchlistPage() {
+		return "watchlist"; // maps to /WEB-INF/views/watchlist.jsp
+	}
 
 	@GetMapping("/stock")
 	public String getAllStocks(HttpSession session, Model model) {
@@ -125,20 +127,14 @@ public class UserDashboardController {
 		return "LoginPage";
 	}
 
-
-	
-	
 	@PostMapping("/withdraw")
 	public String withdrawBalance(HttpSession session, Model model, @RequestParam Double amount) {
-	    UserLog user = (UserLog) session.getAttribute("userlog");
-	    if (user != null) {
-	        return dashboardService.withdrawAccountBalance(user, model, amount);
-	    }
-	    return "LoginPage";
+		UserLog user = (UserLog) session.getAttribute("userlog");
+		if (user != null) {
+			return dashboardService.withdrawAccountBalance(user, model, amount);
+		}
+		return "LoginPage";
 	}
-
-	
-
 
 	@PostMapping("/add")
 	public String addBalance(HttpSession session, Model model, @RequestParam Double cash) {
@@ -153,16 +149,13 @@ public class UserDashboardController {
 		return "LoginPage";
 	}
 
+	@GetMapping("/walletRep")
+	public String showWallet(Model model) {
+		System.out.println("Transactions fetched:");
 
-	  @GetMapping("/walletRep")
-	    public String showWallet(Model model) {
-	        System.out.println("Transactions fetched:");
-
-	        List<Wallet> transactions = Wal.getAllTransactions();
-	        model.addAttribute("transactions", transactions);
-	        return "WalletPage"; // wallet.jsp
-	    }
-
-
+		List<Wallet> transactions = Wal.getAllTransactions();
+		model.addAttribute("transactions", transactions);
+		return "WalletPage"; // wallet.jsp
+	}
 
 }
