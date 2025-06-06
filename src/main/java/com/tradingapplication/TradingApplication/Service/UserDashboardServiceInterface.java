@@ -3,10 +3,12 @@ package com.tradingapplication.TradingApplication.Service;
 import java.util.List;
 
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tradingapplication.TradingApplication.Entity.Stock;
 import com.tradingapplication.TradingApplication.Entity.UserTable;
 
+import jakarta.mail.Multipart;
 import jakarta.servlet.http.HttpSession;
 
 public interface UserDashboardServiceInterface {
@@ -24,6 +26,8 @@ public interface UserDashboardServiceInterface {
 	double getMainBalance(HttpSession session);
 
 	String withdrawAccountBalance(String username, Model model, double amount);
+
+	String updateDp(MultipartFile profile, Model model);
 
 
 }

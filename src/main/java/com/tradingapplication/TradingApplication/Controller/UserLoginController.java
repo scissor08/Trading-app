@@ -56,12 +56,14 @@ public class UserLoginController {
 
 	@PostMapping("/otpvalidate")
 	public String otpValidate(@RequestParam("otp") String otp, HttpSession session, Model model) {
+		String name=(String) session.getAttribute("name");
 		if (!otp.equals(session.getAttribute("otp"))) {
 			model.addAttribute("error", "OTP mismatch");
 			return "auth/ForgetPassword";
 		}
 
 		model.addAttribute("otpVerified", true);
+		model.addAttribute("emailOrUsername", name);
 		return "auth/ForgetPassword";
 	}
 
