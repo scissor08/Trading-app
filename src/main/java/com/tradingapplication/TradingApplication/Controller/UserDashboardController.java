@@ -17,6 +17,7 @@ import com.tradingapplication.TradingApplication.Service.UserDashboardServiceInt
 import com.tradingapplication.TradingApplication.Service.UserService;
 import com.tradingapplication.TradingApplication.Service.WalletReportService;
 
+import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
@@ -43,6 +44,11 @@ public class UserDashboardController {
 		 String username = authUtil.getCurrentUsername();
 			return dashboardService.getUserDetail(username, model);
 	}
+	
+	@PostMapping("/dpupdate")
+	public String dpUpdate(@RequestParam MultipartFile profile,Model model) {
+		return dashboardService.updateDp(profile,model);
+	}
 
 	@GetMapping("/dashboard")
 	public String userDashboard(Model model) {
@@ -57,26 +63,26 @@ public class UserDashboardController {
 	}
 
 	@GetMapping("/stock")
-	public String getAllStocks(HttpSession session, Model model) {
+	public String getAllStocks(Model model) {
 		 authUtil.getCurrentUsername();
 			return "allStocks";
 	}
 
 	@GetMapping("/wallet")
-	public String getBalance(HttpSession session, Model model) {
+	public String getBalance(Model model) {
 		 String username = authUtil.getCurrentUsername();
 			return dashboardService.getAccountBalance(username, model);
 	}
 
 	@PostMapping("/withdraw")
-	public String withdrawBalance(HttpSession session, Model model, @RequestParam Double amount) {
+	public String withdrawBalance(Model model, @RequestParam Double amount) {
 		 String username = authUtil.getCurrentUsername();
 			return dashboardService.withdrawAccountBalance(username, model, amount);
 		
 	}
 
 	@PostMapping("/add")
-	public String addBalance(HttpSession session, Model model, @RequestParam Double cash) {
+	public String addBalance(Model model, @RequestParam Double cash) {
 		 String username = authUtil.getCurrentUsername();
 			double cashh = cash;
 			return dashboardService.addAccountBalance(username, model, cashh);

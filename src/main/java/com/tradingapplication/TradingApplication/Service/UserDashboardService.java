@@ -1,5 +1,6 @@
 package com.tradingapplication.TradingApplication.Service;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.List;
@@ -22,6 +23,7 @@ import com.tradingapplication.TradingApplication.Security.AuthUtil;
 import com.tradingapplication.TradingApplication.globalException.DataNotFoundException;
 import com.tradingapplication.TradingApplication.globalException.KycNotUpdate;
 
+import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
@@ -153,6 +155,18 @@ public String getAccountBalance(String user, Model model) {
 	model.addAttribute("username", userDetails.getUsername());
 
 	return "WalletPage";
+}
+
+@Override
+public String updateDp(MultipartFile profile, Model model) {
+	UserTable user=userDetailsRepository.findByUsername(authUtil.getCurrentUsername()).orElseThrow(()->new DataNotFoundException("user not exist"));
+	try {
+		user.setProfileImage(profile.getBytes());
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+	userDetailsRepository.save(user);
+	return "redirect:/profile";
 }
 	
 }
