@@ -14,4 +14,6 @@ public interface UserLogRepository extends JpaRepository<UserLog,String>{
 	@Query(value = "SELECT COUNT(*) > 0 FROM users WHERE username = :username", nativeQuery = true)
     boolean existsByUsername(@Param("username") String username);
 	
+	UserLog findByUsername(String username);
+	
 }

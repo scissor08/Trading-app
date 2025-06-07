@@ -1,6 +1,5 @@
 package com.tradingapplication.TradingApplication.Entity;
 
-import java.util.Arrays;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -18,15 +17,6 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-//import jakarta.persistence.Column;
-//import jakarta.persistence.Entity;
-//import jakarta.persistence.GeneratedValue;
-//import jakarta.persistence.GenerationType;
-//import jakarta.persistence.Id;
-//import jakarta.persistence.JoinColumn;
-//import jakarta.persistence.Lob;
-//import jakarta.persistence.OneToMany;
-//import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -88,9 +78,13 @@ public class UserTable {
 
 	@Override
 	public String toString() {
-		return "UserTable [userId=" + userId + ", name=" + name + ", profileImage=" + Arrays.toString(profileImage)
-				+ ", username=" + username + ", email=" + email + "]";
+		return "UserTable [userId=" + userId + ", name=" + name + ", username=" + username + ", email=" + email
+				+ ", userLog=" + userLog + ", stocks=" + stocks + ", userAccountDetails=" + userAccountDetails
+				+ ", kycEntity=" + kycEntity + ", transaction=" + transaction + ", portfolio=" + portfolio
+				+ ", growthReport=" + growthReport + "]";
 	}
+
+	
     
     
 }

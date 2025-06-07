@@ -162,6 +162,9 @@ public String updateDp(MultipartFile profile, Model model) {
 	UserTable user=userDetailsRepository.findByUsername(authUtil.getCurrentUsername()).orElseThrow(()->new DataNotFoundException("user not exist"));
 	try {
 		user.setProfileImage(profile.getBytes());
+		System.out.println("Profile image byte length: " + profile.getBytes().length);
+		System.out.println("Profile image first byte: " + profile.getBytes()[0]);
+
 	} catch (IOException e) {
 		e.printStackTrace();
 	}
