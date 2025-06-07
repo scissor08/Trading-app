@@ -13,6 +13,7 @@ import jakarta.persistence.Id;
 
 
 public class Wallet {
+	
     public Long getId() {
 		return id;
 	}

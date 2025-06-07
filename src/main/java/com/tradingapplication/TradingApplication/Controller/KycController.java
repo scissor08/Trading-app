@@ -61,9 +61,8 @@ public class KycController {
   
     @GetMapping("/checkStatus")
     public  ResponseEntity<?> checkKycStatus(HttpSession session) {
-    	UserLog getuser= (UserLog) session.getAttribute("userlog");
-    	String userName=getuser.getUsername();
-    	UserTable user = userDetailsRepository.findByUsername(userName).orElse(null);
+    	String username = authUtil.getCurrentUsername();
+    	UserTable user = userDetailsRepository.findByUsername(username).orElse(null);
         if (user != null && user.getKycEntity() != null) {
         	KycStatus kycStatus=new KycStatus();
         	kycStatus.setVerified(true);
