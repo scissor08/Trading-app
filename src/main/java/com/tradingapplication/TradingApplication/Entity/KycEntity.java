@@ -56,8 +56,7 @@ public class KycEntity {
     private LocalDateTime createdAt;
     
     @OneToOne
-    @MapsId // This tells JPA to use the same ID as the UserTable
-    @JoinColumn(name = "user_id") // FK and PK are same
+    @JoinColumn(name = "user_id")
     private UserTable userTable;
 
     @PrePersist
