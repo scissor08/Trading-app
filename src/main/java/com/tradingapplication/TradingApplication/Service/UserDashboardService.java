@@ -2,13 +2,17 @@ package com.tradingapplication.TradingApplication.Service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.tradingapplication.TradingApplication.DateTime.WalletDTO;
 import com.tradingapplication.TradingApplication.Entity.KycEntity;
 import com.tradingapplication.TradingApplication.Entity.Stock;
 import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
@@ -69,18 +73,18 @@ public class UserDashboardService implements UserDashboardServiceInterface {
 	}
 
 	@Override
-	public String addAccountBalance(String user, Model model, double cash) {
-		UserTable userDetails = getUserDetailsByUsername(user);
-                            
-		UserAccountDetails account = userDetails.getUserAccountDetails();
-		account.setBalance(account.getBalance() + cash);
+	 public String addAccountBalance(String user, Model model, double cash) {
 
-		userDetailsRepository.save(userDetails);
+        // 🔹 1. Update balance
+        UserTable userDetails = userDetailsRepository.findByUsername(user)
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + user));
 
-		model.addAttribute("balance", account.getBalance());
-		model.addAttribute("username", userDetails.getUsername());
-				
-	    Wallet tx = new Wallet();
+        UserAccountDetails account = userDetails.getUserAccountDetails();
+        account.setBalance(account.getBalance() + cash);
+        userDetailsRepository.save(userDetails);
+
+        // 🔹 2. Create wallet transaction
+        Wallet tx = new Wallet();
         tx.setAmount(cash);
         tx.setType("ADD");
         tx.setStatus("SUCCESS");
@@ -88,8 +92,20 @@ public class UserDashboardService implements UserDashboardServiceInterface {
         tx.setUsername(userDetails.getUsername());
         transactionRepository.save(tx);
 
-		return "WalletPage";
-	}
+        // 🔹 3. Convert all Wallet entities → WalletDTO list
+        List<WalletDTO> transactions = transactionRepository.findAll()
+                .stream()
+                .map(WalletDTO::new)
+                .collect(Collectors.toList());
+
+        // 🔹 4. Put data on the model
+        model.addAttribute("balance",     account.getBalance());
+        model.addAttribute("username",    userDetails.getUsername());
+        model.addAttribute("transactions", transactions);
+
+        return "WalletPage";   // WalletPage.jsp
+    }
+
 	public double getMainBalance(HttpSession session) {
 		UserTable getid = userDetailsRepository.findByUsername(authUtil.getCurrentUsername()).orElseThrow(()-> new DataNotFoundException("User not Found...."));	
 		    	int id = getid.getUserId();
@@ -144,6 +160,7 @@ public String withdrawAccountBalance(String username, Model model, double amount
     }
     tx.setTimestamp(LocalDateTime.now());
     transactionRepository.save(tx);
+    model.addAttribute("transactions",transactionRepository.findAll() );
     return "WalletPage";
 }
 

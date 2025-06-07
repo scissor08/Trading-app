@@ -7,72 +7,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-
-
-
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Wallet {
-    public Long getId() {
-		return id;
-	}
-
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-
-	public String getUsername() {
-		return username;
-	}
-
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-
-	public String getType() {
-		return type;
-	}
-
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-
-	public Double getAmount() {
-		return amount;
-	}
-
-
-	public void setAmount(Double amount) {
-		this.amount = amount;
-	}
-
-
-	public LocalDateTime getTimestamp() {
-		return timestamp;
-	}
-
-
-	public void setTimestamp(LocalDateTime timestamp) {
-		this.timestamp = timestamp;
-	}
-
-
-	public String getStatus() {
-		return status;
-	}
-
-
-	public void setStatus(String status) {
-		this.status = status;
-	}
-
-
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -87,6 +32,11 @@ public class Wallet {
   
 
     private String status; // "SUCCESS", "FAILED", etc.
+     
+    
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private UserTable user;
 
-    // Getters & Setters
+  
 }
