@@ -17,7 +17,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class Wallet {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
