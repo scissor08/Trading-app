@@ -73,6 +73,7 @@ public class SecurityConfig {
 								"/arise/success", "/WEB-INF/views/**", "/static/**", "/css/**", "/js/**", "/images/**",
 								"/error", "/favicon.ico", "/h2-console/**", "/oauth2/**","/arise/login?error=*","/arise/**")
 						.permitAll()
+						.requestMatchers("/arise/login","/arise/registration","/arise").anonymous()
 						.anyRequest().authenticated())
 				.headers(headers -> headers.frameOptions().sameOrigin())
 				.formLogin(form -> form

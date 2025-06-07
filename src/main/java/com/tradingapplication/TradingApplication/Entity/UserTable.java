@@ -80,8 +80,9 @@ public class UserTable {
     private List<TransactionBuySell> transaction;
 
     
-    @OneToMany
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Portfolio> portfolio;
+
 
     @OneToMany(mappedBy = "userTable",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<GrowthReportEntity> growthReport;

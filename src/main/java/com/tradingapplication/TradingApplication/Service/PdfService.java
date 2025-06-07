@@ -44,7 +44,7 @@ public class PdfService {
     private TransactionRepository transactionRepository;
     
     @Autowired
-    private UserDetailsRepository userDetailsRepository;
+    private UserDetailsRepository userDetailsRepository; 
     
     @Autowired
     AuthUtil authUtil;
