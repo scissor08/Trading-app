@@ -18,9 +18,9 @@ public class UserLog {
 	private String password;
 	private String role;
 	
-	@OneToOne
+	@OneToOne(mappedBy="userLog")
 	@JsonIgnore
-	private UserTable user;
+	UserTable userDetails;
 	
 
 	public String getUsername() {

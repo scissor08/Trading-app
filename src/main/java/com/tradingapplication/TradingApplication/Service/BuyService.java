@@ -77,7 +77,7 @@ private UserDetailsRepository userDetailsRepository;
 
         if (transactionAmount > user.getBalance()) {
         	 log.warn("Insufficient balance for userId {}: balance={}, required={}", 
-                     user.getUser().getUserId(), user.getBalance(), transactionAmount);
+        			 user.getUserdetails().getUserId(), user.getBalance(), transactionAmount);
             throw new IllegalArgumentException("Low Wallet Balance! Please add funds.");
         }
 
@@ -85,13 +85,12 @@ private UserDetailsRepository userDetailsRepository;
 //        String transactionTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
         double updatedBalance = user.getBalance() - transactionAmount;
-        log.info("User {} wallet updated. New balance: {}", user.getUser().getUserId(), updatedBalance);
-        user.setBalance(changeValue(updatedBalance));
+        log.info("User {} wallet updated. New balance: {}", user.getUserdetails().getUserId(), updatedBalance);        user.setBalance(changeValue(updatedBalance));
         userAccountDetailsRepository.save(user);
         
         
         Portfolio portfolio = portfolioRepository
-                .findByUserAndStocks(user.getUser(), stock)
+        		 .findByUserAndStocks(user.getUserdetails(), stock)
                 .orElse(null);
 
             if (portfolio != null) {
@@ -102,7 +101,7 @@ private UserDetailsRepository userDetailsRepository;
                 portfolio = new Portfolio();
                 portfolio.setQuantity(quantity);
                 portfolio.setTrancationAmount(transactionAmount);
-                portfolio.setUser(user.getUser());
+                portfolio.setUser(user.getUserdetails());
                 portfolio.setPrice(request.getPrice());
                 portfolio.setSymbol(request.getSymbol());
                 portfolio.setStocks(stock);
@@ -119,7 +118,7 @@ private UserDetailsRepository userDetailsRepository;
         transaction.setNoOfStocks(quantity);
         transaction.setCurrentPrice(stockPrice);
         transaction.setTotalAmount(transactionAmount);
-        transaction.setUserDetails(user.getUser());
+        transaction.setUserDetails(user.getUserdetails());
         transaction.setTransactionType(TRANSACTION_TYPE_BUY);
         transcationRepository.save(transaction);
         growthReportServiceInterface.  getGrowthReport(authUtil.getCurrentUsername());

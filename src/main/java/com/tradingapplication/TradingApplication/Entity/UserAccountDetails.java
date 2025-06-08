@@ -21,7 +21,7 @@ public class UserAccountDetails {
 	private double balance;
 	
 	
-	@OneToOne
-	private UserTable user;
+	@OneToOne(mappedBy="userAccountDetails")
+	UserTable userdetails;
 	
 }

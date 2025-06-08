@@ -31,10 +31,9 @@ public class Portfolio {
 	private Double price;
 	private Double trancationAmount;
 
-
-@ManyToOne
-@JoinColumn(name = "user_id")
-private UserTable user;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id") // Optional: matches `UserDetails.userId`
+	private UserTable user;
 
 	
 	@ManyToOne(fetch = FetchType.LAZY)

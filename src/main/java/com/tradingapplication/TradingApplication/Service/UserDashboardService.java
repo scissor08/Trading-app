@@ -2,15 +2,14 @@ package com.tradingapplication.TradingApplication.Service;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Base64;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tradingapplication.TradingApplication.DateTime.WalletDTO;
 import com.tradingapplication.TradingApplication.Entity.KycEntity;
@@ -27,7 +26,6 @@ import com.tradingapplication.TradingApplication.Security.AuthUtil;
 import com.tradingapplication.TradingApplication.globalException.DataNotFoundException;
 import com.tradingapplication.TradingApplication.globalException.KycNotUpdate;
 
-import org.springframework.web.multipart.MultipartFile;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
@@ -179,8 +177,6 @@ public String updateDp(MultipartFile profile, Model model) {
 	UserTable user=userDetailsRepository.findByUsername(authUtil.getCurrentUsername()).orElseThrow(()->new DataNotFoundException("user not exist"));
 	try {
 		user.setProfileImage(profile.getBytes());
-		System.out.println("Profile image byte length: " + profile.getBytes().length);
-		System.out.println("Profile image first byte: " + profile.getBytes()[0]);
 
 	} catch (IOException e) {
 		e.printStackTrace();
