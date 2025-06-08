@@ -27,9 +27,7 @@ public class ForUserConfiguration {
 	    public CommandLineRunner initData(UserDetailsRepository userDetails) {
 	        return args -> {
 	        	  String username = "test";
-	        	if (!userRepository.existsByUsername(username)){
-	        		
-	        	
+	        	if (!userRepository.existsByUsername(username)){	
 	            UserTable user = new UserTable();
 	           UserAccountDetails account = new UserAccountDetails();
 	           UserLog userlog = new UserLog();

@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -21,7 +20,6 @@ public class UserLog {
 	
 	@OneToOne
 	@JsonIgnore
-	@JoinColumn(name = "username")
 	private UserTable user;
 	
 
@@ -48,9 +46,5 @@ public class UserLog {
 	public void setRole(String role) {
 		this.role = role;
 	}
-
-	
-	
-	
 	
 }
