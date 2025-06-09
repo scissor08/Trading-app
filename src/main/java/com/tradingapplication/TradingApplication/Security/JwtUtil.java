@@ -32,17 +32,17 @@ public class JwtUtil {
                 .compact();
     }
     
-    public String generateToken(String username, String role, String email) {
-        return Jwts.builder()
-                .setSubject(username)
-                .claim("role", role)
-                .claim("email", email)  
-                .setIssuer(issuer)
-                .setIssuedAt(new Date())
-                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
-                .signWith(SignatureAlgorithm.HS256, secretKey)
-                .compact();
-    }
+//    public String generateToken(String username, String role, String email) {
+//        return Jwts.builder()
+//                .setSubject(username)
+//                .claim("role", role)
+//                .claim("email", email)  
+//                .setIssuer(issuer)
+//                .setIssuedAt(new Date())
+//                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
+//                .signWith(SignatureAlgorithm.HS256, secretKey)
+//                .compact();
+//    }
 
 
     public String extractUsername(String token) {

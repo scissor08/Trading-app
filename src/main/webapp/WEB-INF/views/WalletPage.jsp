@@ -1,8 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-    
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -494,10 +496,12 @@ main {
                             <button class="add-btn" onclick="focusAddMoney()">Add</button>
                         </div>
                     </div>
-                    <div class="balance-row">
-                        <span class="balance-label">Pledge</span>
-                        <span class="balance-value">₹0.00</span>
-                    </div>
+                   <div class="balance-row">
+    <span class="balance-label">Account Type</span>
+    <span class="balance-value">
+        <c:out value="${user.accountType}" default="Wallet Account" />
+    </span>
+</div>
                 </div>
             </div>
             
@@ -558,7 +562,7 @@ main {
         <table class="transactions-table">
         <thead>
             <tr>
-                <th>Type</th>
+	                <th>Type</th>
                 <th>Amount</th>
                 <th>Date</th>
                 <th>Status</th>

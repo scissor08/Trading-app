@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
@@ -89,6 +90,9 @@ public class UserDashboardService implements UserDashboardServiceInterface {
         tx.setTimestamp(LocalDateTime.now());
         tx.setUsername(userDetails.getUsername());
         transactionRepository.save(tx);
+        
+    	model.addAttribute("transactions", transactionRepository.findAll());
+        
 
         // 🔹 3. Convert all Wallet entities → WalletDTO list
         List<WalletDTO> transactions = transactionRepository.findAll()
@@ -114,6 +118,7 @@ public class UserDashboardService implements UserDashboardServiceInterface {
 	}
 
 	// Utility method to fetch user details or redirect
+	 @Cacheable(value = "userdetails", key = "#username")
 	private UserTable getUserDetailsByUsername(String username) {
 		return userDetailsRepository.findByUsername(username).orElseThrow(() -> new DataNotFoundException("Arise"));
 	}
