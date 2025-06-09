@@ -9,16 +9,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tradingapplication.TradingApplication.Entity.Wallet;
 import com.tradingapplication.TradingApplication.Security.AuthUtil;
 import com.tradingapplication.TradingApplication.Security.JwtUtil;
+import com.tradingapplication.TradingApplication.Service.PaymentService;
 import com.tradingapplication.TradingApplication.Service.UserDashboardServiceInterface;
 import com.tradingapplication.TradingApplication.Service.UserService;
-import com.tradingapplication.TradingApplication.Service.WalletReportService;
 
-import org.springframework.web.multipart.MultipartFile;
-import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -30,9 +29,8 @@ public class UserDashboardController {
 	UserDashboardServiceInterface dashboardService;
 	@Autowired
 	UserService service;
-
 	@Autowired
-	WalletReportService Wal;
+	PaymentService paymentService;
 
 	@Autowired
 	JwtUtil jwtUtil;
@@ -70,9 +68,17 @@ public class UserDashboardController {
 
 	@GetMapping("/wallet")
 	public String getBalance(Model model) {
-		 String username = authUtil.getCurrentUsername();
-			return dashboardService.getAccountBalance(username, model);
+	    String username = authUtil.getCurrentUsername();
+	    
+	    // Add balance/transaction data using your existing logic
+	    String view = dashboardService.getAccountBalance(username, model);
+	    
+	    // Inject Razorpay public key into the model for the JSP
+	    model.addAttribute("razorpayKey", paymentService.getRazorpayKey());
+
+	    return view;
 	}
+
 
 	@PostMapping("/withdraw")
 	public String withdrawBalance(Model model, @RequestParam Double amount) {
@@ -81,18 +87,18 @@ public class UserDashboardController {
 		
 	}
 
-	@PostMapping("/add")
-	public String addBalance(Model model, @RequestParam Double cash) {
-		 String username = authUtil.getCurrentUsername();
-			double cashh = cash;
-			return dashboardService.addAccountBalance(username, model, cashh);
-		}
+//	@PostMapping("/add")
+//	public String addBalance(Model model, @RequestParam Double cash) {
+//		 String username = authUtil.getCurrentUsername();
+//			double cashh = cash;
+//			return dashboardService.addAccountBalance(username, model, cashh);
+//		}
 	
-	@GetMapping("/walletRep")
-	public String showWallet(Model model) {
-		List<Wallet> transactions = Wal.getAllTransactions();
-		model.addAttribute("transactions", transactions);
-		return "WalletPage"; // wallet.jsp
-	}
+//	@GetMapping("/walletRep")
+//	public String showWallet(Model model) {
+//		List<Wallet> transactions = .getAllTransactions();
+//		model.addAttribute("transactions", transactions);
+//		return "WalletPage"; // wallet.jsp
+//	}
 
 }

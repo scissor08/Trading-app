@@ -64,7 +64,8 @@ public class UserTable {
     private KycEntity kycEntity;
 
 
-
+    @OneToMany(mappedBy="user" ,cascade = CascadeType.ALL)
+    private List<Watchlist> watchlist;
     
     @OneToMany(mappedBy = "userDetails", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<TransactionBuySell> transaction;
@@ -72,6 +73,10 @@ public class UserTable {
     
     @OneToMany
     private List<Portfolio> portfolio;
+    
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Wallet> walletTransactions;
+
 
 
     @OneToMany(mappedBy = "userTable",fetch = FetchType.LAZY, cascade = CascadeType.ALL)

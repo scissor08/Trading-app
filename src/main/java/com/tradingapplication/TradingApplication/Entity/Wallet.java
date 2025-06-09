@@ -8,7 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne; // ✅ Use ManyToOne if one user has many transactions
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,25 +18,31 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Wallet {
-	@Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     private String username;
 
     private String type; // "ADD" or "WITHDRAW"
 
     private Double amount;
-    @Column(name = "timestamp") // database column name
+
+    @Column(name = "timestamp")
     private LocalDateTime timestamp;
-  
 
     private String status; // "SUCCESS", "FAILED", etc.
-     
-    
-    @OneToOne
+
+    // ✅ Razorpay Payment IDs (optional but useful for audit/logs)
+    private String razorpayPaymentId;
+    private String razorpayOrderId;
+    private String razorpaySignature;
+
+  
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private UserTable user;
 
-  
+    // ✅ Each user can have multiple wallet transactions
 }
