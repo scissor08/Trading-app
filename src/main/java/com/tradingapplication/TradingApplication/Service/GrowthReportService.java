@@ -119,13 +119,11 @@ public class GrowthReportService implements GrowthReportServiceInterface {
 	
 	@Override
 	public void exportCsv(PrintWriter writer,String username) {
-		
-//		String username = authUtil.getCurrentUsername();
-		
+				
 	    List<GrowthReportEntity> reports =  getGrowthReport(username);
 	    writer.println("\n\n\n\n");
-	    writer.printf("%s","Hello "+username+",");
-	    writer.printf("%s","YOUR GROWTH REPORT");
+	    writer.printf("%s","                          Hello "+username);
+	    writer.printf("%s","                          YOUR GROWTH REPORT");
 	    writer.println("\n\n");
 	    
 	    writer.println("Stock Symbol,Total Buy Qty,Average Buy Price,Total Sell Qty,Average Sell Price,Total Profit,Holdings,Current Sell Price,Current Profit");

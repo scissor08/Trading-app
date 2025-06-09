@@ -38,7 +38,7 @@ public class ForUserConfiguration {
 	           userlog.setUsername("test");
 	           String encodedPassword = passwordEncoder.encode("Test@123");
 	           userlog.setPassword(encodedPassword);
-	           userlog.setRole("ROLE_USER");
+	           userlog.setRole("USER");
 	           user.setUserLog(userlog);
 	           user.setUserAccountDetails(account);
 	           
