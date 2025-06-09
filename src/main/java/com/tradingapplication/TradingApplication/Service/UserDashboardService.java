@@ -67,6 +67,7 @@ public class UserDashboardService implements UserDashboardServiceInterface {
 	}
 
 	@Override
+	@Cacheable(value = "userdata")
 	public UserTable getDashboard(String user, Model model) {
 		return getUserDetailsByUsername(user);
 	}

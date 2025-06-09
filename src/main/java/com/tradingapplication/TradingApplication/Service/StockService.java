@@ -117,6 +117,7 @@ public class StockService implements StockServiceInterface {
 
         return stockList;
     }
+    @Cacheable(value = "allStocks")
   public  List<StockRequestDTO> findAllStocks(){
 	  List<Stock> stockLists=  stockRepository.findAll();
 	  List<StockRequestDTO> stockReqList=new ArrayList<>();
@@ -129,7 +130,7 @@ public class StockService implements StockServiceInterface {
 		  sr.setLow(stock.getLow());
 		  sr.setLatestTradingDay(stock.getLatestTradingDay());
 		  sr.setOpen(stock.getOpen());
-		  sr.setPreviousClose(sr.getPreviousClose());
+		   sr.setPreviousClose(stock.getPreviousClose());
 		  sr.setPrice(stock.getPrice());
 		  sr.setSymbol(stock.getSymbol());
 		  stockReqList.add(sr);
