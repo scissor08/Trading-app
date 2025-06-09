@@ -14,6 +14,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
 <style>
 * {
@@ -513,7 +514,7 @@ main {
                     
                     <!-- Add Money Form -->
                     <div id="addForm" class="action-form active">
-                        <form action="${pageContext.request.contextPath}/add" method="post">
+                        <form action="${pageContext.request.contextPath}/payment/create-order" method="post">
                             <div class="form-group">
                                 <label class="form-label">Enter Amount</label>
                                 <input type="number" class="form-input" name="cash" id="addAmount" placeholder="₹ 0" min="1" required>
@@ -524,7 +525,7 @@ main {
                                     <button type="button" class="amount-btn" onclick="setAmount('add', 5000)">₹ 5000</button>
                                 </div>
                             </div>
-                            <button type="submit" class="submit-btn">Add money</button>
+                            <button type="button" class="submit-btn"  onclick="payNow()">Add money</button>
                         </form>
                     </div>
                     
@@ -548,56 +549,68 @@ main {
         </div>
         
         <!-- Transaction History -->
-       <div class="transactions-section">
+    <!-- Transaction History -->
+<div class="transactions-section">
     <div class="transactions-header">
-        <h3 class="transactions-title">All transactions</h3>
+        <h3 class="transactions-title">Wallet Transactions</h3>
         <a href="#" class="view-all-btn">View all</a>
     </div>
 
     <div id="transactionsContainer">
         <table class="transactions-table">
-        <thead>
-            <tr>
-                <th>Type</th>
-                <th>Amount</th>
-                <th>Date</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody id="transactionsList">
-            <!-- Check if transactions are available -->
-            <c:choose>
-                <c:when test="${not empty transactions}">
-                    <!-- Iterate over the transactions -->
-                    <c:forEach items="${transactions}" var="txn">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Amount</th>
+                    <th>Date</th>
+                    <th>Payment Id</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="transactionsList">
+                <c:choose>
+                    <c:when test="${not empty transactions}">
+                        <c:forEach var="txn" items="${transactions}">
+                            <tr>
+                                <td>
+                                    <c:choose>
+                                        <c:when test="${txn.type == 'ADD'}">
+                                            <span style="color: green;">+ Add</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span style="color: orange;">− Withdraw</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </td>
+                                <td>₹${txn.amount}</td>
+                                <td>
+                                    <fmt:formatDate value="${txn.timestamp}" pattern="dd-MM-yyyy HH:mm:ss" />
+                                </td>
+                                <td>
+                                ${txn.razorpayPaymentId} 
+                                </td>
+                                <td>
+                                    <span style="color: ${txn.status == 'SUCCESS' ? 'green' : 'red'};">
+                                        ${txn.status}
+                                    </span>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </c:when>
+                    <c:otherwise>
                         <tr>
-                            <!-- Access WalletReport entity properties directly -->
-                            <td>${txn.type}</td>
-                            <td>₹${txn.amount}</td>
-                            <td><fmt:formatDate value="${txn.timestamp}" pattern="dd-MM-yyyy HH:mm:ss" /></td>
-                            <td>
-                                <span style="color: ${txn.status == 'SUCCESS' ? 'green' : 'red'};">
-                                    ${txn.status}
-                                </span>
+                            <td colspan="4" class="no-transactions" style="text-align: center;">
+                                <i class="fas fa-history" style="font-size: 2rem; color: #ccc; margin-bottom: 0.5rem;"></i>
+                                <div>No transactions yet</div>
                             </td>
                         </tr>
-                    </c:forEach>
-                </c:when>
-                <c:otherwise>
-                    <!-- Display message when no transactions are found -->
-                    <tr>
-                        <td colspan="4" class="no-transactions">
-                            <i class="fas fa-history" style="font-size: 2rem; color: #ccc; margin-bottom: 0.5rem;"></i>
-                            <div>No transactions yet</div>
-                        </td>
-                    </tr>
-                </c:otherwise>
-            </c:choose>
-        </tbody>
-    </table>
-
+                    </c:otherwise>
+                </c:choose>
+            </tbody>
+        </table>
     </div>
 </div>
+
 
 </main>
 
@@ -639,7 +652,7 @@ function setAmount(type, amount) {
 }
 
 // Focus add money tab and input
-function focusAddMoney() {
+/*function focusAddMoney() {
     // Switch to add tab
     switchTab('add');
     document.querySelector('.action-tab').click();
@@ -647,7 +660,82 @@ function focusAddMoney() {
     setTimeout(() => {
         document.getElementById('addAmount').focus();
     }, 100);
+}*/
+
+
+//Razor pay
+
+    document.getElementById('addAmount').addEventListener('input', function () {
+        let amount = parseInt(this.value.replace(/[^0-9]/g, '')) || 0;
+        document.querySelector('.action-tab').textContent = '₹' + amount;
+    });
+
+function payNow() {
+    let amount = parseInt(document.getElementById('addAmount').value);
+    if (!amount || amount <= 0) {
+        alert("Please enter a valid amount.");
+        return;
+    }
+
+    fetch('/payment/create-order?amount=' + amount, { method: 'POST' })
+        .then(res => res.json())
+        .then(order => {
+            if (order.error) {
+                alert("Error: " + order.error);
+                return;
+            }
+
+            const razorpayKey = '${razorpayKey}'; // Replace this dynamically with your server-side injected key
+            const username = '${username}'; // Inject this value dynamically if possible
+
+            let options = {
+                key: razorpayKey,
+                amount: order.amount,
+                currency: order.currency,
+                name: "Trading App",
+                description: "Payment Transaction",
+                order_id: order.id,
+
+                // ✅ This is where you add the handler
+                handler: function (response) {
+                    fetch('/payment-success', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            razorpay_payment_id: response.razorpay_payment_id,
+                            razorpay_order_id: response.razorpay_order_id,
+                            razorpay_signature: response.razorpay_signature,
+                            amount: order.amount,
+                            username: username
+                        })
+                    })
+                    .then(res => res.text())
+                    .then(data => {
+                        alert("Payment successful and wallet updated!");
+                        location.reload(); // refresh wallet balance
+                    })
+                    .catch(err => {
+                        alert("Payment succeeded, but wallet update failed.");
+                        console.error(err);
+                    });
+                }
+            };
+
+            let rzp = new Razorpay(options);
+            rzp.open();
+        })
+        .catch(err => alert("Failed to create order: " + err));
 }
+
+    
+    
+    
+
+
+
+
 
 // Handle transaction submission
 function handleTransaction(event, type) {

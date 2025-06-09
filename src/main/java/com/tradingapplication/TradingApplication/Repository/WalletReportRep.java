@@ -8,4 +8,6 @@ import com.tradingapplication.TradingApplication.Entity.Wallet;
 
 public interface WalletReportRep extends JpaRepository<Wallet, Long>  {
 	  List<Wallet> findAll();
+	  List<Wallet> findByUsernameOrderByTimestampDesc(String username);
+
 }

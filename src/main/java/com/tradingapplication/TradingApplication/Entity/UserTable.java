@@ -72,6 +72,10 @@ public class UserTable {
     
     @OneToMany
     private List<Portfolio> portfolio;
+    
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Wallet> walletTransactions;
+
 
 
     @OneToMany(mappedBy = "userTable",fetch = FetchType.LAZY, cascade = CascadeType.ALL)
