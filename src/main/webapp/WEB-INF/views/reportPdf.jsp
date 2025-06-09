@@ -344,7 +344,7 @@
 
         function downloadPortfolioPdf() {
             showLoadingModal();
-            window.location.href = '/pdf/download'; 
+            window.location.href = '/holdings/pdf/download'; 
             console.log('Downloading Portfolio PDF...');
             setTimeout(hideLoadingModal, 2000);
         }
