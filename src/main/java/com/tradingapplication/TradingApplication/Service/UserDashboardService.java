@@ -85,6 +85,9 @@ public class UserDashboardService implements UserDashboardServiceInterface {
         tx.setTimestamp(LocalDateTime.now());
         tx.setUsername(userDetails.getUsername());
         transactionRepository.save(tx);
+        
+    	model.addAttribute("transactions", transactionRepository.findAll());
+        
 
 		return "WalletPage";
 	}
