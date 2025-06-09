@@ -1,6 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
- 
+
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -558,7 +562,7 @@ main {
         <table class="transactions-table">
         <thead>
             <tr>
-                <th>Type</th>
+	                <th>Type</th>
                 <th>Amount</th>
                 <th>Date</th>
                 <th>Status</th>

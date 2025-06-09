@@ -24,5 +24,4 @@ public class UserAccountDetails {
 	@OneToOne(mappedBy="userAccountDetails")
 	UserTable userdetails;
 	
-	
 }

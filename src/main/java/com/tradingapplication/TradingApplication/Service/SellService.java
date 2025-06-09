@@ -70,7 +70,7 @@ public class SellService implements SellServiceInterface {
         double transactionAmount = stockPrice * quantityToSell;
 
         Portfolio portfolio = portfolioRepository
-                .findByUserAndStocks(user.getUserdetails(), stock)
+        		.findByUserAndStocks(user.getUserdetails(), stock)
                 .orElseThrow(() -> new DataNotFoundException("Stock not found in user's portfolio"));
 
         if (portfolio.getQuantity() < quantityToSell) {

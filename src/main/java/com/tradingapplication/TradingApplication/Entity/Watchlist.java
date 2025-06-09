@@ -1,6 +1,6 @@
 package com.tradingapplication.TradingApplication.Entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.*; 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,9 +16,15 @@ public class Watchlist {
     private Long id;
 
     private String symbol;
-
+    
+    
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserTable user;
   
-
-    // Getters and setters
+    @ManyToOne
+    @JoinColumn(name = "stock_id")
+    private Stock stock;
+    
 }
 

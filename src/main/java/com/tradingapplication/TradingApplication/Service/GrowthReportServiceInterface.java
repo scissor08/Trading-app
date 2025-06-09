@@ -9,6 +9,8 @@ public interface GrowthReportServiceInterface {
 
 	List<GrowthReportEntity> getGrowthReport(String username);
 
-	void exportCsv(PrintWriter writer);
+//	void exportCsv(PrintWriter writer);
+
+	void exportCsv(PrintWriter writer, String username);
 
 }

@@ -24,7 +24,6 @@ public class PortfolioController {
 	  @GetMapping("/holdings")
 	    public String showHoldingsById(HttpSession session, Model model) {
 		  
-		// UserLog name=  (UserLog) session.getAttribute("userlog");
 	        List<PortfolioResponseDTO> holdings = portfolioServiceInterface.getPortfolio(session);
 	        model.addAttribute("holdings", holdings);
 	        return "Holding"; // JSP page name

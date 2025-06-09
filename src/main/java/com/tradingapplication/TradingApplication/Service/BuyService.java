@@ -77,7 +77,7 @@ private UserDetailsRepository userDetailsRepository;
 
         if (transactionAmount > user.getBalance()) {
         	 log.warn("Insufficient balance for userId {}: balance={}, required={}", 
-                     user.getUserdetails().getUserId(), user.getBalance(), transactionAmount);
+        			 user.getUserdetails().getUserId(), user.getBalance(), transactionAmount);
             throw new IllegalArgumentException("Low Wallet Balance! Please add funds.");
         }
 
@@ -85,13 +85,12 @@ private UserDetailsRepository userDetailsRepository;
 //        String transactionTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
         double updatedBalance = user.getBalance() - transactionAmount;
-        log.info("User {} wallet updated. New balance: {}", user.getUserdetails().getUserId(), updatedBalance);
-        user.setBalance(changeValue(updatedBalance));
+        log.info("User {} wallet updated. New balance: {}", user.getUserdetails().getUserId(), updatedBalance);        user.setBalance(changeValue(updatedBalance));
         userAccountDetailsRepository.save(user);
         
         
         Portfolio portfolio = portfolioRepository
-                .findByUserAndStocks(user.getUserdetails(), stock)
+        		 .findByUserAndStocks(user.getUserdetails(), stock)
                 .orElse(null);
 
             if (portfolio != null) {

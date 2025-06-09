@@ -1,7 +1,7 @@
 package com.tradingapplication.TradingApplication.Entity;
 
 
-import java.time.LocalDateTime;
+import java.time.LocalDateTime; 
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -56,10 +56,10 @@ public class KycEntity {
     private LocalDateTime createdAt;
     
     @OneToOne
-    @MapsId // This tells JPA to use the same ID as the UserTable
+    @MapsId // This tells JPA to use the same ID as the UserTableAdd commentMore actions
     @JoinColumn(name = "user_id") // FK and PK are same
     private UserTable userTable;
-
+    
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();

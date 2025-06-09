@@ -745,6 +745,9 @@ body {
 						<c:if test="${param.error == 'INVALID_CREDENTIALS'}">
 							<div class="error-msg">Invalid username or password.</div>
 						</c:if>
+						<c:if test="${param.error == 'exist'}">
+							<div class="error-msg">Already Have Accouct Please Signin.</div>
+						</c:if>
 						<c:if test="${param.error == 'USER_NOT_FOUND'}">
 							<div class="error-msg">User not found.</div>
 						</c:if>
@@ -958,32 +961,7 @@ body {
             return true; // Proceed with form submission if validation passes
         }
 
-        // Handle URL parameters to show appropriate form and preserve field values
-        window.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const tab = urlParams.get('tab');
-            
-            if (tab === 'register') {
-                switchTab('register');
-            }
-
-            // Clear URL parameters after displaying messages to prevent resubmission
-            if (urlParams.has('error') || urlParams.has('success')) {
-                const cleanUrl = window.location.pathname;
-                window.history.replaceState({}, document.title, cleanUrl);
-            }
-        });
-        
-        function saveToken(token) {
-            localStorage.setItem("jwtToken", token);
-        }
-
-        document.cookie.split("; ").forEach(cookie => {
-            let [name, value] = cookie.split("=");
-            if (name === "jwt") {
-                saveToken(value);
-            }
-        });
+  
         
     </script>
 </body>

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -909,9 +910,9 @@
             </svg>
             Wallet Balance :
         </div>
-        <div style="font-size: 1.4rem; font-weight: bold; color: #28a745;">
-            $  <c:out value="${balance}" />
-        </div>
+       <div style="font-size: 1.4rem; font-weight: bold; color: #28a745;">
+    $ <fmt:formatNumber value="${balance}" type="number" maxFractionDigits="2" minFractionDigits="2" />
+</div>
     </h2>
 </div>
 
@@ -1094,6 +1095,8 @@
             
             if (response.ok) {
                 const data = await response.json();
+                console.error('KYC status check succes:', response.status);
+                console.log();
                 return true;
             } else {
                 console.error('KYC status check failed:', response.status);

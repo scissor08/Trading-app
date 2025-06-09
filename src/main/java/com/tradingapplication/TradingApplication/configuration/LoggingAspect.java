@@ -16,9 +16,9 @@ public class LoggingAspect {
     
     public LoggingAspect() {
     	logger.info(" ✅ LoggingAspect Intilaized ");
-    }
+    }  
 
-    @Around("execution(* com.tradingapplication.TradingApplication.Service.UserDashboardService.addAccountBalance(..))")
+    @Around("execution(* com.tradingapplication.TradingApplication.Service.*.*(..))")
     public Object logBuyServiceMethods(ProceedingJoinPoint joinPoint) throws Throwable {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
 
