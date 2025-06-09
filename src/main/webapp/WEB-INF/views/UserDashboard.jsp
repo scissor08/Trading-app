@@ -374,7 +374,7 @@ $(document).ready(function() {
 	});
 	
 	
-function filterTable() {
+/* function filterTable() {
     var input = document.getElementById("searchInput");
     var filter = input.value.toUpperCase();
     var table = document.getElementById("stockTable");
@@ -387,7 +387,7 @@ function filterTable() {
         tr[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
       }
     }
-  }
+  } */
 </script>
 </body>
 </html>
