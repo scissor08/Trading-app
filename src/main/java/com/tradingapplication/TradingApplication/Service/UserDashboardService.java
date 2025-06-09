@@ -90,6 +90,9 @@ public class UserDashboardService implements UserDashboardServiceInterface {
         tx.setTimestamp(LocalDateTime.now());
         tx.setUsername(userDetails.getUsername());
         transactionRepository.save(tx);
+        
+    	model.addAttribute("transactions", transactionRepository.findAll());
+        
 
         // 🔹 3. Convert all Wallet entities → WalletDTO list
         List<WalletDTO> transactions = transactionRepository.findAll()
