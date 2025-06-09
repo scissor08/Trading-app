@@ -16,6 +16,7 @@ import com.tradingapplication.TradingApplication.Repository.GrowthReportReposito
 import com.tradingapplication.TradingApplication.Repository.StockRepository;
 import com.tradingapplication.TradingApplication.Repository.TransactionRepository;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
+import com.tradingapplication.TradingApplication.Security.AuthUtil;
 
 @Service
 public class GrowthReportService implements GrowthReportServiceInterface {
@@ -28,6 +29,8 @@ public class GrowthReportService implements GrowthReportServiceInterface {
 	GrowthReportRepository growthRepo;
 	@Autowired
 	StockRepository stockRepo;
+	@Autowired
+	AuthUtil authUtil;
 	
 	
 	@Override
@@ -115,10 +118,12 @@ public class GrowthReportService implements GrowthReportServiceInterface {
 	}
 	
 	@Override
-	public void exportCsv(PrintWriter writer) {
-	    List<GrowthReportEntity> reports = growthRepo.findAll(); 
+	public void exportCsv(PrintWriter writer,String username) {
+				
+	    List<GrowthReportEntity> reports =  getGrowthReport(username);
 	    writer.println("\n\n\n\n");
-	    writer.printf("%s","YOUR GROWTH REPORT");
+	    writer.printf("%s","                          Hello "+username);
+	    writer.printf("%s","                          YOUR GROWTH REPORT");
 	    writer.println("\n\n");
 	    
 	    writer.println("Stock Symbol,Total Buy Qty,Average Buy Price,Total Sell Qty,Average Sell Price,Total Profit,Holdings,Current Sell Price,Current Profit");

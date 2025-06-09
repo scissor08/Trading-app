@@ -1,8 +1,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
-    
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -495,10 +497,12 @@ main {
                             <button class="add-btn" onclick="focusAddMoney()">Add</button>
                         </div>
                     </div>
-                    <div class="balance-row">
-                        <span class="balance-label">Pledge</span>
-                        <span class="balance-value">₹0.00</span>
-                    </div>
+                   <div class="balance-row">
+    <span class="balance-label">Account Type</span>
+    <span class="balance-value">
+        <c:out value="${user.accountType}" default="Wallet Account" />
+    </span>
+</div>
                 </div>
             </div>
             
@@ -558,6 +562,7 @@ main {
 
     <div id="transactionsContainer">
         <table class="transactions-table">
+
             <thead>
                 <tr>
                     <th>Type</th>
@@ -597,14 +602,8 @@ main {
                             </tr>
                         </c:forEach>
                     </c:when>
-                    <c:otherwise>
-                        <tr>
-                            <td colspan="4" class="no-transactions" style="text-align: center;">
-                                <i class="fas fa-history" style="font-size: 2rem; color: #ccc; margin-bottom: 0.5rem;"></i>
-                                <div>No transactions yet</div>
-                            </td>
-                        </tr>
-                    </c:otherwise>
+                   
+
                 </c:choose>
             </tbody>
         </table>
