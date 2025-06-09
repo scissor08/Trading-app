@@ -3,6 +3,8 @@
 
 <!-- Professional Responsive Header -->
 <header class="main-header">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <div class="header-container">
         <!-- Logo Section -->
         <div class="header-logo">
@@ -35,15 +37,30 @@
         <!-- Right Section: Search + Profile -->
         <div class="header-right">
             <!-- Search Section -->
-            <div class="search-container">
-                <div class="search-box" style="padding: 0.4rem 0.8rem;">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" id="searchInput" placeholder="Search stocks..." class="search-input">
-                    <button type="button" onclick="filterTable()" class="search-btn">
-                        <i class="fas fa-arrow-right"></i>
-                    </button>
-                </div>
-            </div>
+           <form action="${pageContext.request.contextPath}/stock/search" method="get">
+    <div class="search-container">
+        <div class="search-box" style="padding: 0.4rem 0.8rem;">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" name="symbol" class="search-input" placeholder="Enter stock symbol (e.g. AAPL)" required>
+            <button type="submit" class="search-btn">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+</form>
+
+<c:if test="${not empty error}">
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '${error}'
+        });
+    </script>
+</c:if>
+
+
+                     
 
             <!-- Profile Dropdown -->
             <div class="profile-dropdown">
@@ -96,7 +113,7 @@
         <div class="mobile-search">
             <div class="search-box">
                 <i class="fas fa-search search-icon"></i>
-                <input type="text" placeholder="Search stocks..." class="search-input">
+                <input type="text" placeholder="Enter stock symbol (e.g. AAPL)" class="search-input">
                 <button type="button" class="search-btn">
                     <i class="fas fa-arrow-right"></i>
                 </button>
@@ -568,7 +585,7 @@ function closeAllDropdowns() {
 }
 
 // Search functionality
-function filterTable() {
+/* function filterTable() {
     const searchInput = document.getElementById('searchInput');
     const searchTerm = searchInput.value.trim();
     
@@ -578,7 +595,7 @@ function filterTable() {
         // You can redirect to search results or filter existing content
         // window.location.href = '${pageContext.request.contextPath}/search?q=' + encodeURIComponent(searchTerm);
     }
-}
+} */
 
 // Close dropdown when clicking outside
 document.addEventListener('click', function(event) {
