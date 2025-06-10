@@ -493,7 +493,7 @@ main {
                     <div class="balance-row">
                         <span class="balance-label">Cash</span>
                         <div style="display: flex; align-items: center; gap: 0.5rem;">
-                            <span class="balance-value" id="cashBalance">₹${balance}</span>
+                            <span class="balance-value" id="cashBalance"> ₹<fmt:formatNumber value="${balance}" type="number" minFractionDigits="2" /></span>
                             <button class="add-btn" onclick="focusAddMoney()">Add</button>
                         </div>
                     </div>
