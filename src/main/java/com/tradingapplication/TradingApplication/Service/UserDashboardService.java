@@ -118,7 +118,7 @@ public class UserDashboardService implements UserDashboardServiceInterface {
 	}
 
 	// Utility method to fetch user details or redirect
-	 @Cacheable(value = "userdetails", key = "#username")
+	@Cacheable(value = "userdetails", key = "#username")
 	private UserTable getUserDetailsByUsername(String username) {
 		return userDetailsRepository.findByUsername(username).orElseThrow(() -> new DataNotFoundException("Arise"));
 	}
