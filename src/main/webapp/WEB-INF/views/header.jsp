@@ -14,12 +14,12 @@
         <!-- Navigation Links -->
         <nav class="header-nav">
             <a href="${pageContext.request.contextPath}/dashboard" class="nav-link">
-                <i class="fas fa-tachometer-alt"></i>
+              	<i class="fas fa-tachometer-alt"></i>
                 <span>Dashboard</span>
             </a>
 
             <a href="${pageContext.request.contextPath}/watchlist" class="nav-link">
-                <i class="fas fa-wallet"></i>
+               	<i class="fas fa-eye"></i> 
                 <span>WatchList</span>
         
             <a href="${pageContext.request.contextPath}/stocks" class="nav-link">
@@ -28,7 +28,7 @@
             </a>
             
               <a href="${pageContext.request.contextPath}/holdings" class="nav-link">
-              <i class="fas fa-briefcase"></i>
+            <i class="fas fa-briefcase"></i>
 
                 <span>Holdings</span>
             </a>
@@ -70,7 +70,7 @@
                 </button>
                 <div class="dropdown-menu" id="profileDropdown">
                     <a href="${pageContext.request.contextPath}/wallet" class="dropdown-item">
-                        <i class="fas fa-eye"></i>
+                     	<i class="fas fa-wallet"></i>
                         <span>Wallet</span>
                     </a>
                     <a href="${pageContext.request.contextPath}/pdf/report" class="dropdown-item">

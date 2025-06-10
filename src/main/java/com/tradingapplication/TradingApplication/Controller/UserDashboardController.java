@@ -55,7 +55,6 @@ public class UserDashboardController {
 	public String userDashboard(Model model) {
 	    authUtil.getCurrentUsername();
 	    model.addAttribute("stocks", dashboardService.getAllStockData());
-	    //List<IndexDTO> indices = indexService.getLiveIndices();
 	    try {
 	    List<IndexDTO> indices = indexService.getLiveIndices();
         model.addAttribute("indices", indices);
