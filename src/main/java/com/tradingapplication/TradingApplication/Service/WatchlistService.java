@@ -1,7 +1,9 @@
 package com.tradingapplication.TradingApplication.Service;
 
 
-import org.springframework.beans.factory.annotation.Autowired; 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,7 @@ public class WatchlistService implements WatchlistServiceInterface {
   
 
     @Override
+    @Cacheable(value = "watchlist")
     public List<WatchlistResponseDTO> getAllWatchlistItems() {
     	UserTable getusername = userDetailsRepository.findByUsername(authUtil.getCurrentUsername()).orElseThrow(()-> new DataNotFoundException("user not found"));
 		int id = getusername.getUserId();
@@ -51,6 +54,7 @@ public class WatchlistService implements WatchlistServiceInterface {
     }
 
     @Override
+    @CacheEvict(value = "watchlist", allEntries = true)
     public ResponseEntity<?> addToWatchlist(WatchlistRequestDTO dto) {
         // Step 1: Get logged-in user
         UserTable user = userDetailsRepository.findByUsername(authUtil.getCurrentUsername())
@@ -74,7 +78,7 @@ public class WatchlistService implements WatchlistServiceInterface {
     }
 
 
-    
+    @CacheEvict(value = "watchlist", allEntries = true)
     public boolean removeFromWatchlist(int id) {
         if (repository.existsById(id)) {
             repository.deleteById(id);

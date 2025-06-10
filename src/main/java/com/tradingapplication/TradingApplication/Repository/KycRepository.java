@@ -10,6 +10,8 @@ import com.tradingapplication.TradingApplication.Entity.KycEntity;
 @Repository
 public interface KycRepository extends JpaRepository<KycEntity, Long> {
 	Optional<KycEntity> findByUserEmail(String userEmail);
+	Optional<KycEntity> findById(int i);
+
 
 	// You can add custom query methods later if needed
 }
