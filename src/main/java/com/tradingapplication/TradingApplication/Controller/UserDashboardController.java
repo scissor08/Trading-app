@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.tradingapplication.TradingApplication.Entity.Wallet;
 import com.tradingapplication.TradingApplication.Security.AuthUtil;
 import com.tradingapplication.TradingApplication.Security.JwtUtil;
+import com.tradingapplication.TradingApplication.Service.IndexService;
 import com.tradingapplication.TradingApplication.Service.PaymentService;
 import com.tradingapplication.TradingApplication.Service.UserDashboardServiceInterface;
 import com.tradingapplication.TradingApplication.Service.UserService;
+import com.tradingapplication.TradingApplication.dto.IndexDTO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,6 +33,8 @@ public class UserDashboardController {
 	@Autowired
 	PaymentService paymentService;
 
+	  @Autowired
+	    private IndexService indexService;
 	@Autowired
 	JwtUtil jwtUtil;
 	@Autowired
@@ -51,7 +54,23 @@ public class UserDashboardController {
 	@GetMapping("/dashboard")
 	public String userDashboard(Model model) {
 	    authUtil.getCurrentUsername();
-	    model.addAttribute("stocks", dashboardService.getAllStockData());
+//	    model.addAttribute("stocks", dashboardService.getAllStockData());
+//	    List<IndexDTO> indices = indexService.getLiveIndices();
+	    try {
+	    List<IndexDTO> indices = indexService.getLiveIndices();
+        model.addAttribute("indices", indices);
+
+        System.out.println("Indices: " + indices);
+        
+    } catch (Exception e) {
+        e.printStackTrace();
+        // Add empty list if error occurs
+        model.addAttribute("indices", java.util.Collections.emptyList());
+    }
+    
+	    
+       
+	    
 	    return "UserDashboard";
 	}
 
