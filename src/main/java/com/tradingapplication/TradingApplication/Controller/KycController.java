@@ -151,4 +151,17 @@ public class KycController {
     private String encodeToBase64(MultipartFile file) throws IOException {
         return Base64.getEncoder().encodeToString(file.getBytes());
     }
+    
+    @GetMapping("/download/mykyc")
+    public ResponseEntity<byte[]> downloadMyKycPdf() {
+        byte[] pdf = pdfGeneratorService.generateKycPdfForCurrentUser();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_PDF);
+        headers.setContentDisposition(ContentDisposition.attachment()
+                .filename("my_kyc_record.pdf").build());
+
+        return new ResponseEntity<>(pdf, headers, HttpStatus.OK);
+    }
+
 }
