@@ -1,8 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
-
-
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 
 <!DOCTYPE html>
@@ -500,7 +499,7 @@ main {
                    <div class="balance-row">
     <span class="balance-label">Account Type</span>
     <span class="balance-value">
-        <c:out value="${user.accountType}" default="Wallet Account" />
+        <c:out value="Busness Account" default="Wallet Account" />
     </span>
 </div>
                 </div>
@@ -518,7 +517,7 @@ main {
                     
                     <!-- Add Money Form -->
                     <div id="addForm" class="action-form active">
-                        <form action="${pageContext.request.contextPath}/payment/create-order" method="post">
+                    <!--     <form action="${pageContext.request.contextPath}/payment/create-order" method="post"> -->
                             <div class="form-group">
                                 <label class="form-label">Enter Amount</label>
                                 <input type="number" class="form-input" name="cash" id="addAmount" placeholder="₹ 0" min="1" required>
@@ -530,7 +529,7 @@ main {
                                 </div>
                             </div>
                             <button type="button" class="submit-btn"  onclick="payNow()">Add money</button>
-                        </form>
+                       <!--  </form> -->
                     </div>
                     
                     <!-- Withdraw Form -->
@@ -560,54 +559,85 @@ main {
         <a href="#" class="view-all-btn">View all</a>
     </div>
 
-    <div id="transactionsContainer">
-        <table class="transactions-table">
-
-            <thead>
-                <tr>
-                    <th>Type</th>
-                    <th>Amount</th>
-                    <th>Date</th>
-                    <th>Payment Id</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody id="transactionsList">
-                <c:choose>
-                    <c:when test="${not empty transactions}">
-                        <c:forEach var="txn" items="${transactions}">
-                            <tr>
-                                <td>
-                                    <c:choose>
-                                        <c:when test="${txn.type == 'ADD'}">
-                                            <span style="color: green;">+ Add</span>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <span style="color: orange;">− Withdraw</span>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </td>
-                                <td>₹${txn.amount}</td>
-                                <td>
-                                    <fmt:formatDate value="${txn.timestamp}" pattern="dd-MM-yyyy HH:mm:ss" />
-                                </td>
-                                <td>
-                                ${txn.razorpayPaymentId} 
-                                </td>
-                                <td>
-                                    <span style="color: ${txn.status == 'SUCCESS' ? 'green' : 'red'};">
-                                        ${txn.status}
-                                    </span>
-                                </td>
-                            </tr>
-                        </c:forEach>
-                    </c:when>
-                   
-
-                </c:choose>
-            </tbody>
-        </table>
-    </div>
+<div id="transactionsContainer">
+    <table class="transactions-table">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Payment ID</th>
+            </tr>
+        </thead>
+        <tbody id="transactionsList">
+            <!-- Check if transactions are available -->
+            <c:choose>
+                <c:when test="${not empty transactions}">
+                    <!-- Iterate over the transactions -->
+                    <c:forEach items="${transactions}" var="txn">
+                        <tr>
+                            <!-- Transaction Type -->
+                            <td>
+                                <div class="transaction-type">
+                                    <div class="type-icon ${txn.type == 'ADD' ? 'credit' : 'debit'}">
+                                        <i class="fas fa-${txn.type == 'ADD' ? 'plus' : 'minus'}"></i>
+                                    </div>
+                                    <span>${txn.type == 'ADD' ? 'Money Added' : 'Money Withdrawn'}</span>
+                                </div>
+                            </td>
+                            
+                            <!-- Transaction Amount -->
+                            <td>
+                                <span class="${txn.type == 'ADD' ? 'amount-credit' : 'amount-debit'}">
+                                    ${txn.type == 'ADD' ? '+' : '-'}₹<fmt:formatNumber value="${txn.amount}" type="number" minFractionDigits="2" maxFractionDigits="2"/>
+                                </span>
+                            </td>
+                            
+                            <!-- Transaction Date -->
+                            <td>
+                                <div><fmt:formatDate value="${txn.timestamp}" pattern="dd-MM-yyyy" /></div>
+                                <div class="transaction-date">
+                                    <fmt:formatDate value="${txn.timestamp}" pattern="HH:mm:ss" />
+                                </div>
+                            </td>
+                            
+                            <!-- Transaction Status -->
+                            <td>
+                                <span style="color: ${txn.status == 'SUCCESS' ? '#00d09c' : '#ff4757'}; font-weight: 500;">
+                                    ${txn.status}
+                                </span>
+                            </td>
+                            
+                            <!-- Razorpay Payment ID -->
+                            <td>
+                                <c:choose>
+                                    <c:when test="${not empty txn.razorpayPaymentId}">
+<span style="font-family: monospace; font-size: 0.95rem; color: #666; word-break: break-all; font-weight: bold;">
+${txn.razorpayPaymentId}
+</span>
+</c:when>
+                                    <c:otherwise>
+                                        <span style="color: #999; font-style: italic;">N/A</span>
+                                    </c:otherwise>
+                                </c:choose>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </c:when>
+                <c:otherwise>
+                    <!-- Display message when no transactions are found -->
+                    <tr>
+                        <td colspan="5" class="no-transactions">
+                            <i class="fas fa-history" style="font-size: 2rem; color: #ccc; margin-bottom: 0.5rem;"></i>
+                            <div>No transactions yet</div>
+                        </td>
+                    </tr>
+                </c:otherwise>
+            </c:choose>
+        </tbody>
+    </table>
+</div>
 </div>
 
 
@@ -668,7 +698,6 @@ function setAmount(type, amount) {
         let amount = parseInt(this.value.replace(/[^0-9]/g, '')) || 0;
         document.querySelector('.action-tab').textContent = '₹' + amount;
     });
-
 function payNow() {
     let amount = parseInt(document.getElementById('addAmount').value);
     if (!amount || amount <= 0) {
@@ -684,8 +713,8 @@ function payNow() {
                 return;
             }
 
-            const razorpayKey = '${razorpayKey}'; // Replace this dynamically with your server-side injected key
-            const username = '${username}'; // Inject this value dynamically if possible
+            const razorpayKey = '${razorpayKey}';
+            const username = '${username}';
 
             let options = {
                 key: razorpayKey,
@@ -695,7 +724,7 @@ function payNow() {
                 description: "Payment Transaction",
                 order_id: order.id,
 
-                // ✅ This is where you add the handler
+                // ✅ Updated handler - redirect to wallet page after success
                 handler: function (response) {
                     fetch('/payment-success', {
                         method: 'POST',
@@ -712,12 +741,15 @@ function payNow() {
                     })
                     .then(res => res.text())
                     .then(data => {
-                        alert("Payment successful and wallet updated!");
-                        location.reload(); // refresh wallet balance
+                        alert("Payment successful!");
+                        // ✅ Redirect to wallet page to see updated balance and transactions
+                        window.location.href = '/wallets';
                     })
                     .catch(err => {
                         alert("Payment succeeded, but wallet update failed.");
                         console.error(err);
+                        // Still redirect to wallet page
+                        window.location.href = '/wallet';
                     });
                 }
             };
@@ -727,8 +759,6 @@ function payNow() {
         })
         .catch(err => alert("Failed to create order: " + err));
 }
-
-    
     
     
 

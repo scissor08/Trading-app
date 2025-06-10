@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToOne; // ✅ Use ManyToOne if one user has many 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Data
@@ -39,10 +40,20 @@ public class Wallet {
     private String razorpayOrderId;
     private String razorpaySignature;
 
+    
   
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserTable user;
+
+
+
+	@Override
+	public String toString() {
+		return "Wallet [id=" + id + ", username=" + username + ", type=" + type + ", amount=" + amount + ", timestamp="
+				+ timestamp + ", status=" + status + ", razorpayPaymentId=" + razorpayPaymentId + ", razorpayOrderId="
+				+ razorpayOrderId + ", razorpaySignature=" + razorpaySignature + ", user=" + user + "]";
+	}
 
     // ✅ Each user can have multiple wallet transactions
 }

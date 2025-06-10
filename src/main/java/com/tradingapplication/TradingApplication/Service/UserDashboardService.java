@@ -102,13 +102,54 @@ public class UserDashboardService implements UserDashboardServiceInterface {
                 .map(WalletDTO::new)
                 .collect(Collectors.toList());
 
+        
+        List<Wallet> wlist=transactionRepository.findByUsernameOrderByTimestampDesc(username);
+        
+        for(Wallet w:wlist) {
+        	
+        	log.info("checking rozor--"+w.getRazorpayPaymentId());
+        	
+        	log.info("checking Status--"+w.getStatus());
+        	
+        	log.info("checking Amount--"+w.getAmount());
+        	
+        	
+        	
+        }
         // 🔹 4. Put data on the model
-        model.addAttribute("balance",     account.getBalance());
+      //  model.addAttribute("balance",     account.getBalance());
        // model.addAttribute("username",    userDetails.getUsername());
-        model.addAttribute("transactions",transactionRepository.findAll());
+       // model.addAttribute("transactions",transactions);
+        model.addAttribute("transactions",wlist);
   
         return "WalletPage";   // WalletPage.jsp
     }
+	@Override
+	public void updateWalletBalance(UserTable userDetails, double amount, String username, 
+	                               String razorpayPaymentId, String razorpayOrderId, 
+	                               String razorpaySignature) {
+	    
+	    // 1. Update user balance
+	    UserAccountDetails account = userDetails.getUserAccountDetails();
+	    account.setBalance(account.getBalance() + amount);
+	    userDetailsRepository.save(userDetails);
+	    
+	    // 2. Create wallet transaction record
+	    Wallet tx = new Wallet();
+	    tx.setAmount(amount);
+	    tx.setType("ADD");
+	    tx.setStatus("SUCCESS");
+	    tx.setUsername(username);
+	    tx.setTimestamp(LocalDateTime.now());
+	    tx.setRazorpayOrderId(razorpayOrderId);
+	    tx.setRazorpayPaymentId(razorpayPaymentId);
+	    tx.setRazorpaySignature(razorpaySignature);
+	    tx.setUser(userDetails);
+	    
+	    transactionRepository.save(tx);
+	    
+	    log.info("Wallet updated successfully for user: " + username + ", Amount: " + amount);
+	}
 
 	public double getMainBalance(HttpSession session) {
 		UserTable getid = userDetailsRepository.findByUsername(authUtil.getCurrentUsername()).orElseThrow(()-> new DataNotFoundException("User not Found...."));	

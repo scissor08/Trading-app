@@ -382,6 +382,7 @@
 
         function generateTransactionReport() {
             showLoadingModal();
+           // window.location.href = '/api/wallet/pdf';
             console.log('Generating Transaction Summary...');
             setTimeout(() => {
                 hideLoadingModal();
@@ -391,11 +392,12 @@
 
         function downloadTransactionPdf() {
             showLoadingModal();
+            window.location.href = ' /api/wallet/pdf';
             console.log('Downloading Transaction PDF...');
             setTimeout(hideLoadingModal, 2000);
         }
 
-        // Filter functions
+        // Filter functions  /api/wallet
         function applyFilters() {
             const startDate = document.getElementById('startDate').value;
             const endDate = document.getElementById('endDate').value;

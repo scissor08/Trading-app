@@ -10,6 +10,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.font.PdfFont;
@@ -24,12 +26,15 @@ import com.itextpdf.kernel.pdf.extgstate.PdfExtGState;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.borders.Border;
 import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 import com.tradingapplication.TradingApplication.Entity.TransactionBuySell;
 import com.tradingapplication.TradingApplication.Entity.UserTable;
+import com.tradingapplication.TradingApplication.Entity.Wallet;
 import com.tradingapplication.TradingApplication.Exception.DataNotFoundException;
 import com.tradingapplication.TradingApplication.Repository.TransactionRepository;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
@@ -252,6 +257,11 @@ public class PdfService {
     private void addTransactionTable(Document document, List<TransactionBuySell> data, 
                                    PdfFont boldFont, PdfFont regularFont) {
         try {
+        	String logoPath = "src/main/resources/static/images/logo.png"; // adjust if different
+            ImageData logoData = ImageDataFactory.create(logoPath);
+            Image logo = new Image(logoData).scaleToFit(100, 100).setHorizontalAlignment(HorizontalAlignment.CENTER);
+            document.add(logo);
+            
             Paragraph tableTitle = new Paragraph("Transaction Details")
                     .setFont(boldFont)
                     .setFontSize(14)
@@ -348,4 +358,87 @@ public class PdfService {
             throw new RuntimeException("Error adding footer: " + e.getMessage(), e);
         }
     }
+    public ByteArrayInputStream walletPdfReport(  List<Wallet> walletData) {
+        try {
+        	 UserTable getuserName = userDetailsRepository.findByUsername(authUtil.getCurrentUsername())
+                     .orElseThrow(() -> new DataNotFoundException("No such user found"));
+        	
+        	int id = getuserName.getUserId();
+            List<TransactionBuySell> data = transactionRepository.findAllByUser_Id(id);
+            
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            PdfWriter writer = new PdfWriter(out);
+            PdfDocument pdf = new PdfDocument(writer);
+            Document document = new Document(pdf, PageSize.A4);
+            document.setMargins(40, 40, 40, 40);
+            
+            // Set up fonts
+            PdfFont boldFont = PdfFontFactory.createFont();
+            PdfFont regularFont = PdfFontFactory.createFont();
+            
+            // Add watermark to each page
+            addWatermark(pdf, "TRADING REPORT");
+            
+            // Header Section
+            addHeader(document, boldFont, getuserName);
+            
+            // Summary Section
+           // addSummarySection(document, data, boldFont, regularFont);
+            
+            // Transaction Table
+            addWalletTransactionSection(document, walletData, boldFont, regularFont);
+            
+            // Footer
+            addFooter(document, regularFont);
+            
+            document.close();
+            return new ByteArrayInputStream(out.toByteArray());
+            
+        } catch (Exception e) {
+            throw new RuntimeException("Error generating PDF: " + e.getMessage(), e);
+        }
+    }
+
+    private void addWalletTransactionSection(Document document, List<Wallet> data, PdfFont boldFont, PdfFont regularFont) {
+        try {
+            Paragraph walletTitle = new Paragraph("Wallet Transaction History")
+                    .setFont(boldFont)
+                    .setFontSize(14)
+                    .setFontColor(HEADER_COLOR)
+                    .setMarginBottom(10);
+            document.add(walletTitle);
+
+            // Added extra column width for Payment ID
+            float[] columnWidths = {80F, 100F, 80F, 80F, 80F, 100F, 120F};
+            Table table = new Table(columnWidths);
+            table.setWidth(UnitValue.createPercentValue(100));
+
+            // Header
+            addTableHeaderCell(table, "ID", boldFont);
+            addTableHeaderCell(table, "Username", boldFont);
+            addTableHeaderCell(table, "Type", boldFont);
+            addTableHeaderCell(table, "Amount", boldFont);
+            addTableHeaderCell(table, "Status", boldFont);
+            addTableHeaderCell(table, "Timestamp", boldFont);
+            addTableHeaderCell(table, "Payment ID", boldFont); // New column
+
+            // Data Rows
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy, HH:mm");
+
+            for (Wallet wallet : data) {
+                addTableDataCell(table, String.valueOf(wallet.getId()), regularFont, TextAlignment.CENTER);
+                addTableDataCell(table, wallet.getUsername(), regularFont, TextAlignment.CENTER);
+                addTableDataCell(table, wallet.getType(), regularFont, TextAlignment.CENTER);
+                addTableDataCell(table, String.format("₹%.2f", wallet.getAmount()), regularFont, TextAlignment.RIGHT);
+                addTableDataCell(table, wallet.getStatus(), regularFont, TextAlignment.CENTER);
+                addTableDataCell(table, wallet.getTimestamp().format(formatter), regularFont, TextAlignment.CENTER);
+                addTableDataCell(table, wallet.getRazorpayPaymentId(), regularFont, TextAlignment.CENTER); // New data field
+            }
+
+            document.add(table);
+        } catch (Exception e) {
+            throw new RuntimeException("Error adding wallet section: " + e.getMessage(), e);
+        }
+    }
+    
 }

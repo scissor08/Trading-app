@@ -32,5 +32,8 @@ public interface UserDashboardServiceInterface {
 	String addAccountBalance(UserTable userDetails, double amount, String username, String razorpayPaymentId,
 			String razorpayOrderId, String razorpaySignature, Model model);
 
+	void updateWalletBalance(UserTable userDetails, double amount, String username, String razorpayPaymentId,
+			String razorpayOrderId, String razorpaySignature);
+
 
 }
