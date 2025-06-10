@@ -21,7 +21,17 @@ public class IndexService {
     private static final String API_KEY = "e2a99d855cmsh4c2dbbbb514d333p12b8f3jsn5f0a9aeae998";
     private static final String HOST = "apidojo-yahoo-finance-v1.p.rapidapi.com";
     private static final String BASE_URL = "https://apidojo-yahoo-finance-v1.p.rapidapi.com/market/v2/get-quotes?region=IN&symbols=";
-    private static final String[] INDICES = {"^NSEI", "^BSESN", "^IXIC", "^GSPC", "^DJI"};
+    private static final String[] INDICES = {
+    	    "^NSEI",   // Nifty 50 (India)
+    	    "^BSESN",  // Sensex (India)
+    	    "^IXIC",   // NASDAQ Composite (USA)
+    	    "^GSPC",   // S&P 500 (USA)
+    	    "^DJI",    // Dow Jones Industrial Average (USA)
+    	    "^FTSE",   // FTSE 100 (UK)
+    	    "^N225",   // Nikkei 225 (Japan)
+    	    "^HSI"     // Hang Seng Index (Hong Kong)
+    	};
+
 
     public List<IndexDTO> getLiveIndices() {
         List<IndexDTO> result = new ArrayList<>();
