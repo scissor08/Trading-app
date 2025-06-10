@@ -67,32 +67,35 @@ public class UserDashboardService implements UserDashboardServiceInterface {
 	}
 
 	@Override
+	@Cacheable(value = "userdata")
 	public UserTable getDashboard(String user, Model model) {
 		return getUserDetailsByUsername(user);
 	}
 
 	@Override
-	 public String addAccountBalance(String user, Model model, double cash) {
+	 public String addAccountBalance(UserTable userDetails,double amount, String username,String razorpayPaymentId,String razorpayOrderId,String razorpaySignature, Model model) {
 
         // 🔹 1. Update balance
-        UserTable userDetails = userDetailsRepository.findByUsername(user)
-                .orElseThrow(() -> new IllegalArgumentException("User not found: " + user));
 
         UserAccountDetails account = userDetails.getUserAccountDetails();
-        account.setBalance(account.getBalance() + cash);
+        account.setBalance(account.getBalance() + amount);
         userDetailsRepository.save(userDetails);
 
         // 🔹 2. Create wallet transaction
         Wallet tx = new Wallet();
-        tx.setAmount(cash);
-        tx.setType("ADD");
-        tx.setStatus("SUCCESS");
-        tx.setTimestamp(LocalDateTime.now());
-        tx.setUsername(userDetails.getUsername());
-        transactionRepository.save(tx);
-        
-    	model.addAttribute("transactions", transactionRepository.findAll());
-        
+
+        tx.setAmount(amount); // convert paise to INR
+	    tx.setType("ADD");
+	    tx.setStatus("SUCCESS");
+	    tx.setUsername(username);
+	    tx.setTimestamp(LocalDateTime.now());
+	    tx.setRazorpayOrderId(razorpayOrderId);
+	    tx.setRazorpayPaymentId(razorpayPaymentId);
+	    tx.setRazorpaySignature(razorpaySignature);
+	    tx.setUser(userDetails);
+
+	    transactionRepository.save(tx);
+
 
         // 🔹 3. Convert all Wallet entities → WalletDTO list
         List<WalletDTO> transactions = transactionRepository.findAll()
@@ -102,9 +105,9 @@ public class UserDashboardService implements UserDashboardServiceInterface {
 
         // 🔹 4. Put data on the model
         model.addAttribute("balance",     account.getBalance());
-        model.addAttribute("username",    userDetails.getUsername());
-        model.addAttribute("transactions", transactions);
-
+       // model.addAttribute("username",    userDetails.getUsername());
+        model.addAttribute("transactions",transactionRepository.findAll());
+  
         return "WalletPage";   // WalletPage.jsp
     }
 

@@ -12,10 +12,10 @@ import com.tradingapplication.TradingApplication.dto.WatchlistResponseDTO;
 
 public interface WatchlistServiceInterface {
 	ResponseEntity<?> addToWatchlist(WatchlistRequestDTO dto);
-	boolean removeFromWatchlist(Long id);
+	boolean removeFromWatchlist(int id);
     List<WatchlistResponseDTO> getAllWatchlistItems();
     public Optional<Watchlist> getBySymbol(String symbol);
-    public ResponseEntity<?> call(String symbol);
+   // public ResponseEntity<?> call(String symbol);
  
     
     

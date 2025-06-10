@@ -21,13 +21,16 @@ public interface UserDashboardServiceInterface {
 
     String getAccountBalance(String user, Model model);
 
-    String addAccountBalance(String user, Model model, double cash);
     
 	double getMainBalance(HttpSession session);
 
 	String withdrawAccountBalance(String username, Model model, double amount);
 
 	String updateDp(MultipartFile profile, Model model);
+
+
+	String addAccountBalance(UserTable userDetails, double amount, String username, String razorpayPaymentId,
+			String razorpayOrderId, String razorpaySignature, Model model);
 
 
 }

@@ -192,10 +192,10 @@
                     <div class="card-icon text-danger">
                         <i class="fas fa-receipt"></i>
                     </div>
-                    <h5 class="card-title">Tax Report</h5>
+                    <h5 class="card-title">Kyc Document</h5>
                     <p class="card-text">
-                        Tax-ready reports for capital gains/losses, dividend income, 
-                        and other taxable events to simplify your tax filing process.
+                        KYC-ready Document for Customer, proper verified data, 
+                        and other extracted Details.
                     </p>
                     <div class="mt-auto">
                         <button class="btn btn-danger" onclick="generateTaxReport()">
@@ -344,6 +344,7 @@
 
         function downloadPortfolioPdf() {
             showLoadingModal();
+            window.location.href = '/holdings/pdf/download'; 
             console.log('Downloading Portfolio PDF...');
             setTimeout(hideLoadingModal, 2000);
         }
@@ -366,16 +367,17 @@
 
         function generateTaxReport() {
             showLoadingModal();
-            console.log('Generating Tax Report...');
+            console.log('Generating KYC Document...');
             setTimeout(() => {
                 hideLoadingModal();
-                alert('Tax Report generated successfully!');
+                alert('KYC Document generated successfully!');
             }, 2000);
         }
 
         function downloadTaxPdf() {
             showLoadingModal();
-            console.log('Downloading Tax PDF...');
+            window.location.href = '/kyc/download/mykyc';
+            console.log('Downloading KYC Document...');
             setTimeout(hideLoadingModal, 2000);
         }
 

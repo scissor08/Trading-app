@@ -14,7 +14,7 @@ public class WalletDTO {
     private String status;
     private double amount;
     private Date timestamp;   // java.util.Date works with JSTL
-
+    private String razorpayPaymentId;
     public WalletDTO(Wallet wallet) {
         this.username = wallet.getUsername();
         this.type = wallet.getType();
@@ -25,6 +25,7 @@ public class WalletDTO {
                 wallet.getTimestamp()
                       .atZone(ZoneId.systemDefault())
                       .toInstant());
+        this.razorpayPaymentId=wallet.getRazorpayPaymentId();
     }
 
     /* ---------- getters ---------- */
@@ -33,4 +34,5 @@ public class WalletDTO {
     public String getStatus()    { return status; }
     public double getAmount()    { return amount; }
     public Date getTimestamp()   { return timestamp; }
+    public String getRazorpayPaymentId() {return razorpayPaymentId; }
 }

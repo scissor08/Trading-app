@@ -29,7 +29,7 @@ public class WatchlistController {
         return ResponseEntity.ok(items);
     }
     @DeleteMapping("/remove/{id}")
-    public ResponseEntity<?> deleteStock(@PathVariable Long id) {
+    public ResponseEntity<?> deleteStock(@PathVariable int id) {
         boolean removed = watchlistService.removeFromWatchlist(id);
       
         if (removed) {

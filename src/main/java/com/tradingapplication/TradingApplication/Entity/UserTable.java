@@ -49,7 +49,7 @@ public class UserTable {
     @Column(nullable = false)
     private String email;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "user_log_username", referencedColumnName = "username")
     @JsonIgnore
     private UserLog userLog;
@@ -57,14 +57,15 @@ public class UserTable {
     @OneToMany
     List<Stock> stocks;
     
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     UserAccountDetails userAccountDetails;
     
-    @OneToOne(mappedBy = "userTable", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "userTable", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private KycEntity kycEntity;
 
 
-
+    @OneToMany(mappedBy="user" ,cascade = CascadeType.ALL)
+    private List<Watchlist> watchlist;
     
     @OneToMany(mappedBy = "userDetails", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<TransactionBuySell> transaction;
@@ -72,6 +73,10 @@ public class UserTable {
     
     @OneToMany
     private List<Portfolio> portfolio;
+    
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Wallet> walletTransactions;
+
 
 
     @OneToMany(mappedBy = "userTable",fetch = FetchType.LAZY, cascade = CascadeType.ALL)

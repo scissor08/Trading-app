@@ -5,10 +5,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Dashboard</title>
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+
+
+
+
 <style>
 
   * { box-sizing: border-box; }
@@ -42,7 +47,246 @@
 <jsp:include page="header.jsp" />
 <div class="main-wrapper">
 <jsp:include page="ticker.jsp" />
+
+
+
+
+
   <main>
+  <!-- Live Indices Section - Add this to your UserDashboard.jsp -->
+<div class="indices-section mt-4 mb-4">
+  <div class="section-header d-flex justify-content-between align-items-center mb-3">
+    <h3 class="section-title">
+      <i class="fas fa-chart-line me-2"></i>Live Market Indices
+    </h3>
+    <small class="text-muted">
+      <i class="fas fa-clock me-1"></i>Real-time data
+    </small>
+  </div>
+  
+  <div class="indices-grid">
+    <c:forEach var="index" items="${indices}">
+      <div class="index-card">
+        <div class="index-header">
+          <div class="index-info">
+            <h5 class="index-symbol">${index.symbol}</h5>
+            <p class="index-label">${index.label}</p>
+          </div>
+          <div class="index-icon">
+            <i class="fas fa-chart-area"></i>
+          </div>
+        </div>
+        
+        <div class="index-price-section">
+          <div class="current-price">
+            <fmt:formatNumber value="${index.price}" type="number" maxFractionDigits="2" minFractionDigits="2"/>
+          </div>
+          
+          <div class="price-change ${index.change >= 0 ? 'positive' : 'negative'}">
+            <span class="change-amount">
+              <i class="fas ${index.change >= 0 ? 'fa-arrow-up' : 'fa-arrow-down'}"></i>
+              <fmt:formatNumber value="${index.change}" type="number" maxFractionDigits="2" minFractionDigits="2"/>
+            </span>
+            <span class="change-percent">
+              (<fmt:formatNumber value="${index.changePercent}" type="percent" maxFractionDigits="2"/>)
+            </span>
+          </div>
+        </div>
+        
+        <div class="index-footer">
+          <div class="market-status">
+            <span class="status-dot ${index.change >= 0 ? 'green' : 'red'}"></span>
+            <span class="status-text">Live</span>
+          </div>
+        </div>
+      </div>
+    </c:forEach>
+  </div>
+</div>
+
+<style>
+/* Add this CSS to your existing styles */
+.indices-section {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  border: 1px solid #dee2e6;
+}
+
+.section-header {
+  border-bottom: 2px solid #0e1c36;
+  padding-bottom: 0.75rem;
+}
+
+.section-title {
+  color: #0e1c36;
+  font-weight: 600;
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.indices-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+  margin-top: 1rem;
+}
+
+.index-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  border-radius: 12px;
+  padding: 1.25rem;
+  border: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.index-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #0e1c36, #1e3a5f);
+}
+
+.index-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(14, 28, 54, 0.15);
+  border-color: #0e1c36;
+}
+
+.index-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.index-info {
+  flex: 1;
+}
+
+.index-symbol {
+  color: #0e1c36;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin: 0 0 0.25rem 0;
+}
+
+.index-label {
+  color: #6c757d;
+  font-size: 0.85rem;
+  margin: 0;
+  font-weight: 500;
+}
+
+.index-icon {
+  color: #0e1c36;
+  opacity: 0.7;
+  font-size: 1.25rem;
+}
+
+.index-price-section {
+  margin-bottom: 1rem;
+}
+
+.current-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.price-change {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.price-change.positive {
+  color: #28a745;
+}
+
+.price-change.negative {
+  color: #dc3545;
+}
+
+.change-amount, .change-percent {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.index-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.75rem;
+  border-top: 1px solid #e9ecef;
+}
+
+.market-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  color: #6c757d;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.status-dot.green {
+  background-color: #28a745;
+  box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+}
+
+.status-dot.red {
+  background-color: #dc3545;
+  box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);
+}
+
+.status-text {
+  font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .indices-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .index-card {
+    padding: 1rem;
+  }
+  
+  .current-price {
+    font-size: 1.25rem;
+  }
+}
+
+/* Animation for live data updates */
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+.status-dot.green {
+  animation: pulse 2s infinite;
+}
+</style>
+  
     <h2>Stock Overview Table</h2>
 
 
@@ -130,7 +374,7 @@ $(document).ready(function() {
 	});
 	
 	
-function filterTable() {
+/* function filterTable() {
     var input = document.getElementById("searchInput");
     var filter = input.value.toUpperCase();
     var table = document.getElementById("stockTable");
@@ -143,7 +387,7 @@ function filterTable() {
         tr[i].style.display = txtValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
       }
     }
-  }
+  } */
 </script>
 </body>
 </html>

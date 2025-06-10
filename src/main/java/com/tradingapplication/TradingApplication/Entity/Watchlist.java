@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 public class Watchlist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     private String symbol;
     
