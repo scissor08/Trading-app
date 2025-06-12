@@ -717,7 +717,7 @@ function payNow() {
             const username = '${username}';
 
             let options = {
-                key: razorpayKey,
+                key: '${razorpayKey}',
                 amount: order.amount,
                 currency: order.currency,
                 name: "Trading App",
@@ -749,7 +749,7 @@ function payNow() {
                         alert("Payment succeeded, but wallet update failed.");
                         console.error(err);
                         // Still redirect to wallet page
-                        window.location.href = '/wallet';
+                        window.location.href = '/wallets';
                     });
                 }
             };

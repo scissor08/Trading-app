@@ -147,7 +147,12 @@ public class PdfService {
     private void addHeader(Document document, PdfFont boldFont, UserTable userDetails) {
         try {
             // Company/App Name
-            Paragraph title = new Paragraph("TRADING APPLICATION")
+        	
+        	String logoPath = "src/main/resources/static/images/logo.png"; // adjust if different
+            ImageData logoData = ImageDataFactory.create(logoPath);
+            Image logo = new Image(logoData).scaleToFit(100, 100).setHorizontalAlignment(HorizontalAlignment.CENTER);
+            document.add(logo);
+            Paragraph title = new Paragraph("")     //
                     .setFont(boldFont)
                     .setFontSize(24)
                     .setFontColor(HEADER_COLOR)
@@ -257,10 +262,8 @@ public class PdfService {
     private void addTransactionTable(Document document, List<TransactionBuySell> data, 
                                    PdfFont boldFont, PdfFont regularFont) {
         try {
-        	String logoPath = "src/main/resources/static/images/logo.png"; // adjust if different
-            ImageData logoData = ImageDataFactory.create(logoPath);
-            Image logo = new Image(logoData).scaleToFit(100, 100).setHorizontalAlignment(HorizontalAlignment.CENTER);
-            document.add(logo);
+        	
+            
             
             Paragraph tableTitle = new Paragraph("Transaction Details")
                     .setFont(boldFont)
@@ -358,8 +361,11 @@ public class PdfService {
             throw new RuntimeException("Error adding footer: " + e.getMessage(), e);
         }
     }
-    public ByteArrayInputStream walletPdfReport(  List<Wallet> walletData) {
+    public ByteArrayInputStream walletPdfReport(  List<Wallet> walletData) {             ////
         try {
+        	
+          
+            
         	 UserTable getuserName = userDetailsRepository.findByUsername(authUtil.getCurrentUsername())
                      .orElseThrow(() -> new DataNotFoundException("No such user found"));
         	
@@ -399,8 +405,10 @@ public class PdfService {
         }
     }
 
-    private void addWalletTransactionSection(Document document, List<Wallet> data, PdfFont boldFont, PdfFont regularFont) {
+    private void addWalletTransactionSection(Document document, List<Wallet> data, PdfFont boldFont, PdfFont regularFont) {  //////
         try {
+        	
+     
             Paragraph walletTitle = new Paragraph("Wallet Transaction History")
                     .setFont(boldFont)
                     .setFontSize(14)

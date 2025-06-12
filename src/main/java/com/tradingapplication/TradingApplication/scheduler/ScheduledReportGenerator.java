@@ -45,7 +45,7 @@ public class ScheduledReportGenerator {
 		for (UserTable obj : getAllUserName) {
 
 			byte[] data = pdfService.generatePdf(obj).readAllBytes();
-			File pdfFile = ScheduledReportGenerator.convertByteArrayToFile(data, "growthReport.pdf");
+			File pdfFile = convertByteArrayToFile(data, "growthReport.pdf");
 
 			reportMap.put(obj.getEmail(), pdfFile);
 			

@@ -6,6 +6,7 @@ import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.pdf.*;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.*;
+import com.itextpdf.layout.properties.HorizontalAlignment;
 import com.itextpdf.layout.properties.TextAlignment;
 import com.itextpdf.layout.properties.UnitValue;
 import com.tradingapplication.TradingApplication.Entity.Portfolio;
@@ -51,6 +52,12 @@ public class HoldingsPdfService {
             Document document = new Document(pdf);
 
             // Title
+            
+           	String logoPath = "src/main/resources/static/images/logo.png"; // adjust if different
+            ImageData logoData = ImageDataFactory.create(logoPath);
+            Image logo = new Image(logoData).scaleToFit(100, 100).setHorizontalAlignment(HorizontalAlignment.CENTER);
+            document.add(logo);
+            
             Paragraph title = new Paragraph("Holdings Report")
                     .setFontSize(18)
                     .setTextAlignment(TextAlignment.CENTER)

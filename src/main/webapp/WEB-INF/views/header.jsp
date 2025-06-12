@@ -69,7 +69,7 @@
                     <i class="fas fa-chevron-down dropdown-arrow"></i>
                 </button>
                 <div class="dropdown-menu" id="profileDropdown">
-                    <a href="${pageContext.request.contextPath}/wallet" class="dropdown-item">
+                    <a href="${pageContext.request.contextPath}/wallets" class="dropdown-item">
                      	<i class="fas fa-wallet"></i>
                         <span>Wallet</span>
                     </a>

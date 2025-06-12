@@ -49,6 +49,7 @@ public class PaymentController {
     @GetMapping("/pay")
     public String showPaymentPage(Model model) {
         model.addAttribute("razorpayKey", paymentService.getRazorpayKey());
+        
         return "payment";
     }
 
@@ -83,7 +84,7 @@ public class PaymentController {
             model.addAttribute("balance", account.getBalance());
             model.addAttribute("user", userTable);
             model.addAttribute("username", currentUser);
-            
+            model.addAttribute("razorpayKey", paymentService.getRazorpayKey());
             // Get user transactions
             List<Wallet> transactions = transactionRepository.findByUsernameOrderByTimestampDesc(currentUser);
           

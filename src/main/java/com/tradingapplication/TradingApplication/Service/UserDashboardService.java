@@ -215,8 +215,33 @@ public String withdrawAccountBalance(String username, Model model, double amount
 public String getAccountBalance(String user, Model model) {
 	UserTable userDetails = getUserDetailsByUsername(user);
 
-	model.addAttribute("balance", userDetails.getUserAccountDetails().getBalance());
-	model.addAttribute("username", userDetails.getUsername());
+	
+	 List<WalletDTO> transactions = transactionRepository.findAll()
+             .stream()
+             .map(WalletDTO::new)
+             .collect(Collectors.toList());
+
+     
+     List<Wallet> wlist=transactionRepository.findByUsernameOrderByTimestampDesc(userDetails.getUsername());
+     
+     for(Wallet w:wlist) {
+     	
+     	log.info("checking rozor--"+w.getRazorpayPaymentId());
+     	
+     	log.info("checking Status--"+w.getStatus());
+     	
+     	log.info("checking Amount--"+w.getAmount());
+     	
+     	
+     	
+     }
+     // 🔹 4. Put data on the model
+   //  model.addAttribute("balance",     account.getBalance());
+    // model.addAttribute("username",    userDetails.getUsername());
+    // model.addAttribute("transactions",transactions);
+     model.addAttribute("transactions",wlist);
+     model.addAttribute("balance", userDetails.getUserAccountDetails().getBalance());
+ 	model.addAttribute("username", userDetails.getUsername());
 
 	return "WalletPage";
 }

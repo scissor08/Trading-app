@@ -92,7 +92,9 @@ public class UserDashboardController {
 	    String view = dashboardService.getAccountBalance(username, model);
 	    
 	    // Inject Razorpay public key into the model for the JSP
+	    
 	    model.addAttribute("razorpayKey", paymentService.getRazorpayKey());
+	    
 
 	    return view;
 	}
