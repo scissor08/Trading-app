@@ -1,6 +1,6 @@
 package com.tradingapplication.TradingApplication.Controller;
 
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tradingapplication.TradingApplication.Service.UserServiceInterface;
-import com.tradingapplication.TradingApplication.dto.UserLogDTO;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,28 +21,18 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class UserLoginController {
 
-	private AuthenticationManager authenticationManager;
+	@Autowired
 	private UserServiceInterface service;
-
-	public UserLoginController(AuthenticationManager authenticationManager, UserServiceInterface service) {
-		super();
-		this.authenticationManager = authenticationManager;
-		this.service = service;
+	
+	@GetMapping()
+	public String showHomePage() {
+		return "auth/index";
 	}
-
+	
 	@GetMapping("/login")
 	public String showLoginPage() {
 		return "auth/Arise";
 	}
-
-//	@PostMapping("/authenticate")
-//	public String authenticateUser(@RequestParam String username, @RequestParam String password,
-//			@RequestParam(name = "g-recaptcha-response", required = false) String captcha, HttpSession session,
-//			Model model) {
-//
-//		UserLogDTO userlog = new UserLogDTO(username, password, captcha);
-//		return service.userLogin(userlog, model, session); // Call service, don't duplicate authentication logic
-//	}
 
 	@GetMapping("/forget")
 	public String getForgetPage() {
@@ -57,6 +46,7 @@ public class UserLoginController {
 
 		if (userExists) {
 			model.addAttribute("otpSent", true);
+			model.addAttribute("emailOrUsername", emailOrUsername);
 			return "auth/ForgetPassword";
 		} else {
 			model.addAttribute("error", "User not found.");
@@ -66,17 +56,19 @@ public class UserLoginController {
 
 	@PostMapping("/otpvalidate")
 	public String otpValidate(@RequestParam("otp") String otp, HttpSession session, Model model) {
+		String name=(String) session.getAttribute("name");
 		if (!otp.equals(session.getAttribute("otp"))) {
 			model.addAttribute("error", "OTP mismatch");
 			return "auth/ForgetPassword";
 		}
 
 		model.addAttribute("otpVerified", true);
+		model.addAttribute("emailOrUsername", name);
 		return "auth/ForgetPassword";
 	}
 
 	@PostMapping("/updatePassword")
-	public String updatePassword(@RequestParam String password, HttpSession session) {
+	public String updatePassword(@RequestParam String password, HttpSession session,Model model) {
 		return service.updatePassword(password, (String) session.getAttribute("name"));
 	}
 
@@ -86,11 +78,11 @@ public class UserLoginController {
 		    if (cookies != null) {
 		        for (Cookie cookie : cookies) {
 		            cookie.setValue(null);
-		            cookie.setMaxAge(0); // Delete the cookie
-		            cookie.setPath("/"); // Make sure path matches original
+		            cookie.setMaxAge(0);
+		            cookie.setPath("/"); 
 		            response.addCookie(cookie);
 		        }
 		    }
-		return "redirect:/arise/logout"; // Use Spring Security logout handling
+		return "redirect:/arise/login?success=logout"; 
 	}
 }

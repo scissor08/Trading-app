@@ -1,6 +1,8 @@
 package com.tradingapplication.TradingApplication.scheduler;
 
 import java.io.File; 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
@@ -33,9 +35,9 @@ public class ScheduledReportGenerator {
 	@Autowired
 	private JavaMailSender mailSender;
 
-	@Scheduled(cron = "0 20 15 * * ?") // 9:00
+	@Scheduled(cron = "0 32 22 * * ?") // Time : 
 	public void sendScheduledReport() throws Exception {
-
+	
 		List<UserTable> getAllUserName = userDetailsRepository.findAll();
 
 		Map<String, File> reportMap = new HashMap<>();
@@ -43,17 +45,20 @@ public class ScheduledReportGenerator {
 		for (UserTable obj : getAllUserName) {
 
 			byte[] data = pdfService.generatePdf(obj).readAllBytes();
-			File pdfFile = ScheduledReportGenerator.convertByteArrayToFile(data, "growthReport.pdf");
+			File pdfFile = convertByteArrayToFile(data, "growthReport.pdf");
 
 			reportMap.put(obj.getEmail(), pdfFile);
 			
 			sendReports(reportMap);
+			
+			deletePdf(pdfFile);
 
 		}
 		
 		
-
-	}
+		
+		
+	}	
 	
 	 private void sendReports(Map<String, File> reportMap) throws MessagingException {
 	        for (Map.Entry<String, File> entry : reportMap.entrySet()) {
@@ -81,6 +86,14 @@ public class ScheduledReportGenerator {
 			fos.write(byteArray);
 		}
 		return file;
+	}
+	
+	public void deletePdf(File pdfFile) {
+		if (pdfFile != null || pdfFile.exists()) {
+			
+			pdfFile.delete();
+			
+		}
 	}
 
 }

@@ -15,7 +15,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #ffffff;
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -26,29 +26,38 @@
         .container {
             width: 100%;
             max-width: 450px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: #ffffff;
             padding: 40px;
             border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 1px solid #e1e5e9;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
         }
 
         .container h2 {
             text-align: center;
             margin-bottom: 30px;
-            color: #333;
+            color: #2c3e50;
             font-size: 28px;
             font-weight: 600;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            position: relative;
+        }
+
+        .container h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: #3498db;
+            border-radius: 2px;
         }
 
         .form-group {
@@ -59,7 +68,7 @@
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            color: #555;
+            color: #34495e;
             font-weight: 500;
             font-size: 14px;
         }
@@ -72,24 +81,25 @@
             font-size: 16px;
             transition: all 0.3s ease;
             background-color: #f8f9fa;
+            color: #2c3e50;
         }
 
         input[type=text]:focus, input[type=password]:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #3498db;
             background-color: #fff;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
             transform: translateY(-2px);
         }
 
         input::placeholder {
-            color: #999;
+            color: #7f8c8d;
             font-size: 14px;
         }
 
         button {
             width: 100%;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: #3498db;
             color: white;
             padding: 15px;
             border: none;
@@ -103,8 +113,9 @@
         }
 
         button:hover {
+            background: #2980b9;
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.3);
         }
 
         button:active {
@@ -119,6 +130,7 @@
             border: 1px solid #f5c6cb;
             border-radius: 8px;
             font-size: 14px;
+            border-left: 4px solid #e74c3c;
             animation: shake 0.5s ease-in-out;
         }
 
@@ -130,12 +142,13 @@
             border: 1px solid #c3e6cb;
             border-radius: 8px;
             font-size: 14px;
+            border-left: 4px solid #27ae60;
             animation: fadeIn 0.5s ease-in-out;
         }
 
         .readonly-text {
             padding: 15px 20px;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            background: #f8f9fa;
             border-radius: 12px;
             font-weight: 600;
             color: #495057;
@@ -161,14 +174,16 @@
         }
 
         .step.active {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: #3498db;
             color: white;
             transform: scale(1.1);
+            box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3);
         }
 
         .step.inactive {
-            background-color: #e9ecef;
-            color: #6c757d;
+            background-color: #ecf0f1;
+            color: #7f8c8d;
+            border: 2px solid #bdc3c7;
         }
 
         .password-strength {
@@ -190,6 +205,23 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Professional styling for Arise branding */
+        .arise-brand {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #2c3e50;
+            letter-spacing: 2px;
+        }
+
+        .arise-brand::before,
+        .arise-brand::after {
+            content: '✦';
+            margin: 0 15px;
+            color: #3498db;
+        }
+
         /* Mobile Responsiveness */
         @media (max-width: 768px) {
             body {
@@ -208,7 +240,7 @@
 
             input[type=text], input[type=password] {
                 padding: 12px 15px;
-                font-size: 16px; /* Prevents iOS zoom */
+                font-size: 16px;
             }
 
             button {
@@ -221,6 +253,10 @@
                 height: 35px;
                 margin: 0 8px;
                 font-size: 14px;
+            }
+
+            .arise-brand {
+                font-size: 20px;
             }
         }
 
@@ -256,50 +292,19 @@
             }
         }
 
-        /* Dark mode support */
-        @media (prefers-color-scheme: dark) {
-            .container {
-                background: rgba(33, 37, 41, 0.95);
-                color: #f8f9fa;
-            }
-
-            .container h2 {
-                color: #f8f9fa;
-            }
-
-            input[type=text], input[type=password] {
-                background-color: #495057;
-                border-color: #6c757d;
-                color: #f8f9fa;
-            }
-
-            input[type=text]:focus, input[type=password]:focus {
-                background-color: #6c757d;
-            }
-
-            .readonly-text {
-                background: linear-gradient(135deg, #495057, #6c757d);
-                color: #f8f9fa;
-            }
-
-            .form-group label {
-                color: #ced4da;
-            }
-        }
-
         /* High contrast mode */
         @media (prefers-contrast: high) {
             .container {
-                border: 3px solid #000;
+                border: 3px solid #2c3e50;
             }
 
             input[type=text], input[type=password] {
-                border: 2px solid #000;
+                border: 2px solid #2c3e50;
             }
 
             button {
-                background: #000;
-                border: 2px solid #000;
+                background: #2c3e50;
+                border: 2px solid #2c3e50;
             }
         }
 
@@ -314,7 +319,10 @@
     </style>
 </head>
 <body>
+
+
 <div class="container">
+    <div class="arise-brand">ARISE</div>
     <h2>Forgot Password</h2>
 
     <!-- Step Indicator -->

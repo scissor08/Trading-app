@@ -19,19 +19,18 @@ import lombok.extern.slf4j.Slf4j;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
-    private UserLogRepository userrepo;
+    private UserLogRepository userlogRepo;
     
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserLog user = userrepo.findById(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User Not Found")); // Ensure Spring Security expected exception
-        log.info("User {} assigned role: {}", user.getUsername(), user.getRole());
+        
+    	UserLog user = userlogRepo.findByUsername(username);
 
         return org.springframework.security.core.userdetails.User
                 .withUsername(user.getUsername())
-                .password(user.getPassword()) // Ensure this is BCrypt hashed
-                .authorities(Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole())))                .build();
-        		
+                .password(user.getPassword()) 
+                .authorities(Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole())))
+                .build();   		
     }  
 }
 

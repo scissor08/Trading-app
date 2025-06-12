@@ -15,84 +15,85 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.tradingapplication.TradingApplication.Security.CustomAuthenticationFailureHandler;
 import com.tradingapplication.TradingApplication.Security.CustomAuthenticationSuccessHandler;
+import com.tradingapplication.TradingApplication.Security.JwtAuthenticationEntryPoint;
 import com.tradingapplication.TradingApplication.Security.JwtAuthenticationFilter;
 import com.tradingapplication.TradingApplication.Security.JwtUtil;
+import com.tradingapplication.TradingApplication.Security.OAuth2LoginSuccessHandler;
 import com.tradingapplication.TradingApplication.Security.UserDetailsServiceImpl;
-
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
-    private JwtUtil jwtUtil;
-    @Autowired
-    CustomAuthenticationSuccessHandler successHandler;
-    @Bean
-    public UserDetailsService userDetailsService() {
-        return new UserDetailsServiceImpl();
-    }
+	@Autowired
+	private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+	@Autowired
+	private JwtUtil jwtUtil;
+	@Autowired
+	CustomAuthenticationSuccessHandler successHandler;
+	@Autowired
+	CustomAuthenticationFailureHandler failureHandler;
+	@Autowired
+	private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+	
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	public UserDetailsService userDetailsService() {
+		return new UserDetailsServiceImpl();
+	}
 
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService());
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
-    }
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-        return authConfig.getAuthenticationManager();
-    }
+	@Bean
+	public DaoAuthenticationProvider authenticationProvider() {
+		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+		authProvider.setUserDetailsService(userDetailsService());
+		authProvider.setPasswordEncoder(passwordEncoder());
+		return authProvider;
+	}
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(
-                    "/arise/login",
-                    "/arise/registration",
-                    "/arise/authenticate",
-                    "/arise/validation",
-                    "/arise/verification",
-                    "/arise/register",
-                    "/arise/forget",
-                    "/arise/uservalidate",
-                    "/arise/otpvalidate",
-                    "/arise/updatePassword",
-                    "/arise/OTPPage",
-                    "/arise/success",
-                    "/WEB-INF/views/**",
-                    "/static/**",
-                    "/css/**",
-                    "/js/**",
-                    "/images/**",
-                    "/error",
-                    "/favicon.ico",
-                    "/h2-console/**"
-                ).permitAll()
-                .anyRequest().authenticated()
-            )
-            .formLogin(form -> form
-            	    .loginPage("/arise/login") // Ensure this page exists for GET requests
-            	    .loginProcessingUrl("/arise/login") // Spring Security expects POST requests here
-            	    .successHandler(successHandler) // Your custom logic after login
-            	    .failureUrl("/arise/login?error=true")
-            	    .permitAll()
-            	)
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
+		return authConfig.getAuthenticationManager();
+	}
 
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authenticationProvider(authenticationProvider())
-            .addFilterBefore(new JwtAuthenticationFilter(jwtUtil, userDetailsService()), UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
+	@Bean
+	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+		http.csrf(csrf -> csrf.disable())
+				.authorizeHttpRequests(auth -> auth
+						.requestMatchers("/arise/login", "/arise/registration", "/arise/authenticate",
+								"/arise/validation", "/arise/verification", "/arise/register", "/arise/forget",
+								"/arise/uservalidate", "/arise/otpvalidate", "/arise/updatePassword", "/arise/OTPPage",
+								"/arise/success", "/WEB-INF/views/**", "/static/**", "/css/**", "/js/**", "/images/**",
+								"/error", "/favicon.ico", "/h2-console/**", "/oauth2/**","/arise/login?error=*","/arise/**")
+						.permitAll()
+						.requestMatchers("/arise/login","/arise/registration","/arise").anonymous()
+						.anyRequest().authenticated())
+				.headers(headers -> headers.frameOptions().sameOrigin())
+				.formLogin(form -> form
+					    .loginPage("/arise/login") 
+					    .loginProcessingUrl("/arise/login") 
+					    .successHandler(successHandler)
+					    .failureHandler(failureHandler) // Keep this
+					    .permitAll()) // Remove failureUrl()
+				.oauth2Login(oauth2 -> oauth2
+						.loginPage("/arise/login")
+						.successHandler(oAuth2LoginSuccessHandler))
+				 .exceptionHandling(ex -> ex
+					        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+					    )
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.authenticationProvider(authenticationProvider())
+				.addFilterBefore(new JwtAuthenticationFilter(jwtUtil, userDetailsService()),
+						UsernamePasswordAuthenticationFilter.class);
+
+
+		return http.build();
+	}
 }

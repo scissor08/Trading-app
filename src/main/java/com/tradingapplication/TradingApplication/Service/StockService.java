@@ -117,7 +117,28 @@ public class StockService implements StockServiceInterface {
 
         return stockList;
     }
+    @Cacheable(value = "allStocks")
+  public  List<StockRequestDTO> findAllStocks(){
+	  List<Stock> stockLists=  stockRepository.findAll();
+	  List<StockRequestDTO> stockReqList=new ArrayList<>();
+	  for(Stock stock:stockLists) {
+		  StockRequestDTO sr=new StockRequestDTO();
+		  sr.setChangePercent(stock.getChangePercent());
+		  sr.setChange(stock.getChange());
+		  sr.setDomain(stock.getDomain());
+		  sr.setHigh(stock.getHigh());
+		  sr.setLow(stock.getLow());
+		  sr.setLatestTradingDay(stock.getLatestTradingDay());
+		  sr.setOpen(stock.getOpen());
 
+		  sr.setPreviousClose(stock.getPreviousClose());
+
+		  sr.setPrice(stock.getPrice());
+		  sr.setSymbol(stock.getSymbol());
+		  stockReqList.add(sr);
+	  }
+    	return stockReqList;
+    }
     private StockRequestDTO convertToDTO(Stock stock) {
         StockRequestDTO dto = new StockRequestDTO();
         dto.setSymbol(stock.getSymbol());

@@ -1,24 +1,24 @@
 package com.tradingapplication.TradingApplication.Controller;
 
-import org.springframework.beans.factory.annotation.Autowired; 
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.tradingapplication.TradingApplication.Entity.UserLog;
-import com.tradingapplication.TradingApplication.Entity.UserTable;
+import com.tradingapplication.TradingApplication.Security.AuthUtil;
 import com.tradingapplication.TradingApplication.Security.JwtUtil;
+import com.tradingapplication.TradingApplication.Service.IndexService;
+import com.tradingapplication.TradingApplication.Service.PaymentService;
 import com.tradingapplication.TradingApplication.Service.UserDashboardServiceInterface;
 import com.tradingapplication.TradingApplication.Service.UserService;
+import com.tradingapplication.TradingApplication.dto.IndexDTO;
 
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -31,92 +31,94 @@ public class UserDashboardController {
 	@Autowired
 	UserService service;
 	@Autowired
+	PaymentService paymentService;
+
+	  @Autowired
+	    private IndexService indexService;
+	@Autowired
 	JwtUtil jwtUtil;
+	@Autowired
+	AuthUtil authUtil;
 
 	@GetMapping("/profile")
 	public String getUserDetails(Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-		if (authentication != null && authentication.isAuthenticated()) {
-			String username = authentication.getName();
+		 String username = authUtil.getCurrentUsername();
 			return dashboardService.getUserDetail(username, model);
-		}
-
-		return "LoginPage";
+	}
+	
+	@PostMapping("/dpupdate")
+	public String dpUpdate(@RequestParam MultipartFile profile,Model model) {
+		return dashboardService.updateDp(profile,model);
 	}
 
 	@GetMapping("/dashboard")
-	public String userDashboard(HttpServletRequest request, Model model) {
-	    String token = null;
+	public String userDashboard(Model model) {
+	    authUtil.getCurrentUsername();
+	    model.addAttribute("stocks", dashboardService.getAllStockData());
+	    try {
+	    List<IndexDTO> indices = indexService.getLiveIndices();
+        model.addAttribute("indices", indices);
 
-	    // ✅ Extract JWT token from cookies
-	    Cookie[] cookies = request.getCookies();
-	    if (cookies != null) {
-	        for (Cookie cookie : cookies) {
-	            if ("jwt".equals(cookie.getName())) {
-	                token = cookie.getValue();
-	                break;
-	            }
-	        }
-	    }
-
-	    if (token != null && jwtUtil.validateToken(token, jwtUtil.extractUsername(token))) {
-	        String username = jwtUtil.extractUsername(token);
-	        log.info("Authenticated User: {}", username);
-
-	        UserTable userdetails = dashboardService.getDashboard(username, model);
-	        model.addAttribute("username", userdetails.getUsername());
-	        model.addAttribute("balance", userdetails.getUserAccountDetails().getBalance());
-	        model.addAttribute("stocks", dashboardService.getAllStockData());
-
-	        return "UserDashboard"; // Renders UserDashboard.jsp
-	    }
-
-	    return "LoginPage"; // Redirect to login if no valid token
+        System.out.println("Indices: " + indices);
+        
+    } catch (Exception e) {
+        e.printStackTrace();
+        // Add empty list if error occurs
+        model.addAttribute("indices", java.util.Collections.emptyList());
+    }
+    
+	    
+       
+	    
+	    return "UserDashboard";
 	}
 
+	@GetMapping("/watchlist")
+	public String showWatchlistPage() {
+		return "watchlist"; 
+	}
 
 	@GetMapping("/stock")
-	public String getAllStocks(HttpSession session, Model model) {
-		UserLog user = (UserLog) session.getAttribute("userlog");
-		if (user != null) {
+	public String getAllStocks(Model model) {
+		 authUtil.getCurrentUsername();
 			return "allStocks";
-		}
-		return "LoginPage";
 	}
 
 	@GetMapping("/wallet")
-	public String getBalance(HttpSession session, Model model) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	public String getBalance(Model model) {
+	    String username = authUtil.getCurrentUsername();
+	    
+	    // Add balance/transaction data using your existing logic
+	    String view = dashboardService.getAccountBalance(username, model);
+	    
+	    // Inject Razorpay public key into the model for the JSP
+	    
+	    model.addAttribute("razorpayKey", paymentService.getRazorpayKey());
+	    
 
-		if (authentication != null && authentication.isAuthenticated()) {
-			String username = authentication.getName();
-			return dashboardService.getAccountBalance(username, model);
-		}
-
-		return "LoginPage";
+	    return view;
 	}
 
-	@GetMapping("/addbalance")
-	public String addBalancePage(HttpSession session) {
-		UserLog user = (UserLog) session.getAttribute("userlog");
-		if (user != null) {
-			return "AddBalance";
-		}
-		return "LoginPage";
+
+	@PostMapping("/withdraw")
+	public String withdrawBalance(Model model, @RequestParam Double amount) {
+		 String username = authUtil.getCurrentUsername();
+			return dashboardService.withdrawAccountBalance(username, model, amount);
+		
 	}
 
-	@PostMapping("/add")
-	public String addBalance(HttpSession session, Model model, @RequestParam Double cash) {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
-		if (authentication != null && authentication.isAuthenticated()) {
-			String username = authentication.getName();
-			double cashh = cash;
-			return dashboardService.addAccountBalance(username, model, cashh);
-		}
-
-		return "LoginPage";
-	}
+//	@PostMapping("/add")
+//	public String addBalance(Model model, @RequestParam Double cash) {
+//		 String username = authUtil.getCurrentUsername();
+//			double cashh = cash;
+//			return dashboardService.addAccountBalance(username, model, cashh);
+//		}
+	
+//	@GetMapping("/walletRep")
+//	public String showWallet(Model model) {
+//		List<Wallet> transactions = .getAllTransactions();
+//		model.addAttribute("transactions", transactions);
+//		return "WalletPage"; // wallet.jsp
+//	}
 
 }

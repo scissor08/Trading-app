@@ -1,12 +1,11 @@
 package com.tradingapplication.TradingApplication.Service;
  
-import java.io.PrintWriter;  
+import java.io.PrintWriter;   
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import com.tradingapplication.TradingApplication.Entity.GrowthReportEntity;
 import com.tradingapplication.TradingApplication.Entity.Stock;
@@ -17,6 +16,7 @@ import com.tradingapplication.TradingApplication.Repository.GrowthReportReposito
 import com.tradingapplication.TradingApplication.Repository.StockRepository;
 import com.tradingapplication.TradingApplication.Repository.TransactionRepository;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
+import com.tradingapplication.TradingApplication.Security.AuthUtil;
 
 @Service
 public class GrowthReportService implements GrowthReportServiceInterface {
@@ -29,11 +29,14 @@ public class GrowthReportService implements GrowthReportServiceInterface {
 	GrowthReportRepository growthRepo;
 	@Autowired
 	StockRepository stockRepo;
+	@Autowired
+	AuthUtil authUtil;
 	
 	
 	@Override
 	public List<GrowthReportEntity> getGrowthReport(String username) {
-
+		
+		if(username==null) new DataNotFoundException("LoginPage");
 		UserTable user = userRepository.findByUsername(username)
 				.orElseThrow(() -> new DataNotFoundException("LoginPage"));
 
@@ -60,6 +63,7 @@ public class GrowthReportService implements GrowthReportServiceInterface {
 			double currentprice = 0;
 			double totalprofitpercentage=0;
 			double currentprofitpercentage=0;
+			double currentsellprice=0;
 			for (TransactionBuySell trans : transaction) {
 				if (trans.getStockName().equals(stockname) && trans.getTransactionType().equalsIgnoreCase("Buy")
 						&& trans.getUserDetails().getUserId() == user.getUserId()) {
@@ -83,6 +87,7 @@ public class GrowthReportService implements GrowthReportServiceInterface {
 			stockholdings = totalbuystock - totalsellstock;
 			profitvalue = (totalsellstock * averagesellvalue)-((totalbuystock - stockholdings) * averagebuyvalue);
 			totalprofitpercentage=(totalsellstock * averagesellvalue)/((totalbuystock - stockholdings) * averagebuyvalue)*100;
+			currentsellprice=stockholdings*currentprice;
 			currentprofit = (currentprice * stockholdings)-(averagebuyvalue * stockholdings);
 			currentprofitpercentage=((currentprice*stockholdings)/(averagebuyvalue*stockholdings))*100;
 			
@@ -97,12 +102,12 @@ public class GrowthReportService implements GrowthReportServiceInterface {
 			growthRe.setProfitValue(changeValue(profitvalue));
 			growthRe.setCurrentHoldings(stockholdings);
 			growthRe.setCurrentProfitValue(changeValue(currentprofit));
-			growthRe.setTotalProfitPercentage(totalprofitpercentage);
-			growthRe.setCurrentProfitPercentage(currentprofitpercentage);
+			growthRe.setTotalProfitPercentage(changeValue(totalprofitpercentage));
+			growthRe.setCurrentProfitPercentage(changeValue(currentprofitpercentage));
+			growthRe.setTotalSellPrice(changeValue(currentsellprice));
 			if (growthRe.getTotalBuyPrice() > 0.0) {
 				growthReport.add(growthRe);
-				growthRepo.save(growthRe);
-				
+				growthRepo.save(growthRe);	
 			}
 		}
 		return growthReport;
@@ -113,16 +118,21 @@ public class GrowthReportService implements GrowthReportServiceInterface {
 	}
 	
 	@Override
-	public void exportCsv(PrintWriter writer) {
-	    List<GrowthReportEntity> reports = growthRepo.findAll(); // or however you fetch
-
-	    writer.println("Stock Symbol,Total Buy Qty,Total Buy Price,Total Sell Qty,Total Sell Price,Avg Buy,Avg Sell,Holdings,Profit,Current Profit");
+	public void exportCsv(PrintWriter writer,String username) {
+				
+	    List<GrowthReportEntity> reports =  getGrowthReport(username);
+	    writer.println("\n\n\n\n");
+	    writer.printf("%s","                          Hello "+username);
+	    writer.printf("%s","                          YOUR GROWTH REPORT");
+	    writer.println("\n\n");
+	    
+	    writer.println("Stock Symbol,Total Buy Qty,Average Buy Price,Total Sell Qty,Average Sell Price,Total Profit,Holdings,Current Sell Price,Current Profit");
 	    for (GrowthReportEntity r : reports) {
-	    	 writer.printf("%s,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f%n",
-	            r.getStockSymbol(), r.getTotalBuyQuantity(), r.getTotalBuyPrice(),
-	            r.getTotalSellQuantity(), r.getTotalSellPrice(), r.getAverageBuyValue(),
-	            r.getAverageSellValue(), r.getCurrentHoldings(),
-	            r.getProfitValue(), r.getCurrentProfitValue());
+	    	 writer.printf("%s,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%n",
+	            r.getStockSymbol(), r.getTotalBuyQuantity(),r.getAverageBuyValue(),
+	            r.getTotalSellQuantity(),r.getAverageSellValue(), r.getProfitValue(),
+	            r.getCurrentHoldings(), r.getTotalSellPrice(),
+	             r.getCurrentProfitValue());
 	    }
 	}
 

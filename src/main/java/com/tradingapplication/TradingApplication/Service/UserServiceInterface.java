@@ -2,9 +2,6 @@ package com.tradingapplication.TradingApplication.Service;
 
 import org.springframework.ui.Model;
 
-import com.tradingapplication.TradingApplication.Entity.UserLog;
-import com.tradingapplication.TradingApplication.dto.UpdateRequestDTO;
-import com.tradingapplication.TradingApplication.dto.UserLogDTO;
 import com.tradingapplication.TradingApplication.dto.UserRequestDTO;
 
 import jakarta.servlet.http.HttpSession; 
@@ -20,5 +17,5 @@ public interface UserServiceInterface {
 	boolean sendOtpToUser(String emailOrUsername, Model model, HttpSession session);
 	public String updatePassword(String password, String emailOrUsername);
 	public boolean verifyCaptcha(String captchaResponse);
-	String userLogin(UserLogDTO userlog, Model model, HttpSession session);
+//	String userLogin(UserLogDTO userlog, Model model, HttpSession session);
 }

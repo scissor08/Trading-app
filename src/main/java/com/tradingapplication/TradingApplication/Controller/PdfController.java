@@ -1,8 +1,7 @@
 package com.tradingapplication.TradingApplication.Controller;
 
-import com.tradingapplication.TradingApplication.Entity.UserLog;
-import com.tradingapplication.TradingApplication.Service.PdfService; 
-import jakarta.servlet.http.HttpSession;
+import java.io.ByteArrayInputStream;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -11,7 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import java.io.ByteArrayInputStream;
+
+import com.tradingapplication.TradingApplication.Security.AuthUtil;
+import com.tradingapplication.TradingApplication.Service.PdfService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/pdf")
@@ -19,6 +22,8 @@ public class PdfController {
 
     @Autowired
     private PdfService pdfService;
+    @Autowired
+    AuthUtil authUtil;
 
     @GetMapping("/download")
     public ResponseEntity<byte[]> downloadPdf(HttpSession session) {
@@ -37,17 +42,8 @@ public class PdfController {
     
     @GetMapping("/report")
     public String reportJsp(HttpSession session, Model model) {
-    	
-    	UserLog user = (UserLog) session.getAttribute("userlog");
-		if(user!=null) {
-			return "reportPdf";
-		}
-		return "LoginPage";
-    	
-    	
-    	
-    	
-    	
+    	authUtil.getCurrentUsername();
+			return "reportPdf"; 	
     }
     
     

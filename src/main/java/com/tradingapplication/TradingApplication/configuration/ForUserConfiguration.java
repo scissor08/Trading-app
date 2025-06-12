@@ -26,6 +26,8 @@ public class ForUserConfiguration {
 	 @Bean
 	    public CommandLineRunner initData(UserDetailsRepository userDetails) {
 	        return args -> {
+	        	  String username = "test";
+	        	if (!userRepository.existsByUsername(username)){	
 	            UserTable user = new UserTable();
 	           UserAccountDetails account = new UserAccountDetails();
 	           UserLog userlog = new UserLog();
@@ -36,12 +38,17 @@ public class ForUserConfiguration {
 	           userlog.setUsername("test");
 	           String encodedPassword = passwordEncoder.encode("Test@123");
 	           userlog.setPassword(encodedPassword);
-	           userlog.setRole("ROLE_USER");
+	           userlog.setRole("USER");
 	           user.setUserLog(userlog);
 	           user.setUserAccountDetails(account);
 	           
 	           userRepository.save(user);
-	          
+	        	}else {
+	        		System.out.println("user already exsist");
+	        	}
+	        	
 	        };
+	     
+	        
 }
 }

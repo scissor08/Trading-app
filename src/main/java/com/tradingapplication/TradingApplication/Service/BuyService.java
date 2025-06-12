@@ -2,7 +2,7 @@
 package com.tradingapplication.TradingApplication.Service;
 
 
-import java.util.Date; 
+import java.util.Date;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,6 @@ import com.tradingapplication.TradingApplication.Entity.Portfolio;
 import com.tradingapplication.TradingApplication.Entity.Stock;
 import com.tradingapplication.TradingApplication.Entity.TransactionBuySell;
 import com.tradingapplication.TradingApplication.Entity.UserAccountDetails;
-import com.tradingapplication.TradingApplication.Entity.UserLog;
 import com.tradingapplication.TradingApplication.Entity.UserTable;
 import com.tradingapplication.TradingApplication.Exception.DataNotFoundException;
 import com.tradingapplication.TradingApplication.Repository.PortfolioRepository;
@@ -20,6 +19,7 @@ import com.tradingapplication.TradingApplication.Repository.StockRepository;
 import com.tradingapplication.TradingApplication.Repository.TransactionRepository;
 import com.tradingapplication.TradingApplication.Repository.UserAccountDetailsRepository;
 import com.tradingapplication.TradingApplication.Repository.UserDetailsRepository;
+import com.tradingapplication.TradingApplication.Security.AuthUtil;
 import com.tradingapplication.TradingApplication.dto.BuyRequestDTO;
 import com.tradingapplication.TradingApplication.dto.BuyResponseDTO;
 
@@ -50,14 +50,15 @@ private UserDetailsRepository userDetailsRepository;
     TransactionRepository transcationRepository;
     @Autowired
     private GrowthReportServiceInterface growthReportServiceInterface;
-
+    @Autowired
+    AuthUtil authUtil;
+   
     public BuyResponseDTO buyStock(HttpSession session, BuyRequestDTO request) {
     	
+    	System.out.println("BuyStock Method Invoked for userId: {}, symbol: {}, quantity: {},price {}"+
+   	    request.getSymbol()+ request.getQuantity()+request.getPrice());
     	
-    	UserLog getuser= (UserLog) session.getAttribute("userlog");
-    	
-    	
-    	UserTable getid = userDetailsRepository.findByUsername(getuser.getUsername()).orElseThrow(()-> new DataNotFoundException("User not Found...."));	
+    	UserTable getid = userDetailsRepository.findByUsername(authUtil.getCurrentUsername()).orElseThrow(()-> new DataNotFoundException("User not Found...."));	
     	int id = getid.getUserId();
     	log.info("BuyStock Method Invoked for userId: {}, symbol: {}, quantity: {},price {}",
     	         id, request.getSymbol(), request.getQuantity(),request.getPrice());
@@ -76,7 +77,7 @@ private UserDetailsRepository userDetailsRepository;
 
         if (transactionAmount > user.getBalance()) {
         	 log.warn("Insufficient balance for userId {}: balance={}, required={}", 
-                     user.getUserdetails().getUserId(), user.getBalance(), transactionAmount);
+        			 user.getUserdetails().getUserId(), user.getBalance(), transactionAmount);
             throw new IllegalArgumentException("Low Wallet Balance! Please add funds.");
         }
 
@@ -84,13 +85,12 @@ private UserDetailsRepository userDetailsRepository;
 //        String transactionTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
 
         double updatedBalance = user.getBalance() - transactionAmount;
-        log.info("User {} wallet updated. New balance: {}", user.getUserdetails().getUserId(), updatedBalance);
-        user.setBalance(changeValue(updatedBalance));
+        log.info("User {} wallet updated. New balance: {}", user.getUserdetails().getUserId(), updatedBalance);        user.setBalance(changeValue(updatedBalance));
         userAccountDetailsRepository.save(user);
         
         
         Portfolio portfolio = portfolioRepository
-                .findByUserAndStocks(user.getUserdetails(), stock)
+        		 .findByUserAndStocks(user.getUserdetails(), stock)
                 .orElse(null);
 
             if (portfolio != null) {
@@ -121,7 +121,7 @@ private UserDetailsRepository userDetailsRepository;
         transaction.setUserDetails(user.getUserdetails());
         transaction.setTransactionType(TRANSACTION_TYPE_BUY);
         transcationRepository.save(transaction);
-        growthReportServiceInterface.  getGrowthReport(getuser.getUsername());
+        growthReportServiceInterface.  getGrowthReport(authUtil.getCurrentUsername());
         log.info("Transaction completed. Order ID:"+ transaction.getOrderId() + "  Amount:"  +transactionAmount);
 
 

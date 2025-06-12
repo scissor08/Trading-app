@@ -7,52 +7,42 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.tradingapplication.TradingApplication.Entity.Watchlist;
+import com.tradingapplication.TradingApplication.Service.WatchlistService;
 import com.tradingapplication.TradingApplication.Service.WatchlistServiceInterface;
 import com.tradingapplication.TradingApplication.dto.WatchlistRequestDTO;
 import com.tradingapplication.TradingApplication.dto.WatchlistResponseDTO;
 
 import java.util.List;
 import java.util.Optional;
-
-@Controller
+@RestController
 @RequestMapping("/api/watchlist")
 public class WatchlistController {
 
     @Autowired
-    private WatchlistServiceInterface watchlistService;
+    private WatchlistServiceInterface service;
+
+    @Autowired
+    private WatchlistService watchlistService;
+    @GetMapping
+    public ResponseEntity<List<WatchlistResponseDTO>> getWatchlist() {
+        List<WatchlistResponseDTO> items = service.getAllWatchlistItems();
+        return ResponseEntity.ok(items);
+    }
+    @DeleteMapping("/remove/{id}")
+    public ResponseEntity<?> deleteStock(@PathVariable int id) {
+        boolean removed = watchlistService.removeFromWatchlist(id);
+      
+        if (removed) {
+        	  return ResponseEntity.ok().body("Deleted"); // 204 No Content
+        } else {
+            return ResponseEntity.notFound().build(); // 404 Not Found
+        }
+    }
+    
+    
 
     @PostMapping("/add")
     public ResponseEntity<?> add(@RequestBody WatchlistRequestDTO dto) {
-        return watchlistService.addToWatchlist(dto);
+        return service.addToWatchlist(dto);
     }
-
-    @GetMapping("/watch")
-    public String watch() {
-    	return "watchlist";
-    }
-    @DeleteMapping("/remove/{id}")
-    public void remove(@PathVariable Long id) {
-        watchlistService.removeFromWatchlist(id);
-    }
-
-    @GetMapping("")
-    public List<WatchlistResponseDTO> getAll() {
-        return watchlistService.getAllWatchlistItems();
-    }
-
-    @PostMapping("/adds")
-    public ResponseEntity<?> addToWatchlist(@RequestBody WatchlistRequestDTO requestDTO) {
-        String symbol = requestDTO.getSymbol();
-        Optional<Watchlist> existingItem = watchlistService.getBySymbol(symbol);
-
-        if (existingItem.isPresent()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Stock already exists in watchlist.");
-        }
-
-      
-
-        return watchlistService.call(symbol);
-    }
-
 }
-

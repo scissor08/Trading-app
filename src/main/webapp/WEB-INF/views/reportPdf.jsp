@@ -58,6 +58,7 @@
     </style>
 </head>
 <body>
+ <jsp:include page="header.jsp" />
     <!-- Page Header -->
     <div class="page-header">
         <div class="container">
@@ -191,10 +192,10 @@
                     <div class="card-icon text-danger">
                         <i class="fas fa-receipt"></i>
                     </div>
-                    <h5 class="card-title">Tax Report</h5>
+                    <h5 class="card-title">Kyc Document</h5>
                     <p class="card-text">
-                        Tax-ready reports for capital gains/losses, dividend income, 
-                        and other taxable events to simplify your tax filing process.
+                        KYC-ready Document for Customer, proper verified data, 
+                        and other extracted Details.
                     </p>
                     <div class="mt-auto">
                         <button class="btn btn-danger" onclick="generateTaxReport()">
@@ -284,7 +285,7 @@
             </div>
         </div>
     </div>
-
+<jsp:include page="footer.jsp" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         // Main PDF download function (existing endpoint)
@@ -343,6 +344,7 @@
 
         function downloadPortfolioPdf() {
             showLoadingModal();
+            window.location.href = '/holdings/pdf/download'; 
             console.log('Downloading Portfolio PDF...');
             setTimeout(hideLoadingModal, 2000);
         }
@@ -365,21 +367,23 @@
 
         function generateTaxReport() {
             showLoadingModal();
-            console.log('Generating Tax Report...');
+            console.log('Generating KYC Document...');
             setTimeout(() => {
                 hideLoadingModal();
-                alert('Tax Report generated successfully!');
+                alert('KYC Document generated successfully!');
             }, 2000);
         }
 
         function downloadTaxPdf() {
             showLoadingModal();
-            console.log('Downloading Tax PDF...');
+            window.location.href = '/kyc/download/mykyc';
+            console.log('Downloading KYC Document...');
             setTimeout(hideLoadingModal, 2000);
         }
 
         function generateTransactionReport() {
             showLoadingModal();
+           // window.location.href = '/api/wallet/pdf';
             console.log('Generating Transaction Summary...');
             setTimeout(() => {
                 hideLoadingModal();
@@ -389,11 +393,12 @@
 
         function downloadTransactionPdf() {
             showLoadingModal();
+            window.location.href = ' /api/wallet/pdf';
             console.log('Downloading Transaction PDF...');
             setTimeout(hideLoadingModal, 2000);
         }
 
-        // Filter functions
+        // Filter functions  /api/wallet
         function applyFilters() {
             const startDate = document.getElementById('startDate').value;
             const endDate = document.getElementById('endDate').value;
@@ -432,5 +437,6 @@
             document.getElementById('startDate').value = thirtyDaysAgo.toISOString().split('T')[0];
         });
     </script>
+    
 </body>
 </html>
