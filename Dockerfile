@@ -23,5 +23,5 @@ COPY --from=build /app/target/TradingApplication-0.0.1-SNAPSHOT.war $CATALINA_HO
 # Update Tomcat config to use 818 instead of 8080
 RUN sed -i 's/port="8080"/port="818"/' $CATALINA_HOME/conf/server.xml
 
-EXPOSE 818
+EXPOSE 8080
 CMD ["catalina.sh", "run"]
