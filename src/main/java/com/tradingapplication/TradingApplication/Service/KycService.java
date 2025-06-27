@@ -26,19 +26,21 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class KycService {
 
-	@Autowired
+	
     private final KycRepository kycRepository;
-	@Autowired
+	
     private final UserDetailsRepository userDetailsRepository;
-	@Autowired
+	
     private final UserLogRepository userLogRepository;
-	@Autowired
+
     private final ObjectMapper objectMapper = new ObjectMapper();
 
 	  @Value("${idanalyzer.apikey}")
 	    private String apiKey;
-	  
-    private final String profileId = "default";
+	  public static final String STATUS_ACCEPTED = "accept";
+	  public static final String STATUS_REJECTED = "reject";
+
+    private static final String PROFILE_ID = "default";
     private static final double CONFIDENCE_THRESHOLD = 0.90;
     private static final String API_URL = "https://api2.idanalyzer.com/scan";
 
@@ -49,7 +51,7 @@ public class KycService {
             // Check if username exists in UserLog
             boolean exists = userLogRepository.existsByUsername(request.getUsername());
             if (!exists) {
-                return new KycResponseDTO(false, "reject", 0,
+                return new KycResponseDTO(false, STATUS_REJECTED, 0,
                     "User with username '" + request.getUsername() + "' does not exist.", null);
             }
 
@@ -59,7 +61,7 @@ public class KycService {
 
             // Build payload for IdAnalyzer
             Map<String, Object> payload = new HashMap<>();
-            payload.put("profile", profileId);
+            payload.put("profile", PROFILE_ID);
             payload.put("document", request.getDocumentPrimaryBase64());
             if (request.getDocumentSecondaryBase64() != null) {
                 payload.put("document_secondary", request.getDocumentSecondaryBase64());
@@ -80,7 +82,7 @@ public class KycService {
 
             if (!root.path("success").asBoolean(false)) {
                 String message = root.path("error").path("message").asText();
-                return new KycResponseDTO(false, "reject", 0, "Verification failed: " + message, null);
+                return new KycResponseDTO(false, STATUS_REJECTED, 0, "Verification failed: " + message, null);
             }
 
             JsonNode data = root.path("data");
@@ -95,14 +97,14 @@ public class KycService {
             // Matching logic
             boolean nameMatch = normalize(extractedFullName).equals(normalize(request.getUserFullName()));
             boolean dobMatch = extractedDob.equals(request.getUserDob());
-            String decision = (confidence >= CONFIDENCE_THRESHOLD && nameMatch && dobMatch) ? "accept" : "reject";
+            String decision = (confidence >= CONFIDENCE_THRESHOLD && nameMatch && dobMatch) ? STATUS_ACCEPTED : STATUS_REJECTED;
 
             // Create KycEntity and link UserTable
             KycEntity entity = request.toEntity(user, decision, confidence,
                     extractedFullName, extractedDob, extractedDocNumber, extractedAge, extractedDocumentType);
 
             entity.setUserTable(user); // crucial to avoid null one-to-one id error
-            if(decision.equals("accept")) {
+            if(decision.equals(STATUS_ACCEPTED)) {
             kycRepository.save(entity);}
 
             Map<String, Object> preview = new HashMap<>();
@@ -112,12 +114,12 @@ public class KycService {
             
 
             return new KycResponseDTO(true, decision, confidence,
-                    decision.equals("accept") ? "Verification successful" : "Verification failed: mismatch",
+                    decision.equals(STATUS_ACCEPTED) ? "Verification successful" : "Verification failed: mismatch",
                     preview);
 
         } catch (Exception e) {
             log.error("KYC verification error", e);
-            return new KycResponseDTO(false, "reject", 0, "Internal error: " + e.getMessage(), null);
+            return new KycResponseDTO(false, STATUS_REJECTED, 0, "Internal error: " + e.getMessage(), null);
         }
     }
 

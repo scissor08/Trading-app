@@ -157,8 +157,7 @@ public class UserDashboardService implements UserDashboardServiceInterface {
 		    	int id = getid.getUserId();
 		        UserAccountDetails user = userAccountDetailsRepository.findById(id)
 		                .orElseThrow(() -> new DataNotFoundException("User not found"));
-		        double balance=user.getBalance();
-		        return balance;
+		        return user.getBalance();
 	}
 
 	// Utility method to fetch user details or redirect
