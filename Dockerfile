@@ -1,11 +1,11 @@
-# -------- Stage 1: Build JAR --------
-FROM maven:3.9.6-eclipse-temurin-21 AS build
-WORKDIR /app
-COPY . .
-RUN mvn clean package -DskipTests
+FROM tomcat:9.0-jdk21
 
-# -------- Stage 2: Run JAR --------
-FROM openjdk:21-jdk-slim
-WORKDIR /app
-COPY --from=build /app/target/TradingApplication-0.0.1-SNAPSHOT.jar app.jar
-CMD ["java", "-jar", "app.jar"]
+# Remove default webapps
+RUN rm -rf /usr/local/tomcat/webapps/*
+
+# Copy your WAR into the ROOT context
+COPY target/TradingApplication-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
+
+EXPOSE 8080
+
+CMD ["catalina.sh", "run"]
