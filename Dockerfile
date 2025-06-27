@@ -1,14 +1,12 @@
-# Use official Tomcat base image
+# Use Maven to build the WAR first
+FROM maven:3.8.7-openjdk-11 AS build
+WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
+
+# Use Tomcat base image to deploy the WAR
 FROM tomcat:9-jdk11
-
-# Clean default webapps
 RUN rm -rf /usr/local/tomcat/webapps/*
-
-# Copy the WAR file as ROOT.war
-COPY target/*.war /usr/local/tomcat/webapps/ROOT.war
-
-# Expose Tomcat port
+COPY --from=build /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
 EXPOSE 8080
-
-# Start Tomcat
 CMD ["catalina.sh", "run"]
