@@ -10,6 +10,7 @@ RUN mvn clean package -DskipTests
 # -------- Stage 2: Deploy WAR to External Tomcat --------
 FROM tomcat:9.0-jdk21
 
+RUN sed -i 's/port="8005"/port="-1"/' /usr/local/tomcat/conf/server.xml
 # Set Tomcat Home
 ENV CATALINA_HOME /usr/local/tomcat
 
